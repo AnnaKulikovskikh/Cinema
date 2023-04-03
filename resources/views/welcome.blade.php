@@ -19,7 +19,7 @@
     <body>
         <div class="center">
             <a href="/admin/login"><button>Администратор</button></a>
-            <a href="/user"><button>Гость</button></a>
+            <a href="/client/index"><button>Гость</button></a>
         </div>    
     </body>
 </html>

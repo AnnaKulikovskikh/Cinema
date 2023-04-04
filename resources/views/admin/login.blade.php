@@ -30,9 +30,8 @@
       </header>
       <div class="login__wrapper">
 
-        <form class="login__form" action="admin_login" method="POST" accept-charset="utf-8">
-        <!-- <form class="login__form" action="{{ route('login') }}" method="POST" accept-charset="utf-8"> -->
-          <!-- @csrf -->
+        <form class="login__form" action="" method="POST" accept-charset="utf-8">
+          @csrf
           <label class="login__label" for="mail">
             E-mail
             <input class="login__input" type="mail" placeholder="example@domain.xyz" name="mail" required>

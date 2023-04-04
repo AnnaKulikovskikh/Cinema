@@ -17,9 +17,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/admin/login', [\App\Http\Controllers\AdminController::class, 'login']);
-Route::post('/admin/login', [\App\Http\Controllers\AdminController::class, 'post']);
+Route::get('/admin/login', [\App\Http\Controllers\LoginController::class, 'form']);
+Route::post('/admin/login', [\App\Http\Controllers\LoginController::class, 'result']);
 //if (Auth::check()) { return redirect(route('/admin/index'));}
+
 Route::get('/admin/index', [\App\Http\Controllers\AdminController::class, 'index']);
 Route::get('/admin/halladd', [\App\Http\Controllers\AdminController::class, 'hallAdd']);
 Route::get('/admin/halldel', [\App\Http\Controllers\AdminController::class, 'hallDel']);

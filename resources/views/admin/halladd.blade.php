@@ -10,14 +10,14 @@
 
         </div>
         <div class="popup__wrapper">
-            <form action="add_hall" method="post" accept-charset="utf-8">
+            <form action="" method="post" accept-charset="utf-8">
             <label class="conf-step__label conf-step__label-fullsize" for="name">
                 Название зала
                 <input class="conf-step__inputв" type="text" placeholder="Например, &laquo;Зал 1&raquo;" name="name" required>
             </label>
             <div class="conf-step__buttons text-center">
                 <input type="submit" value="Добавить зал" class="conf-step__button conf-step__button-accent">
-                <button class="conf-step__button conf-step__button-regular">Отменить</button>            
+                <a href="{{ route('index') }}"><button class="conf-step__button conf-step__button-regular">Отменить</button></a>            
             </div>
             </form>
         </div>

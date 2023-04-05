@@ -32,7 +32,11 @@
             <button class="conf-step__button conf-step__button-trash"></button>
           </li>
         </ul>
-        <button class="conf-step__button conf-step__button-accent">Создать зал</button>
+
+        
+        <a href="{{ route('addHall') }}"><button class="conf-step__button conf-step__button-accent">Создать зал</button></a>
+
+
       </div>
     </section>
     

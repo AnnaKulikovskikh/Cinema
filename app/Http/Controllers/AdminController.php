@@ -7,21 +7,19 @@ use App\Models\User;
 
 class AdminController extends Controller
 {
-    public function login(){
-        $note = new User;
-
-        $note->name = "Admin";
-        $note->email = "admin@mail.ru";
-        $note->password = "123";
-        $note->is_admin = true;
-
-        $notes = User::all();
-        dump($notes);
-        return view('admin.login');
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware('auth');
+    // }
 
     public function index(){
         return view('admin.index');
+    }
+
+    public function addHall(){
+        $hall = new Hall;
+        view('admin.halladd');
+
     }
 
     public function hallAdd(){

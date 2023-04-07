@@ -16,7 +16,8 @@ return new class extends Migration
             $table->string('name')->default('New hall');
             $table->integer('width')->default(20);
             $table->integer('heigth')->default(10);
-            $table->array('seats');
+            $table->json('seats');
+            //$table->set('seats', ['usual','vip','busy','no']);
             $table->integer('price');
             $table->integer('price_vip');
             $table->timestamps();

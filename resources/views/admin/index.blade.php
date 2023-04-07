@@ -33,7 +33,14 @@
           </li>
         </ul>
 
-        <button class="conf-step__button conf-step__button-accent">Создать зал</button>
+        <button class="conf-step__button conf-step__button-accent add_hall">Создать зал</button>
+        @php
+          require_once('../resources/popup/hallAdd.php');
+          require_once('../resources/popup/hallDel.php');
+          require_once('../resources/popup/movieAdd.php');
+          require_once('../resources/popup/showAdd.php');
+          require_once('../resources/popup/showDel.php');
+        @endphp
 
       </div>
     </section>

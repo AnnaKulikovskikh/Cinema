@@ -22,10 +22,8 @@ Route::get('/admin/login', [\App\Http\Controllers\LoginController::class, 'form'
 Route::post('/admin/login', [\App\Http\Controllers\LoginController::class, 'result']);
 //if (Auth::check()) { return redirect(route('/admin/index'));}
 
-Route::get('/admin/test', [\App\Http\Controllers\AdminController::class, 'test'])->name('test');
-
-
 Route::get('/admin/index', [\App\Http\Controllers\AdminController::class, 'index'])->name('index');
+Route::post('/admin/add_hall', [\App\Http\Controllers\AdminController::class, 'add_hall'])->name('add_hall');
 
 // Route::group(['middleware'=>'auth'], function() {
 //  Route::get добавить сюда защещенные роуты

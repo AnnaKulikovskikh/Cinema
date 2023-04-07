@@ -12,14 +12,15 @@ class AdminController extends Controller
     //     $this->middleware('auth');
     // }
 
-    public function test()
-    {
-        return view('admin.test', ['text' => 'this is content of the page']);
-    }
-
-
     public function index()
     {
         return view('admin.index');
+    }
+
+    public function add_hall(Request $request)
+    {
+        dump($request->input('name'));
+        return redirect()->back();
+        //return redirect('/admin/index');
     }
 }

@@ -9,7 +9,12 @@ class LoginController extends Controller
     {
         // dump($request->input('mail'));
 		// dump($request->input('pwd'));
+        //dump($request->session());
         if ($request->input('mail') === 'user-1@mail.ru' and $request->input('pwd') === '12345678') {
+            // dump($request->input('mail'));
+            // $value = $request->session()->get('counter', 1);
+            // $request->session()->put('counter', $value + 1);
+            // dump($value);
             return redirect('/admin/index'); 
         }
     }

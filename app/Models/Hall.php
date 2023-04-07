@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Hall extends Model
 {
     use HasFactory;
+    protected $casts = ['seats' => 'array',];
 }

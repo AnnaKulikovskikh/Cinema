@@ -19,6 +19,8 @@ class AdminController extends Controller
 
     public function add_hall(Request $request)
     {
+        $token = $request->session()->token();
+        $token = csrf_token();
         dump($request->input('name'));
         return redirect()->back();
         //return redirect('/admin/index');

@@ -1,4 +1,3 @@
-
     <div class="popup">
     <div class="popup__container">
         <div class="popup__content">

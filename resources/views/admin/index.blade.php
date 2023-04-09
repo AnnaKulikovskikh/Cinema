@@ -13,6 +13,13 @@
 </head>
 
 <body>
+
+  @include('popup.hall_add');
+  @include('popup.hall_del')
+  @include('popup.movie_add')
+  @include('popup.show_add')
+  @include('popup.show_del')
+  
   <header class="page-header">
     <h1 class="page-header__title">Идём<span>в</span>кино</h1>
     <span class="page-header__subtitle">Администраторррская</span>
@@ -35,13 +42,6 @@
         </ul>
 
         <button class="conf-step__button conf-step__button-accent add_hall">Создать зал</button>
-        @php
-          require_once('../resources/popup/hallAdd.php');
-          require_once('../resources/popup/hallDel.php');
-          require_once('../resources/popup/movieAdd.php');
-          require_once('../resources/popup/showAdd.php');
-          require_once('../resources/popup/showDel.php');
-        @endphp
 
       </div>
     </section>

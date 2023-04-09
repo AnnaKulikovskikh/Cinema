@@ -6,6 +6,7 @@ const addHall = document.querySelector('.add_hall')
 const delHall = [...document.querySelectorAll('.conf-step__button-trash')]
 
 addHall.onclick = function(e) {
+    console.log(popup);
     popup[0].classList.add('active');
 }
 

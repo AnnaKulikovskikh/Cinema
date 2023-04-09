@@ -10,7 +10,9 @@
       </div>
       <div class="popup__wrapper">
         <form action="/admin/add_hall" method="post" accept-charset="utf-8">
+            
           @csrf
+
           <label class="conf-step__label conf-step__label-fullsize" for="name">
             Название зала
             <input class="conf-step__inputв" type="text" placeholder="Например, &laquo;Зал 1&raquo;" name="name" required>

@@ -33,12 +33,11 @@
       <div class="conf-step__wrapper">
         <p class="conf-step__paragraph">Доступные залы:</p>
         <ul class="conf-step__list">
-          <li>Зал 1
-            <button class="conf-step__button conf-step__button-trash"></button>
-          </li>
-          <li>Зал 2
-            <button class="conf-step__button conf-step__button-trash"></button>
-          </li>
+          @foreach ($halls as $hall)
+            <li>{{ $hall->name }}
+              <button class="conf-step__button conf-step__button-trash"></button>
+            </li>
+          @endforeach
         </ul>
 
         <button class="conf-step__button conf-step__button-accent add_hall">Создать зал</button>

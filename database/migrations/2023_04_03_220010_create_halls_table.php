@@ -14,12 +14,11 @@ return new class extends Migration
         Schema::create('halls', function (Blueprint $table) {
             $table->id();
             $table->string('name')->default('New hall');
-            $table->integer('width')->default(20);
-            $table->integer('heigth')->default(10);
+            $table->integer('rows')->default(2);
+            $table->integer('cols')->default(3);
             $table->json('seats');
-            //$table->set('seats', ['usual','vip','busy','no']);
-            $table->integer('price');
-            $table->integer('price_vip');
+            $table->integer('price')->default(100);
+            $table->integer('price_vip')->default(200);
             $table->timestamps();
         });
     }

@@ -30,9 +30,7 @@ class AdminController extends Controller
 
     public function del_hall(Request $request, $id)
     {
-        // dump($request);
-        
-        //Hall::destroy($id);
+        Hall::destroy($id-1);
         return redirect('admin/index');
     }
 }

@@ -28,11 +28,11 @@ class AdminController extends Controller
         return redirect()->back();
     }
 
-    public function del_hall(Request $request)
+    public function del_hall(Request $request, $id)
     {
-        dump($request);
-        // $hall_id = Hall::find(1);
-        // $hall_id->delete;
-        // return redirect('admin/index');
+        // dump($request);
+        
+        //Hall::destroy($id);
+        return redirect('admin/index');
     }
 }

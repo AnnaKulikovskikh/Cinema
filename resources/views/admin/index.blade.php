@@ -34,7 +34,7 @@
         <p class="conf-step__paragraph">Доступные залы:</p>
         <ul class="conf-step__list">
           @foreach ($halls as $hall)
-            <li>{{ $hall->name }}
+            <li>{{ $hall->id }}  {{ $hall->name}}
               <button class="conf-step__button conf-step__button-trash"></button>
             </li>
           @endforeach
@@ -52,8 +52,9 @@
       <div class="conf-step__wrapper">
         <p class="conf-step__paragraph">Выберите зал для конфигурации:</p>
         <ul class="conf-step__selectors-box">
-          <li><input type="radio" class="conf-step__radio" name="chairs-hall" value="Зал 1" checked><span class="conf-step__selector">Зал 1</span></li>
-          <li><input type="radio" class="conf-step__radio" name="chairs-hall" value="Зал 2"><span class="conf-step__selector">Зал 2</span></li>
+          @foreach ($halls as $hall)
+            <li><input type="radio" class="conf-step__radio" name="chairs-hall" value="{{ $hall->name}}" checked><span class="conf-step__selector">{{ $hall->name }}</span></li>
+          @endforeach
         </ul>
         <p class="conf-step__paragraph">Укажите количество рядов и максимальное количество кресел в ряду:</p>
         <div class="conf-step__legend">

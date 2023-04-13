@@ -14,8 +14,9 @@ for (let i = 0; i <delHall.length; i++) {
         const nameHall = document.querySelector('.conf-step__paragraph')
         const trashForm = document.querySelector('.trash-form')
         nameHall.querySelector('span').textContent = delHall[i].closest('li').textContent
+        const id = delHall[i].closest('li').className
         popup[1].classList.add('active')
-        trashForm.action =  trashForm.action + '/' + i
+        trashForm.action =  trashForm.action + '/' + id
     })
 }
 

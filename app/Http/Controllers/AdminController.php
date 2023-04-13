@@ -31,7 +31,7 @@ class AdminController extends Controller
 
     public function deleteHall(Request $request, int $id): RedirectResponse
     {
-        Hall::destroy($id-1);
+        Hall::destroy($id);
         return redirect('admin/index');
     }
 }

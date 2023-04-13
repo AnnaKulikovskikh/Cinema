@@ -9,4 +9,5 @@ class Hall extends Model
 {
     use HasFactory;
     protected $casts = ['seats' => 'array',];
+    protected $fillable = ['name', 'rows', 'cols', 'seats', 'price', 'price_vip' ];
 }

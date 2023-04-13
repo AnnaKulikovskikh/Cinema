@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Hall;
+use Illuminate\Http\RedirectResponse;
 
 class AdminController extends Controller
 {
@@ -19,16 +20,16 @@ class AdminController extends Controller
         return view('admin.index', ['halls' => $halls]);
     }
 
-    public function addHall(Request $request)
+    public function addHall(Request $request): RedirectResponse
     {
-        $hall = new Hall;
-        $hall->name = $request->input('name');
-        $hall->seats = ['st','st','st','st','st','st','st','st'];
-        $hall->save();
+        Hall::create([
+            "name" => $request->input('name'),
+            "seats" => ['st','st','st','st','st','st','st','st'],
+        ]);
         return redirect()->back();
     }
 
-    public function deleteHall(Request $request, $id)
+    public function deleteHall(Request $request, int $id): RedirectResponse
     {
         Hall::destroy($id-1);
         return redirect('admin/index');

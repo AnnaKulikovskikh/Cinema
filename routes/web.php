@@ -23,8 +23,8 @@ Route::post('/admin/login', [\App\Http\Controllers\LoginController::class, 'resu
 //if (Auth::check()) { return redirect(route('/admin/index'));}
 
 Route::get('/admin/index', [\App\Http\Controllers\AdminController::class, 'index'])->name('index');
-Route::post('/admin/add_hall', [\App\Http\Controllers\AdminController::class, 'add_hall'])->name('add_hall');
-Route::post('/admin/del_hall/{id}', [\App\Http\Controllers\AdminController::class, 'del_hall']);
+Route::post('/admin/add_hall', [\App\Http\Controllers\AdminController::class, 'addHall'])->name('addHall');
+Route::post('/admin/del_hall/{id}', [\App\Http\Controllers\AdminController::class, 'deleteHall']);
 
 // Route::group(['middleware'=>'auth'], function() {
 //  Route::get добавить сюда защещенные роуты

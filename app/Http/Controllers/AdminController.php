@@ -19,7 +19,7 @@ class AdminController extends Controller
         return view('admin.index', ['halls' => $halls]);
     }
 
-    public function add_hall(Request $request)
+    public function addHall(Request $request)
     {
         $hall = new Hall;
         $hall->name = $request->input('name');
@@ -28,7 +28,7 @@ class AdminController extends Controller
         return redirect()->back();
     }
 
-    public function del_hall(Request $request, $id)
+    public function deleteHall(Request $request, $id)
     {
         Hall::destroy($id-1);
         return redirect('admin/index');

@@ -14,12 +14,11 @@ for (let i = 0; i <delHall.length; i++) {
         const nameHall = document.querySelector('.conf-step__paragraph')
         const trashForm = document.querySelector('.trash-form')
         nameHall.querySelector('span').textContent = delHall[i].closest('li').textContent
-        const id = delHall[i].closest('li').className
+        const hallID = delHall[i].closest('li').className
         popup[1].classList.add('active')
-        trashForm.action =  trashForm.action + '/' + id
+        trashForm.action =  trashForm.action + '/' + hallID
     })
 }
-
 
 //кнопка "Отменить"
 const abort = [...document.querySelectorAll('.conf-step__button-regular')]
@@ -39,4 +38,13 @@ function close() {
             popup[i].classList.remove('active')
         }
     }
+}
+
+//выбор зала для конфигураций
+const hallsList = [...document.getElementsByName('chairs-hall')]
+let hallID = hallsList[hallsList.length - 1].value
+for (let i = 0; i < hallsList.length; i++){
+    hallsList[i].addEventListener('input', function(){
+        hallID = hallsList[i].value
+    })
 }

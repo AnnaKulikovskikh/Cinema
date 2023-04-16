@@ -56,12 +56,14 @@
             <li><input type="radio" class="conf-step__radio" name="chairs-hall" value="{{ $hall->id}}" checked><span class="conf-step__selector">{{ $hall->name }}</span></li>
           @endforeach
         </ul>
+
         <p class="conf-step__paragraph">Укажите количество рядов и максимальное количество кресел в ряду:</p>
         <div class="conf-step__legend">
-          <label class="conf-step__label">Рядов, шт<input type="text" class="conf-step__input" placeholder="10" ></label>
+          <label class="conf-step__label">Рядов, шт<input name="rows" type="text" class="conf-step__input" placeholder="2" ></label>
           <span class="multiplier">x</span>
-          <label class="conf-step__label">Мест, шт<input type="text" class="conf-step__input" placeholder="8" ></label>
+          <label class="conf-step__label">Мест, шт<input name="cols" type="text" class="conf-step__input" placeholder="3" ></label>
         </div>
+
         <p class="conf-step__paragraph">Теперь вы можете указать типы кресел на схеме зала:</p>
         <div class="conf-step__legend">
           <span class="conf-step__chair conf-step__chair_standart"></span> — обычные кресла
@@ -69,7 +71,22 @@
           <span class="conf-step__chair conf-step__chair_disabled"></span> — заблокированные (нет кресла)
           <p class="conf-step__hint">Чтобы изменить вид кресла, нажмите по нему левой кнопкой мыши</p>
         </div>  
-        
+
+
+        <div class="conf-step__hall">
+          <div class="conf-step__hall-wrapper">
+            @for($i = 0; $i < $halls[0]->rows; $i++)
+            <div class="conf-step__row">
+              @for($j = 0; $j < $halls[0]->cols; $j++)
+                <span class="seat conf-step__chair conf-step__chair_standart"></span>
+              @endfor  
+            </div>
+            @endfor
+          </div>
+        </div>
+
+
+
         <div class="conf-step__hall">
           <div class="conf-step__hall-wrapper">
             <div class="conf-step__row">

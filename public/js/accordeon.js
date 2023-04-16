@@ -48,3 +48,26 @@ for (let i = 0; i < hallsList.length; i++){
         hallID = hallsList[i].value
     })
 }
+
+//изменение вида кресла
+const rows = 2
+const cols = 3
+const seatsArray = ['st', 'st', 'st', 'st', 'st', 'st']
+const seats = [...document.getElementsByClassName('seat')]
+for (let i = 0; i < seats.length; i++){
+    seats[i].addEventListener('click', function(){
+        if (seatsArray[i] == 'st') {
+            seats[i].classList.toggle('conf-step__chair_standart')
+            seats[i].classList.toggle('conf-step__chair_vip')
+            seatsArray[i] ='vip'
+        } else if (seatsArray[i] == 'disable') {
+            seats[i].classList.toggle('conf-step__chair_disable')
+            seats[i].classList.toggle('conf-step__chair_standart')
+            seatsArray[i] ='st'
+        } else {
+            seats[i].classList.toggle('conf-step__chair_vip')
+            seats[i].classList.toggle('conf-step__chair_disable')
+            seatsArray[i] = 'disable'
+        }
+    })
+}

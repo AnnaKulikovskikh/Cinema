@@ -42,17 +42,26 @@ function close() {
 
 //выбор зала для конфигураций
 const hallsList = [...document.getElementsByName('chairs-hall')]
+const chooseForm = document.querySelector('.choose-form')
 let hallID = hallsList[hallsList.length - 1].value
 for (let i = 0; i < hallsList.length; i++){
     hallsList[i].addEventListener('input', function(){
         hallID = hallsList[i].value
+        console.log(chooseForm)
+        chooseForm.action =  chooseForm.action + '/' + i
     })
 }
 
 //изменение вида кресла
-const rows = 2
-const cols = 3
-const seatsArray = ['st', 'st', 'st', 'st', 'st', 'st']
+const a = document.getElementsByName('rows')
+console.log(a)
+console.log(document.getElementsByName('rows').placeholder)
+console.log(document.getElementsByName('rows').value)
+console.log(document.getElementsByName('rows').classList)
+
+let rows = 2 //цифру надо взять из index.blade
+let cols = 3 //цифру надо взять из index.blade
+const seatsArray = ['st', 'st', 'st', 'st', 'st', 'st'] //массив надо взять из index.blade, например из цикла по seats, а потом вернуть в php
 const seats = [...document.getElementsByClassName('seat')]
 for (let i = 0; i < seats.length; i++){
     seats[i].addEventListener('click', function(){
@@ -61,12 +70,12 @@ for (let i = 0; i < seats.length; i++){
             seats[i].classList.toggle('conf-step__chair_vip')
             seatsArray[i] ='vip'
         } else if (seatsArray[i] == 'disable') {
-            seats[i].classList.toggle('conf-step__chair_disable')
+            seats[i].classList.toggle('conf-step__chair_disabled')
             seats[i].classList.toggle('conf-step__chair_standart')
             seatsArray[i] ='st'
         } else {
             seats[i].classList.toggle('conf-step__chair_vip')
-            seats[i].classList.toggle('conf-step__chair_disable')
+            seats[i].classList.toggle('conf-step__chair_disabled')
             seatsArray[i] = 'disable'
         }
     })

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Hall;
+use App\Http\Requests\AddHallPostRequest;
 use Illuminate\Http\RedirectResponse;
 
 class AdminController extends Controller
@@ -20,10 +21,11 @@ class AdminController extends Controller
         return view('admin.index', ['halls' => $halls]);
     }
 
-    public function addHall(Request $request): RedirectResponse
+    public function addHall(AddHallPostRequest $request): RedirectResponse
     {
+        $validated = $request->validated();
         Hall::create([
-            "name" => $request->input('name'),
+            "name" => $validated['name'],
             "seats" => ['st','st','st','st','st','st','st','st'],
         ]);
         return redirect()->back();

@@ -11,10 +11,11 @@ addHall.onclick = function() {
 
 for (let i = 0; i <delHall.length; i++) {
     delHall[i].addEventListener('click', () => {
+        //const hallList = document.querySelector('.conf-step__list')
         const nameHall = document.querySelector('.conf-step__paragraph')
         const trashForm = document.querySelector('.trash-form')
         nameHall.querySelector('span').textContent = delHall[i].closest('li').textContent
-        const hallID = delHall[i].closest('li').className
+        const hallID = delHall[i].closest('li').dataset.id
         popup[1].classList.add('active')
         trashForm.action =  trashForm.action + '/' + hallID
     })

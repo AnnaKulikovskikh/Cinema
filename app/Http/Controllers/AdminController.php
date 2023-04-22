@@ -17,7 +17,7 @@ class AdminController extends Controller
 
     public function index()
     {
-        $halls = Hall::paginate();
+        $halls = Hall::paginate(7);
         return view('admin.index', ['halls' => $halls]);
     }
 
@@ -41,6 +41,11 @@ class AdminController extends Controller
     {
         dd($id);
         //return view('admin.index', ['halls' => $halls, 'numberHall' = $id]);
+    }
+
+    public function give()
+    {
+        return response->Hall.json();
     }
     
 }

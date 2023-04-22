@@ -1,3 +1,9 @@
+// const url = 'http://127.0.0.1:8000/admin/index'
+// fetch(url)
+//     .then(res => res.json())
+//     .then(data => console.log(data))
+
+
 //массив из 5 всплывающих окон
 const popup = [...document.querySelectorAll('.popup')]
 
@@ -21,7 +27,7 @@ for (let i = 0; i <delHall.length; i++) {
 }
 
 //кнопка "Отменить"
-const abort = [...document.querySelectorAll('.conf-step__button-regular')]
+const abort = [...document.querySelectorAll('.abort')]
 const dismiss = [...document.querySelectorAll('.popup__dismiss')]
 
 for (let i = 0; i < abort.length; i++) {
@@ -32,32 +38,49 @@ for (let i = 0; i < dismiss.length; i++) {
     dismiss[i].addEventListener('click', close)
 }
 
-function close() {
+function close(e) {
+    e.preventDefault()
     for (let i = 0; i < 5; i++) {
         if (popup[i].classList.contains('active')) {
             popup[i].classList.remove('active')
         }
     }
+    //console.log(e.target.closest('form'))
+
 }
 
 //выбор зала для конфигураций
 const hallsList = [...document.getElementsByName('chairs-hall')]
 const chooseForm = document.querySelector('.choose-form')
-let hallID = hallsList[hallsList.length - 1].value
+
+//let hallID = hallsList[hallsList.length - 1].value
 for (let i = 0; i < hallsList.length; i++){
     hallsList[i].addEventListener('input', function(){
-        hallID = hallsList[i].value
-        console.log(chooseForm)
-        chooseForm.action =  chooseForm.action + '/' + i
+        const opt = {
+            method: 'POST',
+            headers: {
+                "Content-type": "application/json; charset=UTF-8"
+            },
+            body: JSON.stringify({
+                completed: true
+            })
+        }
+        fetch('/halls', opt)
+            .then(res => res.json())
+            .then(data => console.log(data))
+        //hallID = hallsList[i].value
+        //console.log(hallID)
+        //chooseForm.action =  chooseForm.action + '/' + i
     })
 }
 
 //изменение вида кресла
-const a = document.getElementsByName('rows')
-console.log(a)
-console.log(document.getElementsByName('rows').placeholder)
-console.log(document.getElementsByName('rows').value)
-console.log(document.getElementsByName('rows').classList)
+
+//const a = document.getElementsByName('rows')
+// console.log(a)
+// console.log(document.getElementsByName('rows').placeholder)
+// console.log(document.getElementsByName('rows').value)
+// console.log(document.getElementsByName('rows').classList)
 
 let rows = 2 //цифру надо взять из index.blade
 let cols = 3 //цифру надо взять из index.blade

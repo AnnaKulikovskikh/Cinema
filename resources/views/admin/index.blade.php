@@ -52,6 +52,9 @@
       <div class="conf-step__wrapper">
         <p class="conf-step__paragraph">Выберите зал для конфигурации:</p>
 
+        <!-- все залы из table-halls в $halls -->
+        <input class="data-halls" type="hidden" data-halls="{{ $halls }}"/>
+
         <form class="choose-form" action="/admin/choose_hall" method="post">
           <ul class="conf-step__selectors-box">
             @foreach ($halls as $hall)

@@ -45,17 +45,21 @@ function close(e) {
             popup[i].classList.remove('active')
         }
     }
-    //console.log(e.target.closest('form'))
-
 }
 
 //выбор зала для конфигураций
+const hallsTable = document.querySelector('.data-halls')
+const hallsBD = hallsTable.dataset.halls
+
+console.log(JSON.stringify(hallsBD))
+
 const hallsList = [...document.getElementsByName('chairs-hall')]
 const chooseForm = document.querySelector('.choose-form')
 
 //let hallID = hallsList[hallsList.length - 1].value
 for (let i = 0; i < hallsList.length; i++){
     hallsList[i].addEventListener('input', function(){
+
         const opt = {
             method: 'POST',
             headers: {
@@ -65,9 +69,11 @@ for (let i = 0; i < hallsList.length; i++){
                 completed: true
             })
         }
-        fetch('/halls', opt)
+
+        fetch('/halls')
             .then(res => res.json())
             .then(data => console.log(data))
+
         //hallID = hallsList[i].value
         //console.log(hallID)
         //chooseForm.action =  chooseForm.action + '/' + i

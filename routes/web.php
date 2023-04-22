@@ -23,7 +23,8 @@ Route::post('/admin/login', [\App\Http\Controllers\LoginController::class, 'resu
 //if (Auth::check()) { return redirect(route('/admin/index'));}
 
 //эксперименты с AJAX
-Route::post('/halls',[\App\Http\Controllers\HallController::class, 'take']);
+//Route::post('/halls',[\App\Http\Controllers\HallController::class, 'take']);
+Route::get('/halls',[\App\Http\Controllers\HallController::class, 'take']);
 
 //роуты admin
 Route::get('/admin/index', [\App\Http\Controllers\AdminController::class, 'index'])->name('index');

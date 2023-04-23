@@ -3,6 +3,29 @@
 //     .then(res => res.json())
 //     .then(data => console.log(data))
 
+const hallsData = [
+    {
+        id: 0,
+        name: 'Holly',
+        rows: 2,
+        cols: 3,
+        seats:  ['st','st','st','st','st','st'],
+        price: 200,
+        price_vio: 400,
+    },
+    {
+        id: 1,
+        name: 'Bolly',
+        rows: 2,
+        cols: 4,
+        seats:  ['st','st','st','st','st','st','st','st'],
+        price: 250,
+        price_vio: 350,
+    }
+]
+
+let choosenHall = hallsData.length - 1
+
 
 //массив из 5 всплывающих окон
 const popup = [...document.querySelectorAll('.popup')]
@@ -48,64 +71,78 @@ function close(e) {
 }
 
 //выбор зала для конфигураций
-const hallsTable = document.querySelector('.data-halls')
-const hallsBD = hallsTable.dataset.halls
 
-console.log(JSON.stringify(hallsBD))
+// const hallsTable = document.querySelector('.data-halls')
+// const hallsBD = hallsTable.dataset.halls
+
+// console.log(JSON.stringify(hallsBD))
 
 const hallsList = [...document.getElementsByName('chairs-hall')]
 const chooseForm = document.querySelector('.choose-form')
 
-//let hallID = hallsList[hallsList.length - 1].value
+let hallID = hallsList[hallsList.length - 1].value
 for (let i = 0; i < hallsList.length; i++){
     hallsList[i].addEventListener('input', function(){
+        hallConfigurate(i)
+        // const opt = {
+        //     method: 'POST',
+        //     headers: {
+        //         "Content-type": "application/json; charset=UTF-8"
+        //     },
+        //     body: JSON.stringify({
+        //         completed: true
+        //     })
+        // }
 
-        const opt = {
-            method: 'POST',
-            headers: {
-                "Content-type": "application/json; charset=UTF-8"
-            },
-            body: JSON.stringify({
-                completed: true
-            })
-        }
+        // fetch('/halls')
+        //     .then(res => res.json())
+        //     .then(data => console.log(data))
 
-        fetch('/halls')
-            .then(res => res.json())
-            .then(data => console.log(data))
-
-        //hallID = hallsList[i].value
-        //console.log(hallID)
+        // hallID = hallsList[i].value
+        // console.log(hallID)
         //chooseForm.action =  chooseForm.action + '/' + i
     })
 }
 
-//изменение вида кресла
+// отображение зала из JS
 
-//const a = document.getElementsByName('rows')
-// console.log(a)
-// console.log(document.getElementsByName('rows').placeholder)
-// console.log(document.getElementsByName('rows').value)
-// console.log(document.getElementsByName('rows').classList)
-
-let rows = 2 //цифру надо взять из index.blade
-let cols = 3 //цифру надо взять из index.blade
-const seatsArray = ['st', 'st', 'st', 'st', 'st', 'st'] //массив надо взять из index.blade, например из цикла по seats, а потом вернуть в php
-const seats = [...document.getElementsByClassName('seat')]
-for (let i = 0; i < seats.length; i++){
-    seats[i].addEventListener('click', function(){
-        if (seatsArray[i] == 'st') {
-            seats[i].classList.toggle('conf-step__chair_standart')
-            seats[i].classList.toggle('conf-step__chair_vip')
-            seatsArray[i] ='vip'
-        } else if (seatsArray[i] == 'disable') {
-            seats[i].classList.toggle('conf-step__chair_disabled')
-            seats[i].classList.toggle('conf-step__chair_standart')
-            seatsArray[i] ='st'
-        } else {
-            seats[i].classList.toggle('conf-step__chair_vip')
-            seats[i].classList.toggle('conf-step__chair_disabled')
-            seatsArray[i] = 'disable'
+function hallConfigurate(i) {
+    // hallsData   //перечень залов якобы взятый из php
+    choosenHall = i
+    let rows = hallsData[choosenHall].rows
+    let cols = hallsData[choosenHall].cols
+    let seatsArray = hallsData[choosenHall].seats  //типы кресел с сервера, массив ['st', 'st', 'st']
+    const wrapper = document.querySelector('.conf-step__hall-wrapper')
+    let add = ''
+    for (let i = 0; i< rows; i++) {
+        add += '<div class="conf-step__row">'
+        for (let j = 0; j < cols; j++) {
+            add += '<span class="seat conf-step__chair conf-step__chair_standart"></span>'
         }
-    })
+        add += '</div>'
+    }
+
+    wrapper.innerHTML = add
+
+    //изменение вида кресла
+
+    const seats = [...document.getElementsByClassName('seat')] // элементы DOM обозрачающие кресла
+    for (let i = 0; i < seats.length; i++){
+        seats[i].addEventListener('click', function(){
+            if (seatsArray[i] == 'st') {
+                seats[i].classList.toggle('conf-step__chair_standart')
+                seats[i].classList.toggle('conf-step__chair_vip')
+                seatsArray[i] ='vip'
+            } else if (seatsArray[i] == 'disable') {
+                seats[i].classList.toggle('conf-step__chair_disabled')
+                seats[i].classList.toggle('conf-step__chair_standart')
+                seatsArray[i] ='st'
+            } else {
+                seats[i].classList.toggle('conf-step__chair_vip')
+                seats[i].classList.toggle('conf-step__chair_disabled')
+                seatsArray[i] = 'disable'
+            }
+        })
+    }
+
 }

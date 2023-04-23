@@ -81,13 +81,13 @@
 
         <div class="conf-step__hall">
           <div class="conf-step__hall-wrapper">
-            @for($i = 0; $i < $halls[0]->rows; $i++)
-            <div class="conf-step__row">
-              @for($j = 0; $j < $halls[0]->cols; $j++)
-                <span class="seat conf-step__chair conf-step__chair_standart"></span>
-              @endfor  
-            </div>
-            @endfor
+            <!-- @for($i = 0; $i < $halls[0]->rows; $i++) -->
+            <!-- <div class="conf-step__row"> -->
+              <!-- @for($j = 0; $j < $halls[0]->cols; $j++) -->
+                <!-- <span class="seat conf-step__chair conf-step__chair_standart"></span> -->
+              <!-- @endfor   -->
+            <!-- </div> -->
+            <!-- @endfor -->
           </div>
         </div>
 
@@ -108,10 +108,18 @@
       </header>
       <div class="conf-step__wrapper">
         <p class="conf-step__paragraph">Выберите зал для конфигурации:</p>
-        <ul class="conf-step__selectors-box">
+        <!-- <ul class="conf-step__selectors-box">
           <li><input type="radio" class="conf-step__radio" name="prices-hall" value="Зал 1"><span class="conf-step__selector">Зал 1</span></li>
           <li><input type="radio" class="conf-step__radio" name="prices-hall" value="Зал 2" checked><span class="conf-step__selector">Зал 2</span></li>
-        </ul>
+        </ul> -->
+
+        <form class="choose-form" action="/admin/choose_hall" method="post">
+          <ul class="conf-step__selectors-box">
+            @foreach ($halls as $hall)
+              <li><input type="radio" class="conf-step__radio" name="chairs-hall" value="{{ $hall->id}}" checked><span class="conf-step__selector">{{ $hall->name }}</span></li>
+            @endforeach
+          </ul>
+        </form>
           
         <p class="conf-step__paragraph">Установите цены для типов кресел:</p>
           <div class="conf-step__legend">

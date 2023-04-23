@@ -26,7 +26,7 @@ class AdminController extends Controller
         $validated = $request->validated();
         Hall::create([
             "name" => $validated['name'],
-            "seats" => ['st','st','st','st','st','st','st','st'],
+            "seats" => ['st','st','st','st','st','st'],
         ]);
         return redirect()->back();
     }

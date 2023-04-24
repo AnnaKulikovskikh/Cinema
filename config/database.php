@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Str;
+use Illuminate\Database\DBAL\TimestampType;
 
 return [
 
@@ -34,6 +35,12 @@ return [
     */
 
     'connections' => [
+
+        'dbal' => [
+            'types' => [
+                'timestamp' => TimestampType::class,
+            ],
+        ],
 
         'sqlite' => [
             'driver' => 'sqlite',

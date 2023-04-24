@@ -19,7 +19,8 @@ return new class extends Migration
             $table->json('seats');
             $table->integer('price')->default(100);
             $table->integer('price_vip')->default(200);
-            $table->timestamps();
+            $table->integer('session_id');
+            $table->integer('movid_id');
         });
     }
 

@@ -65,9 +65,9 @@
 
         <p class="conf-step__paragraph">Укажите количество рядов и максимальное количество кресел в ряду:</p>
         <div class="conf-step__legend">
-          <label class="conf-step__label">Рядов, шт<input name="rows" type="text" class="conf-step__input" placeholder="2" ></label>
+          <label class="conf-step__label">Рядов, шт<input type="text" class="conf-step__input rows" placeholder="2" ></label>
           <span class="multiplier">x</span>
-          <label class="conf-step__label">Мест, шт<input name="cols" type="text" class="conf-step__input" placeholder="3" ></label>
+          <label class="conf-step__label">Мест, шт<input type="text" class="conf-step__input cols" placeholder="3" ></label>
         </div>
 
         <p class="conf-step__paragraph">Теперь вы можете указать типы кресел на схеме зала:</p>

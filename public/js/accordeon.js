@@ -106,6 +106,17 @@ for (let i = 0; i < hallsList.length; i++){
 
 // отображение зала из JS
 
+
+//количество рядов и мест в них
+document.querySelector('.rows').onchange = (e) => {
+    hallsData[choosenHall].rows =  e.target.value
+}
+
+document.querySelector('.cols').onchange = (e) => {
+    hallsData[choosenHall].cols =  e.target.value
+}
+
+//изменение вида кресла
 function hallConfigurate(i) {
     // hallsData   //перечень залов якобы взятый из php
     choosenHall = i
@@ -123,8 +134,6 @@ function hallConfigurate(i) {
     }
 
     wrapper.innerHTML = add
-
-    //изменение вида кресла
 
     const seats = [...document.getElementsByClassName('seat')] // элементы DOM обозрачающие кресла
     for (let i = 0; i < seats.length; i++){

@@ -72,31 +72,37 @@ function close(e) {
 
 //выбор зала для конфигураций
 
-// const hallsTable = document.querySelector('.data-halls')
-// const hallsBD = hallsTable.dataset.halls
+const hallsTable = document.querySelector('.data-halls')
+const hallsBD = hallsTable.dataset.halls
+console.log(hallsBD)
+console.log(hallsBD.length)
+for (let i = 0; i < hallsBD.length; i++) {
+    console.log('1')
+    console.log(hallsBD[i])
+}
 
 // console.log(JSON.stringify(hallsBD))
 
 const hallsList = [...document.getElementsByName('chairs-hall')]
 const chooseForm = document.querySelector('.choose-form')
 
-let hallID = hallsList[hallsList.length - 1].value
+//let hallID = hallsList[hallsList.length - 1].value
 for (let i = 0; i < hallsList.length; i++){
     hallsList[i].addEventListener('input', function(){
         hallConfigurate(i)
-        // const opt = {
-        //     method: 'POST',
-        //     headers: {
-        //         "Content-type": "application/json; charset=UTF-8"
-        //     },
-        //     body: JSON.stringify({
-        //         completed: true
-        //     })
-        // }
+        const opt = {
+            method: 'POST',
+            headers: {
+                "Content-type": "application/json; charset=UTF-8"
+            },
+            body: JSON.stringify({
+                completed: true
+            })
+        }
 
-        // fetch('/halls')
-        //     .then(res => res.json())
-        //     .then(data => console.log(data))
+        fetch('/halls')
+            .then(res => res.json())
+            .then(data => console.log(data))
 
         // hallID = hallsList[i].value
         // console.log(hallID)

@@ -8,6 +8,8 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
+     * $table->integer('hall_id');
+     * $table->integer('movie_id');
      */
     public function up(): void
     {
@@ -16,8 +18,6 @@ return new class extends Migration
             $table->date('data');
             $table->integer('start');
             $table->integer('finish');
-            $table->integer('hall_id');
-            $table->integer('movie_id');
         });
     }
 

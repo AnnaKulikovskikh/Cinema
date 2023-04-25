@@ -81,13 +81,7 @@
 
         <div class="conf-step__hall">
           <div class="conf-step__hall-wrapper">
-            <!-- @for($i = 0; $i < $halls[0]->rows; $i++) -->
-            <!-- <div class="conf-step__row"> -->
-              <!-- @for($j = 0; $j < $halls[0]->cols; $j++) -->
-                <!-- <span class="seat conf-step__chair conf-step__chair_standart"></span> -->
-              <!-- @endfor   -->
-            <!-- </div> -->
-            <!-- @endfor -->
+ 
           </div>
         </div>
 

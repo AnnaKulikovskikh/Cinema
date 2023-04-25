@@ -17,3 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+//эксперименты с AJAX
+//Route::post('/halls',[\App\Http\Controllers\HallController::class, 'take']);
+Route::get('/halls',[\App\Http\Controllers\HallController::class, 'take']);

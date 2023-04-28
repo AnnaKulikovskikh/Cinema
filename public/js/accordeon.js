@@ -1,30 +1,9 @@
-// const url = 'http://127.0.0.1:8000/admin/index'
-// fetch(url)
-//     .then(res => res.json())
-//     .then(data => console.log(data))
 
-const hallsData = [
-    {
-        id: 0,
-        name: 'Holly',
-        rows: 2,
-        cols: 3,
-        seats:  ['st','st','st','st','st','st'],
-        price: 200,
-        price_vio: 400,
-    },
-    {
-        id: 1,
-        name: 'Bolly',
-        rows: 2,
-        cols: 4,
-        seats:  ['st','st','st','st','st','st','st','st'],
-        price: 250,
-        price_vio: 350,
-    }
-]
-
+//получение таблицы с залами с сервера
+const hallsTable = document.querySelector('.data-halls')
+const hallsData = JSON.parse(hallsTable.value).data
 let choosenHall = hallsData.length - 1
+hallConfigurate()
 
 
 //массив из 5 всплывающих окон
@@ -72,61 +51,52 @@ function close(e) {
 
 //выбор зала для конфигураций
 
-const hallsTable = document.querySelector('.data-halls')
-//const hallsBD = hallsTable.dataset.halls
-const hallsBD = JSON.parse(hallsTable.value)
-for (hall of hallsBD.data) {
-    console.log(hall)
-    console.log(hall.name)
-    console.log(hall.cols)
-}
-
-
-// console.log(JSON.stringify(hallsBD))
-
 const hallsList = [...document.getElementsByName('chairs-hall')]
 const chooseForm = document.querySelector('.choose-form')
 
-//let hallID = hallsList[hallsList.length - 1].value
 for (let i = 0; i < hallsList.length; i++){
     hallsList[i].addEventListener('input', function(){
-        hallConfigurate(i)
-        // const opt = {
-        //     method: 'POST',
-        //     headers: {
-        //         "Content-type": "application/json; charset=UTF-8"
-        //     },
-        //     body: JSON.stringify({
-        //         completed: true
-        //     })
-        // }
-
-        // fetch('/halls')
-        //     .then(res => res.json())
-        //     .then(data => console.log(data))
-
-        // hallID = hallsList[i].value
-        // console.log(hallID)
-        //chooseForm.action =  chooseForm.action + '/' + i
+        choosenHall = i
+        hallConfigurate()
     })
 }
 
 // отображение зала из JS
 
 
-//количество рядов и мест в них
+//количество рядов и мест в них. Из-за двух рядов с выбором зала в hallsList вдвое больше элементов. С этим надо что-то сделать
 document.querySelector('.rows').onchange = (e) => {
-    hallsData[choosenHall].rows =  e.target.value
+    resizeHall('rows', e.target.value)
 }
 
 document.querySelector('.cols').onchange = (e) => {
-    hallsData[choosenHall].cols =  e.target.value
+    resizeHall('cols', e.target.value)
 }
 
+function resizeHall(dimension, value){
+    for (let i = 0; i < hallsList.length/2; i++){
+        if (hallsList[i].checked){
+            choosenHall = i
+            if (dimension === 'cols'){
+                hallsData[choosenHall].cols = value
+            } else {
+                hallsData[choosenHall].rows = value
+            }
+            hallsData[choosenHall].seats = []
+            const quantitySeats = hallsData[choosenHall].rows *  hallsData[choosenHall].cols
+            for (let j = 0; j < quantitySeats; j++) {
+                hallsData[choosenHall].seats.push('st')
+            }
+        }
+    }
+    hallConfigurate()
+}
+
+
+
 //изменение вида кресла
-function hallConfigurate(i) {
-    // hallsData   //перечень залов якобы взятый из php
-    choosenHall = i
+function hallConfigurate() {
+    // hallsData   //перечень залов
     let rows = hallsData[choosenHall].rows
     let cols = hallsData[choosenHall].cols
     let seatsArray = hallsData[choosenHall].seats  //типы кресел с сервера, массив ['st', 'st', 'st']
@@ -149,16 +119,19 @@ function hallConfigurate(i) {
                 seats[i].classList.toggle('conf-step__chair_standart')
                 seats[i].classList.toggle('conf-step__chair_vip')
                 seatsArray[i] ='vip'
+                hallsData[choosenHall].seats[i] = 'vip'
             } else if (seatsArray[i] == 'disable') {
                 seats[i].classList.toggle('conf-step__chair_disabled')
                 seats[i].classList.toggle('conf-step__chair_standart')
                 seatsArray[i] ='st'
+                hallsData[choosenHall].seats[i] = 'st'
             } else {
                 seats[i].classList.toggle('conf-step__chair_vip')
                 seats[i].classList.toggle('conf-step__chair_disabled')
                 seatsArray[i] = 'disable'
+                hallsData[choosenHall].seats[i] = 'disable'
             }
         })
     }
-
+    console.log(hallsData[choosenHall].seats)
 }

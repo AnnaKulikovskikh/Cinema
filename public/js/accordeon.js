@@ -52,17 +52,23 @@ function close(e) {
 
 //выбор зала для конфигураций
 
-const hallsList = [...document.getElementsByName('chairs-hall')]
+const hallsList = [...document.getElementsByName('chairs-hall')] //переключатели для вида зала
+const hallsList1 = [...document.getElementsByName('chairs-hall1')] //переключатели для цены
 const chooseForm = document.querySelector('.choose-form')
 
 for (let i = 0; i < hallsList.length; i++){
+    hallsList1[i].addEventListener('input', function(){
+        choosenHall = i
+        hallConfigurate()
+    })
+
     hallsList[i].addEventListener('input', function(){
         choosenHall = i
         hallConfigurate()
     })
 }
 
-//количество рядов и мест в них. Из-за двух рядов с выбором зала в hallsList вдвое больше элементов. С этим надо что-то сделать
+//количество рядов и мест в них
 document.querySelector('.rows').onchange = (e) => {
     resizeHall('rows', e.target.value)
 }
@@ -72,7 +78,7 @@ document.querySelector('.cols').onchange = (e) => {
 }
 
 function resizeHall(dimension, value){
-    for (let i = 0; i < hallsList.length/2; i++){
+    for (let i = 0; i < hallsList.length; i++){
         if (hallsList[i].checked){
             choosenHall = i
             if (dimension === 'cols'){
@@ -138,5 +144,10 @@ function hallConfigurate() {
             }
         })
     }
-    //console.log(hallsData[choosenHall].seats)
+}
+
+//сохранение hall_update
+const formUpdate = document.getElementById("hall_update")
+formUpdate.onsubmit = function(e){
+    console.log(e)
 }

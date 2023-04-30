@@ -7,9 +7,8 @@ use Illuminate\Http\Request;
 
 class HallController extends Controller
 {
-    public function take(Request $request): JsonResponse
+    public function update(Request $request)
     {
-        $halls = Hall::paginate(7);
-        return response() -> json($halls);
+        dump($request);
     }
 }

@@ -15,7 +15,7 @@
 
           <label class="conf-step__label conf-step__label-fullsize" for="name">
             Название зала
-            <input class="conf-step__inputв" type="text" placeholder="Например, &laquo;Зал 1&raquo;" name="name" required>
+            <input class="conf-step__input" type="text" placeholder="Например, &laquo;Зал 1&raquo;" name="name" required>
           </label>
           <div class="conf-step__buttons text-center">
             <input type="submit" value="Добавить зал" class="conf-step__button conf-step__button-accent">

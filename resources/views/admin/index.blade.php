@@ -19,6 +19,8 @@
   @include('popup.movie_add')
   @include('popup.show_add')
   @include('popup.show_del')
+  <!-- все залы из table-halls в $halls -->
+  <input class="data-halls" type="hidden" value="{{ json_encode($halls) }}"/>
   
   <header class="page-header">
     <h1 class="page-header__title">Идём<span>в</span>кино</h1>
@@ -44,173 +46,172 @@
 
       </div>
     </section>
-    
-    <section class="conf-step">
-      <header class="conf-step__header conf-step__header_opened">
-        <h2 class="conf-step__title">Конфигурация залов</h2>
-      </header>
-      <div class="conf-step__wrapper">
-        <p class="conf-step__paragraph">Выберите зал для конфигурации:</p>
 
-        <!-- все залы из table-halls в $halls -->
-        <input class="data-halls" type="hidden" value="{{ json_encode($halls) }}"/>
+    <form action="/admin/halls" id="hall_update" method="post">
+    @csrf
+      <section class="conf-step">
+        <header class="conf-step__header conf-step__header_opened">
+          <h2 class="conf-step__title">Конфигурация залов</h2>
+        </header>
+        <div class="conf-step__wrapper">
+          <p class="conf-step__paragraph">Выберите зал для конфигурации:</p>
 
-        <form class="choose-form" action="/admin/choose_hall" method="post">
           <ul class="conf-step__selectors-box">
             @foreach ($halls as $hall)
               <li><input type="radio" class="conf-step__radio" name="chairs-hall" value="{{ $hall->id}}" checked><span class="conf-step__selector">{{ $hall->name }}</span></li>
             @endforeach
           </ul>
-        </form>
-
-        <p class="conf-step__paragraph">Укажите количество рядов и максимальное количество кресел в ряду:</p>
-        <div class="conf-step__legend">
-          <label class="conf-step__label">Рядов, шт<input type="text" class="conf-step__input rows" placeholder="2" ></label>
-          <span class="multiplier">x</span>
-          <label class="conf-step__label">Мест, шт<input type="text" class="conf-step__input cols" placeholder="3" ></label>
-        </div>
-
-        <p class="conf-step__paragraph">Теперь вы можете указать типы кресел на схеме зала:</p>
-        <div class="conf-step__legend">
-          <span class="conf-step__chair conf-step__chair_standart"></span> — обычные кресла
-          <span class="conf-step__chair conf-step__chair_vip"></span> — VIP кресла
-          <span class="conf-step__chair conf-step__chair_disabled"></span> — заблокированные (нет кресла)
-          <p class="conf-step__hint">Чтобы изменить вид кресла, нажмите по нему левой кнопкой мыши</p>
-        </div>  
-
-
-        <div class="conf-step__hall">
-          <div class="conf-step__hall-wrapper">
- 
-          </div>
-        </div>
-
         
-        <fieldset class="conf-step__buttons text-center">
-          <button class="conf-step__button conf-step__button-regular">Отмена</button>
-          <input type="submit" value="Сохранить" class="conf-step__button conf-step__button-accent">
-        </fieldset>                 
-      </div>
-    </section>
+
+          <p class="conf-step__paragraph">Укажите количество рядов и максимальное количество кресел в ряду:</p>
+          <div class="conf-step__legend">
+            <label class="conf-step__label">Рядов, шт<input type="text" class="conf-step__input rows" placeholder="2" ></label>
+            <span class="multiplier">x</span>
+            <label class="conf-step__label">Мест, шт<input type="text" class="conf-step__input cols" placeholder="3" ></label>
+          </div>
+
+          <p class="conf-step__paragraph">Теперь вы можете указать типы кресел на схеме зала:</p>
+          <div class="conf-step__legend">
+            <span class="conf-step__chair conf-step__chair_standart"></span> — обычные кресла
+            <span class="conf-step__chair conf-step__chair_vip"></span> — VIP кресла
+            <span class="conf-step__chair conf-step__chair_disabled"></span> — заблокированные (нет кресла)
+            <p class="conf-step__hint">Чтобы изменить вид кресла, нажмите по нему левой кнопкой мыши</p>
+          </div>  
+
+
+          <div class="conf-step__hall">
+            <div class="conf-step__hall-wrapper">
+  
+            </div>
+          </div>
+
+          
+          <fieldset from="hall_update" class="conf-step__buttons text-center">
+            <button class="conf-step__button conf-step__button-regular abort">Отмена</button>
+            <input type="submit" value="Сохранить" class="conf-step__button conf-step__button-accent">
+          </fieldset>                 
+        </div>
+      </section>
 
 
 
-    
-    <section class="conf-step">
-      <header class="conf-step__header conf-step__header_opened">
-        <h2 class="conf-step__title">Конфигурация цен</h2>
-      </header>
-      <div class="conf-step__wrapper">
-        <p class="conf-step__paragraph">Выберите зал для конфигурации:</p>
-        <!-- <ul class="conf-step__selectors-box">
-          <li><input type="radio" class="conf-step__radio" name="prices-hall" value="Зал 1"><span class="conf-step__selector">Зал 1</span></li>
-          <li><input type="radio" class="conf-step__radio" name="prices-hall" value="Зал 2" checked><span class="conf-step__selector">Зал 2</span></li>
-        </ul> -->
+      
+      <section class="conf-step">
+        <header class="conf-step__header conf-step__header_opened">
+          <h2 class="conf-step__title">Конфигурация цен</h2>
+        </header>
+        <div class="conf-step__wrapper">
+          <p class="conf-step__paragraph">Выберите зал для конфигурации:</p>
+          <!-- <ul class="conf-step__selectors-box">
+            <li><input type="radio" class="conf-step__radio" name="prices-hall" value="Зал 1"><span class="conf-step__selector">Зал 1</span></li>
+            <li><input type="radio" class="conf-step__radio" name="prices-hall" value="Зал 2" checked><span class="conf-step__selector">Зал 2</span></li>
+          </ul> -->
 
-        <form class="choose-form" action="/admin/choose_hall" method="post">
+      
           <ul class="conf-step__selectors-box">
             @foreach ($halls as $hall)
-              <li><input type="radio" class="conf-step__radio" name="chairs-hall" value="{{ $hall->id}}" checked><span class="conf-step__selector">{{ $hall->name }}</span></li>
+              <li><input type="radio" class="conf-step__radio" name="chairs-hall1" value="{{ $hall->id}}" checked><span class="conf-step__selector">{{ $hall->name }}</span></li>
             @endforeach
           </ul>
-        </form>
-          
-        <p class="conf-step__paragraph">Установите цены для типов кресел:</p>
-          <div class="conf-step__legend">
-            <label class="conf-step__label">Цена, рублей<input type="text" class="conf-step__input" placeholder="0" ></label>
-            за <span class="conf-step__chair conf-step__chair_standart"></span> обычные кресла
-          </div>  
-          <div class="conf-step__legend">
-            <label class="conf-step__label">Цена, рублей<input type="text" class="conf-step__input" placeholder="0" value="350"></label>
-            за <span class="conf-step__chair conf-step__chair_vip"></span> VIP кресла
-          </div>  
         
-        <fieldset class="conf-step__buttons text-center">
-          <button class="conf-step__button conf-step__button-regular">Отмена</button>
-          <input type="submit" value="Сохранить" class="conf-step__button conf-step__button-accent">
-        </fieldset>  
-      </div>
-    </section>
-    
-    <section class="conf-step">
-      <header class="conf-step__header conf-step__header_opened">
-        <h2 class="conf-step__title">Сетка сеансов</h2>
-      </header>
-      <div class="conf-step__wrapper">
-        <p class="conf-step__paragraph">
-          <button class="conf-step__button conf-step__button-accent">Добавить фильм</button>
-        </p>
-        <div class="conf-step__movies">
-          <div class="conf-step__movie">
-            <img class="conf-step__movie-poster" alt="poster" src="/i/poster.png">
-            <h3 class="conf-step__movie-title">Звёздные войны XXIII: Атака клонированных клонов</h3>
-            <p class="conf-step__movie-duration">130 минут</p>
-          </div>
+            
+          <p class="conf-step__paragraph">Установите цены для типов кресел:</p>
+            <div class="conf-step__legend">
+              <label class="conf-step__label">Цена, рублей<input type="text" class="conf-step__input" placeholder="0" ></label>
+              за <span class="conf-step__chair conf-step__chair_standart"></span> обычные кресла
+            </div>  
+            <div class="conf-step__legend">
+              <label class="conf-step__label">Цена, рублей<input type="text" class="conf-step__input" placeholder="0" value="350"></label>
+              за <span class="conf-step__chair conf-step__chair_vip"></span> VIP кресла
+            </div>  
           
-          <div class="conf-step__movie">
-            <img class="conf-step__movie-poster" alt="poster" src="/i/poster.png">
-            <h3 class="conf-step__movie-title">Миссия выполнима</h3>
-            <p class="conf-step__movie-duration">120 минут</p>
-          </div>
-          
-          <div class="conf-step__movie">
-            <img class="conf-step__movie-poster" alt="poster" src="/i/poster.png">
-            <h3 class="conf-step__movie-title">Серая пантера</h3>
-            <p class="conf-step__movie-duration">90 минут</p>
-          </div>
-          
-          <div class="conf-step__movie">
-            <img class="conf-step__movie-poster" alt="poster" src="/i/poster.png">
-            <h3 class="conf-step__movie-title">Движение вбок</h3>
-            <p class="conf-step__movie-duration">95 минут</p>
-          </div>   
-          
-          <div class="conf-step__movie">
-            <img class="conf-step__movie-poster" alt="poster" src="/i/poster.png">
-            <h3 class="conf-step__movie-title">Кот Да Винчи</h3>
-            <p class="conf-step__movie-duration">100 минут</p>
-          </div>            
+          <fieldset from="hall_update" class="conf-step__buttons text-center">
+            <button class="conf-step__button conf-step__button-regular">Отмена</button>
+            <input type="submit" value="Сохранить" class="conf-step__button conf-step__button-accent">
+          </fieldset>  
         </div>
-        
-        <div class="conf-step__seances">
-          <div class="conf-step__seances-hall">
-            <h3 class="conf-step__seances-title">Зал 1</h3>
-            <div class="conf-step__seances-timeline">
-              <div class="conf-step__seances-movie" style="width: 60px; background-color: rgb(133, 255, 137); left: 0;">
-                <p class="conf-step__seances-movie-title">Миссия выполнима</p>
-                <p class="conf-step__seances-movie-start">00:00</p>
+      </section>
+      
+      <section class="conf-step">
+        <header class="conf-step__header conf-step__header_opened">
+          <h2 class="conf-step__title">Сетка сеансов</h2>
+        </header>
+        <div class="conf-step__wrapper">
+          <p class="conf-step__paragraph">
+            <button class="conf-step__button conf-step__button-accent">Добавить фильм</button>
+          </p>
+          <div class="conf-step__movies">
+            <div class="conf-step__movie">
+              <img class="conf-step__movie-poster" alt="poster" src="/i/poster.png">
+              <h3 class="conf-step__movie-title">Звёздные войны XXIII: Атака клонированных клонов</h3>
+              <p class="conf-step__movie-duration">130 минут</p>
+            </div>
+            
+            <div class="conf-step__movie">
+              <img class="conf-step__movie-poster" alt="poster" src="/i/poster.png">
+              <h3 class="conf-step__movie-title">Миссия выполнима</h3>
+              <p class="conf-step__movie-duration">120 минут</p>
+            </div>
+            
+            <div class="conf-step__movie">
+              <img class="conf-step__movie-poster" alt="poster" src="/i/poster.png">
+              <h3 class="conf-step__movie-title">Серая пантера</h3>
+              <p class="conf-step__movie-duration">90 минут</p>
+            </div>
+            
+            <div class="conf-step__movie">
+              <img class="conf-step__movie-poster" alt="poster" src="/i/poster.png">
+              <h3 class="conf-step__movie-title">Движение вбок</h3>
+              <p class="conf-step__movie-duration">95 минут</p>
+            </div>   
+            
+            <div class="conf-step__movie">
+              <img class="conf-step__movie-poster" alt="poster" src="/i/poster.png">
+              <h3 class="conf-step__movie-title">Кот Да Винчи</h3>
+              <p class="conf-step__movie-duration">100 минут</p>
+            </div>            
+          </div>
+          
+          <div class="conf-step__seances">
+            <div class="conf-step__seances-hall">
+              <h3 class="conf-step__seances-title">Зал 1</h3>
+              <div class="conf-step__seances-timeline">
+                <div class="conf-step__seances-movie" style="width: 60px; background-color: rgb(133, 255, 137); left: 0;">
+                  <p class="conf-step__seances-movie-title">Миссия выполнима</p>
+                  <p class="conf-step__seances-movie-start">00:00</p>
+                </div>
+                <div class="conf-step__seances-movie" style="width: 60px; background-color: rgb(133, 255, 137); left: 360px;">
+                  <p class="conf-step__seances-movie-title">Миссия выполнима</p>
+                  <p class="conf-step__seances-movie-start">12:00</p>
+                </div>
+                <div class="conf-step__seances-movie" style="width: 65px; background-color: rgb(202, 255, 133); left: 420px;">
+                  <p class="conf-step__seances-movie-title">Звёздные войны XXIII: Атака клонированных клонов</p>
+                  <p class="conf-step__seances-movie-start">14:00</p>
+                </div>              
               </div>
-              <div class="conf-step__seances-movie" style="width: 60px; background-color: rgb(133, 255, 137); left: 360px;">
-                <p class="conf-step__seances-movie-title">Миссия выполнима</p>
-                <p class="conf-step__seances-movie-start">12:00</p>
+            </div>
+            <div class="conf-step__seances-hall">
+              <h3 class="conf-step__seances-title">Зал 2</h3>
+              <div class="conf-step__seances-timeline">
+                <div class="conf-step__seances-movie" style="width: 65px; background-color: rgb(202, 255, 133); left: 595px;">
+                  <p class="conf-step__seances-movie-title">Звёздные войны XXIII: Атака клонированных клонов</p>
+                  <p class="conf-step__seances-movie-start">19:50</p>
+                </div>
+                <div class="conf-step__seances-movie" style="width: 60px; background-color: rgb(133, 255, 137); left: 660px;">
+                  <p class="conf-step__seances-movie-title">Миссия выполнима</p>
+                  <p class="conf-step__seances-movie-start">22:00</p>
+                </div>              
               </div>
-              <div class="conf-step__seances-movie" style="width: 65px; background-color: rgb(202, 255, 133); left: 420px;">
-                <p class="conf-step__seances-movie-title">Звёздные войны XXIII: Атака клонированных клонов</p>
-                <p class="conf-step__seances-movie-start">14:00</p>
-              </div>              
             </div>
           </div>
-          <div class="conf-step__seances-hall">
-            <h3 class="conf-step__seances-title">Зал 2</h3>
-            <div class="conf-step__seances-timeline">
-              <div class="conf-step__seances-movie" style="width: 65px; background-color: rgb(202, 255, 133); left: 595px;">
-                <p class="conf-step__seances-movie-title">Звёздные войны XXIII: Атака клонированных клонов</p>
-                <p class="conf-step__seances-movie-start">19:50</p>
-              </div>
-              <div class="conf-step__seances-movie" style="width: 60px; background-color: rgb(133, 255, 137); left: 660px;">
-                <p class="conf-step__seances-movie-title">Миссия выполнима</p>
-                <p class="conf-step__seances-movie-start">22:00</p>
-              </div>              
-            </div>
-          </div>
+          
+          <fieldset class="conf-step__buttons text-center">
+            <button class="conf-step__button conf-step__button-regular">Отмена</button>
+            <input type="submit" value="Сохранить" class="conf-step__button conf-step__button-accent">
+          </fieldset>  
         </div>
-        
-        <fieldset class="conf-step__buttons text-center">
-          <button class="conf-step__button conf-step__button-regular">Отмена</button>
-          <input type="submit" value="Сохранить" class="conf-step__button conf-step__button-accent">
-        </fieldset>  
-      </div>
-    </section>
+      </section>
+    </form>  
     
     <section class="conf-step">
       <header class="conf-step__header conf-step__header_opened">

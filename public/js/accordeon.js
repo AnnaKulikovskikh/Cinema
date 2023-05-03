@@ -149,5 +149,22 @@ function hallConfigurate() {
 //сохранение hall_update
 const formUpdate = document.getElementById("hall_update")
 formUpdate.onsubmit = function(e){
-    console.log(e)
+    document.querySelector(".data-tables").value = hallsData[choosenHall]
+    e.preventDefault()
+
+    const options = {
+        method: "POST",
+        body: JSON.stringify(hallsData),
+        headers: {"Content-Type": "application/json"}
+    }
+
+    fetch('/api/halls', options)
+        .then(res => res.json())
+        .then(data => console.log(data))
+        // .then(res => res.json())
+        // if (res.ok) {
+        //     alert('save')
+        // } else {
+        //     throw new Error(res.status)
+        // }
 }

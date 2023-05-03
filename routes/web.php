@@ -27,6 +27,8 @@ Route::get('/admin/index', [\App\Http\Controllers\AdminController::class, 'index
 Route::post('/admin/add_hall', [\App\Http\Controllers\AdminController::class, 'addHall'])->name('addHall');
 Route::post('/admin/del_hall/{id}', [\App\Http\Controllers\AdminController::class, 'deleteHall']);
 
+//Route::post('/halls',[\App\Http\Controllers\HallController::class, 'update']);
+
 // Route::group(['middleware'=>'auth'], function() {
 //  Route::get добавить сюда защещенные роуты
 //})

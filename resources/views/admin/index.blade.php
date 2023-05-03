@@ -47,8 +47,10 @@
       </div>
     </section>
 
-    <form action="/admin/halls" id="hall_update" method="post">
+    <form action="/api/halls" id="hall_update" method="post">
     @csrf
+    <input class="data-tables" type="hidden"/>
+
       <section class="conf-step">
         <header class="conf-step__header conf-step__header_opened">
           <h2 class="conf-step__title">Конфигурация залов</h2>

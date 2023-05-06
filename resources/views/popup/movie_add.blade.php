@@ -9,10 +9,15 @@
 
       </div>
       <div class="popup__wrapper">
-        <form action="add_movie" method="post" accept-charset="utf-8">
+        <form action="/admin/add_movie" method="post" accept-charset="utf-8">
+          @csrf
           <label class="conf-step__label conf-step__label-fullsize" for="name">
             Название фильма
             <input class="conf-step__input" type="text" placeholder="Например, &laquo;Гражданин Кейн&raquo;" name="name" required>
+          </label>
+          <label class="conf-step__label conf-step__label-fullsize" for="duration">
+            Продолжительность фильма, мин
+            <input class="conf-step__input" type="text" placeholder="Например, &laquo;120&raquo;" name="duration" required>
           </label>
           <div class="conf-step__buttons text-center">
             <input type="submit" value="Добавить фильм" class="conf-step__button conf-step__button-accent">

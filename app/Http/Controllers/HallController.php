@@ -9,8 +9,11 @@ class HallController extends Controller
 {
     public function update(Request $request)
     {
-        dump($request);
-        $updatedHall = 1;
-        return response()->json($updatedHall);
+        app('log')->info($request->all());
+        $halls = Hall::all();
+        $halls = $request;
+        $halls->save();
+        $updateHalls = $request;
+        return response()->json($updateHalls);
     }
 }

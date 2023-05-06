@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Hall;
+use App\Models\Movie;
 use App\Http\Requests\AddHallPostRequest;
+use App\Http\Requests\AddMoviePostRequest;
 use Illuminate\Http\RedirectResponse;
 
 class AdminController extends Controller
@@ -18,7 +20,8 @@ class AdminController extends Controller
     public function index()
     {
         $halls = Hall::paginate(7);
-        return view('admin.index', ['halls' => $halls]);
+        $movies = Movie::paginate(10);
+        return view('admin.index', ['halls' => $halls, 'movies' => $movies]);
     }
 
     public function addHall(AddHallPostRequest $request): RedirectResponse
@@ -27,6 +30,16 @@ class AdminController extends Controller
         Hall::create([
             "name" => $validated['name'],
             "seats" => ['st','st','st','st','st','st'],
+        ]);
+        return redirect()->back();
+    }
+
+    public function addMovie(AddMoviePostRequest $request): RedirectResponse
+    {
+        $validated = $request->validated();
+        Movie::create([
+            "title" => $validated['name'],
+            "duration" => $validated['duration'],
         ]);
         return redirect()->back();
     }

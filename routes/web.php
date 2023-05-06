@@ -25,6 +25,7 @@ Route::post('/admin/login', [\App\Http\Controllers\LoginController::class, 'resu
 //роуты admin
 Route::get('/admin/index', [\App\Http\Controllers\AdminController::class, 'index'])->name('index');
 Route::post('/admin/add_hall', [\App\Http\Controllers\AdminController::class, 'addHall'])->name('addHall');
+Route::post('/admin/add_movie', [\App\Http\Controllers\AdminController::class, 'addMovie'])->name('addMovie');
 Route::post('/admin/del_hall/{id}', [\App\Http\Controllers\AdminController::class, 'deleteHall']);
 
 //Route::post('/halls',[\App\Http\Controllers\HallController::class, 'update']);

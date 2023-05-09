@@ -9,22 +9,23 @@
 
       </div>
       <div class="popup__wrapper">
-        <form action="add_movie" method="post" accept-charset="utf-8">
+        <form action="add_seance" method="post" accept-charset="utf-8" id="add_seance">
           <label class="conf-step__label conf-step__label-fullsize" for="hall">
             Название зала
             <select class="conf-step__input" name="hall" required>
-              <option value="1" selected>Зал 1</option>
-              <option value="2">Зал 2</option>
+              @foreach ($halls as $hall)
+                <option value="{{$hall->id}}" selected>{{$hall->name}}</option>
+              @endforeach
             </select>
           </label>
-          <label class="conf-step__label conf-step__label-fullsize" for="name">
+          <label class="conf-step__label conf-step__label-fullsize" for="start_time">
             Время начала
             <input class="conf-step__input" type="time" value="00:00" name="start_time" required>
           </label>
 
-          <label class="conf-step__label conf-step__label-fullsize" for="name">
-            Название зала
-            <input class="conf-step__input" type="text" placeholder="Например, &laquo;Зал 1&raquo;" name="name" required>
+          <label class="conf-step__label conf-step__label-fullsize" for="date">
+            Дата
+            <input class="conf-step__input" type="date" placeholder="Например, &laquo;Зал 1&raquo;" name="date" required>
           </label>
 
           <div class="conf-step__buttons text-center">

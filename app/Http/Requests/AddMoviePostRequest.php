@@ -23,7 +23,7 @@ class AddMoviePostRequest extends FormRequest
     {
         return [
             'name' => 'required|unique:movies|max:255',
-            'duration' => 'required|digits_between:0,300',
+            'duration' => 'required|integer|max:300',
         ];
     }
 }

@@ -38,7 +38,7 @@
         <ul class="conf-step__list">
           @foreach ($halls as $hall)
             <li data-id="{{ $hall->id }}">{{ $hall->id}} {{ $hall->name}}
-              <button class="conf-step__button conf-step__button-trash"></button>
+              <button class="conf-step__button conf-step__button-trash trash_hall"></button>
             </li>
           @endforeach
         </ul>
@@ -120,7 +120,7 @@
               за <span class="conf-step__chair conf-step__chair_standart"></span> обычные кресла
             </div>  
             <div class="conf-step__legend">
-              <label class="conf-step__label">Цена, рублей<input type="text" class="conf-step__input vip_price" placeholder="0" value="350"></label>
+              <label class="conf-step__label">Цена, рублей<input type="text" class="conf-step__input vip_price" placeholder="0"></label>
               за <span class="conf-step__chair conf-step__chair_vip"></span> VIP кресла
             </div>  
           

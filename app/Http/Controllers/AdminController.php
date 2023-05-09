@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Hall;
 use App\Models\Movie;
+use App\Models\Session;
 use App\Http\Requests\AddHallPostRequest;
 use App\Http\Requests\AddMoviePostRequest;
 use Illuminate\Http\RedirectResponse;
@@ -34,6 +35,12 @@ class AdminController extends Controller
         return redirect()->back();
     }
 
+    public function deleteHall(Request $request, int $id): RedirectResponse
+    {
+        Hall::destroy($id);
+        return redirect('admin/index');
+    }
+
     public function addMovie(AddMoviePostRequest $request): RedirectResponse
     {
         $validated = $request->validated();
@@ -44,10 +51,18 @@ class AdminController extends Controller
         return redirect()->back();
     }
 
-    public function deleteHall(Request $request, int $id): RedirectResponse
+    
+    public function addSeance(Request $request, int $id): RedirectResponse
     {
-        Hall::destroy($id);
-        return redirect('admin/index');
-    }
+        //$finish = 
+        Session::create([
+            "data" => $request['data'],
+            "start" => $request['start'],
+            "finish" => $finish,
+            "movie_id" => $id,
+            "hall_id" => $request['hall'],
+        ]);
+        return redirect()->back();
+    }    
     
 }

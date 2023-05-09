@@ -27,6 +27,7 @@ Route::get('/admin/index', [\App\Http\Controllers\AdminController::class, 'index
 Route::post('/admin/add_hall', [\App\Http\Controllers\AdminController::class, 'addHall'])->name('addHall');
 Route::post('/admin/add_movie', [\App\Http\Controllers\AdminController::class, 'addMovie'])->name('addMovie');
 Route::post('/admin/del_hall/{id}', [\App\Http\Controllers\AdminController::class, 'deleteHall']);
+Route::post('/admin/add_seance/{id}', [\App\Http\Controllers\AdminController::class, 'addSeance']);
 
 //Route::post('/halls',[\App\Http\Controllers\HallController::class, 'update']);
 

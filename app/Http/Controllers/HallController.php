@@ -7,13 +7,12 @@ use Illuminate\Http\Request;
 
 class HallController extends Controller
 {
-    public function update(Request $request)
+    public function update(Request $request, int $id)
     {
         app('log')->info($request->all());
-        $halls = Hall::all();
-        $halls = $request;
+        $halls = Hall::query()->findOrFail($id);
+        $halls->fill($request->all());
         $halls->save();
-        $updateHalls = $request;
-        return response()->json($updateHalls);
+        return response()->json($halls);
     }
 }

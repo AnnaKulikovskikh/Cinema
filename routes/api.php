@@ -19,4 +19,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 //AJAX
-Route::post('/halls',[\App\Http\Controllers\HallController::class, 'update']);
+Route::post('/halls/{id}',[\App\Http\Controllers\HallController::class, 'update']);

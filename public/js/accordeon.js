@@ -2,21 +2,27 @@
 //получение таблицы с залами с сервера
 const hallsTable = document.querySelector('.data-halls')
 const hallsData = JSON.parse(hallsTable.value).data
-const moviesTable = document.querySelector('.data-movies')
-const moviesData = JSON.parse(moviesTable.value).data
 let choosenHall = hallsData.length - 1
 hallConfigurate()
+
+const moviesTable = document.querySelector('.data-movies')
+const moviesData = JSON.parse(moviesTable.value).data
+let choosenSeance = null
+
+document.querySelector(".price").value = hallsData[choosenHall].price
+document.querySelector(".vip_price").value = hallsData[choosenHall].price_vip
+
 const colors = ['#caff85', '#85ff89', '#85ffd3', '#85e2ff', '#8599ff', '#ba85ff', '#ff85fb', '#ff85b1', '#ffa285']
 //заместо записанных на сервер
 const sessions = [
-    {id: 0, hall: 0, movie: "Forest", start: 0, duration: 120},
-    {id: 1, hall: 0, movie: "Waterfall", start: 1200, duration: 220},
-    {id: 2, hall: 1, movie: "Forest", start: 340, duration: 120},
-    {id: 3, hall: 1, movie: "Forest", start: 700, duration: 120},
-    {id: 4, hall: 2, movie: "Lake", start: 700, duration: 180},
-    {id: 5, hall: 0, movie: "Lake", start: 700, duration: 180},
-    {id: 6, hall: 1, movie: "Waterfall", start: 1000, duration: 220},
-    {id: 7, hall: 2, movie: "Forest", start: 45, duration: 120},
+    {id: 0, hall: 1, movie: "Forest", start: 0, duration: 120},
+    {id: 1, hall: 1, movie: "Waterfall", start: 1200, duration: 220},
+    {id: 2, hall: 2, movie: "Forest", start: 340, duration: 120},
+    {id: 3, hall: 2, movie: "Forest", start: 700, duration: 120},
+    {id: 4, hall: 4, movie: "Lake", start: 700, duration: 180},
+    {id: 5, hall: 1, movie: "Lake", start: 700, duration: 180},
+    {id: 6, hall: 2, movie: "Waterfall", start: 1000, duration: 220},
+    {id: 7, hall: 4, movie: "Forest", start: 45, duration: 120},
   ]
 
 
@@ -25,7 +31,7 @@ const popup = [...document.querySelectorAll('.popup')]
 
 //добавление-удаление зала
 const addHall = document.querySelector('.add_hall')
-const delHall = [...document.querySelectorAll('.conf-step__button-trash')]
+const delHall = [...document.querySelectorAll('.trash_hall')]
 
 addHall.onclick = function() {
     popup[0].classList.add('active')
@@ -73,11 +79,13 @@ const chooseForm = document.querySelector('.choose-form')
 for (let i = 0; i < hallsList.length; i++){
     hallsList1[i].addEventListener('input', function(){
         choosenHall = i
+        hallsList[i].checked = true
         hallConfigurate()
     })
 
     hallsList[i].addEventListener('input', function(){
         choosenHall = i
+        hallsList1[i].checked = true
         hallConfigurate()
     })
 }
@@ -114,7 +122,10 @@ function resizeHall(dimension, value){
 
 function hallConfigurate() {
     // hallsData   //перечень залов
-    //let seatsArray = hallsData[choosenHall].seats  //типы кресел с сервера, массив ['st', 'st', 'st']
+    
+    document.querySelector(".price").value = hallsData[i].price
+    document.querySelector(".vip_price").value = hallsData[i].price_vip
+
     const wrapper = document.querySelector('.conf-step__hall-wrapper')
 
     let type = 'conf-step__chair_standart'
@@ -166,7 +177,7 @@ document.querySelector(".price").onchange = (e) => {
 }
 
 document.querySelector(".vip_price").onchange = (e) => {
-    hallsData[choosenHall].vip_price = e.target.value
+    hallsData[choosenHall].price_vip = e.target.value
 }
 
 //сохранение hall_update
@@ -177,13 +188,14 @@ formUpdate.onsubmit = function(e){
 
     const options = {
         method: "POST",
-        body: JSON.stringify(hallsData),
+        body: JSON.stringify(hallsData[choosenHall]),
         headers: {"Content-Type": "application/json"}
     }
 
-    fetch('/api/halls', options)
+    fetch(`/api/halls/${hallsData[choosenHall].id}`, options)
         .then(res=>res.json())
         .then(data=>console.log(data))
+
         
 //         .then(res => res.json())
 //         if (res.ok) {
@@ -208,17 +220,19 @@ let addMovie = ""
 for (let i = 0; i < moviesData.length; i++) {
     addMovie += `
         <div class="conf-step__movie">
-        <img class="conf-step__movie-poster" alt="poster" src="/i/poster.png">
-        <h3 class="conf-step__movie-title">${moviesData[i].title}</h3>
-        <p class="conf-step__movie-duration">${moviesData[i].duration} минут</p>
+            <img class="conf-step__movie-poster" alt="poster" src="/i/poster.png">
+            <h3 class="conf-step__movie-title">${moviesData[i].title}</h3>
+            <p class="conf-step__movie-duration">${moviesData[i].duration} минут</p>
+            <button class="conf-step__button conf-step__button-trash trash_movie"></button>
         </div>
+        
     `
 }
 
 wrapperMovies.innerHTML = addMovie
 
 
-//вывод seances-timeline залов. droppable элементы
+//вывод seances-timeline залов
 
 const wrappersHalls = document.querySelector(".conf-step__seances")
 let addTimeline = ""
@@ -226,19 +240,46 @@ const hallSession = [] //сортировка сеансов по залам
 
 for (let j = 0; j < hallsData.length; j++){
     hallSession.push(sessions.filter(item => item.hall === hallsData[j].id))
-    
     addTimeline += `
-      <div class="conf-step__seances-hall droppable">
+      <div class="conf-step__seances-hall">
         <h3 class="conf-step__seances-title">${hallsData[j].name}</h3>
         <div class="conf-step__seances-timeline">
         
         </div>
-        
       </div>  
     `
   }
   
 wrappersHalls.innerHTML = addTimeline
+
+
+//добавление сеанса
+const moviesEl = [...document.querySelectorAll('.conf-step__movie')]
+for (i = 0; i < moviesEl.length; i++) {
+    moviesEl[i].onclick = () => {
+        //choosenMovie = i // choosenMovie = moviesData[i].id  а нужна ли эта переменная?
+        popup[3].classList.add('active')
+        addForm = document.querySelector('.add_seance').action 
+        addForm.action =  addForm.action + '/' + moviesData[i].id
+    }
+}
+
+
+
+for (let i = 0; i <delHall.length; i++) {
+    delHall[i].addEventListener('click', () => {
+        //работает, потому что conf-step__paragraph в рорар для удаления встречается в первый раз
+        const nameHall = document.querySelector('.conf-step__paragraph') 
+        const trashForm = document.querySelector('.trash-form')
+        nameHall.querySelector('span').textContent = delHall[i].closest('li').textContent
+        const hallID = delHall[i].closest('li').dataset.id
+        popup[1].classList.add('active')
+        trashForm.action =  trashForm.action + '/' + hallID
+    })
+}
+
+
+
 
 
 //добавление сеансов в seances-timeline залов
@@ -257,6 +298,16 @@ for (let j = 0; j < hallsData.length; j++){
     wrapperSeances[j].innerHTML = addSeance
     addSeance = ""
 }
+
+//удаление сеанса
+const seanceEl = [...document.querySelectorAll('.conf-step__seances-movie')]
+for (i = 0; i < seanceEl.length; i++) {
+    seanceEl[i].onclick = () => {
+        //choosenSeance = i // choosenMovie = moviesData[i].id
+        popup[4].classList.add('active')
+    }
+}
+
 
 //вспомогательная функция для перевода минут в hh:mm
 function minutesToTime(min){

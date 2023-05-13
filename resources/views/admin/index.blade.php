@@ -22,6 +22,7 @@
   <!-- все залы из table-halls в $halls -->
   <input class="data-halls" type="hidden" value="{{ json_encode($halls) }}"/>
   <input class="data-movies" type="hidden" value="{{ json_encode($movies) }}"/>
+  <input class="data-seances" type="hidden" value="{{ json_encode($seances) }}"/>
   
   <header class="page-header">
     <h1 class="page-header__title">Идём<span>в</span>кино</h1>
@@ -130,32 +131,34 @@
           </fieldset>  
         </div>
       </section>
+    </form>  
 
-
-      
-      
+  
       <section class="conf-step">
         <header class="conf-step__header conf-step__header_opened">
           <h2 class="conf-step__title">Сетка сеансов</h2>
         </header>
-        <div class="conf-step__wrapper">
-          <p class="conf-step__paragraph">
-            <button class="conf-step__button conf-step__button-accent add_movie">Добавить фильм</button>
-          </p>
 
-          <div class="conf-step__movies">
-          </div>
+        <form action="/api/seance" id="seance_update" method="post">
+          <div class="conf-step__wrapper">
+            <p class="conf-step__paragraph">
+              <button class="conf-step__button conf-step__button-accent add_movie">Добавить фильм</button>
+            </p>
+
+            <div class="conf-step__movies">
+            </div>
+
+            <div class="conf-step__seances">
+            </div>
           
-          <div class="conf-step__seances">
+            <fieldset class="conf-step__buttons text-center" form="seance_update">
+              <button class="conf-step__button conf-step__button-regular">Отмена</button>
+              <input type="submit" value="Сохранить" class="conf-step__button conf-step__button-accent">
+            </fieldset>  
           </div>
-          
-          <fieldset class="conf-step__buttons text-center">
-            <button class="conf-step__button conf-step__button-regular">Отмена</button>
-            <input type="submit" value="Сохранить" class="conf-step__button conf-step__button-accent">
-          </fieldset>  
-        </div>
+        </form>
       </section>
-    </form>  
+    
     
     <section class="conf-step">
       <header class="conf-step__header conf-step__header_opened">

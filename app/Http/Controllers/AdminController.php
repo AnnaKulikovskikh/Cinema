@@ -22,7 +22,8 @@ class AdminController extends Controller
     {
         $halls = Hall::paginate(7);
         $movies = Movie::paginate(10);
-        return view('admin.index', ['halls' => $halls, 'movies' => $movies]);
+        $seances = Session::all();
+        return view('admin.index', ['halls' => $halls, 'movies' => $movies, 'seances' => $seances]);
     }
 
     public function addHall(AddHallPostRequest $request): RedirectResponse
@@ -54,14 +55,12 @@ class AdminController extends Controller
     
     public function addSeance(Request $request, int $id): RedirectResponse
     {
-        //$finish = 
         Session::create([
-            "data" => $request['data'],
-            "start" => $request['start'],
-            "finish" => $finish,
-            "movie_id" => $id,
+            "start" => $request['start_time'],
             "hall_id" => $request['hall'],
+            "movie_id" => $id,
         ]);
+
         return redirect()->back();
     }    
     

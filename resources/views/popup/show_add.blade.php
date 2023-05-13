@@ -10,6 +10,7 @@
       </div>
       <div class="popup__wrapper">
         <form action="add_seance" method="post" accept-charset="utf-8" id="add_seance">
+          @csrf
           <label class="conf-step__label conf-step__label-fullsize" for="hall">
             Название зала
             <select class="conf-step__input" name="hall" required>
@@ -21,11 +22,6 @@
           <label class="conf-step__label conf-step__label-fullsize" for="start_time">
             Время начала
             <input class="conf-step__input" type="time" value="00:00" name="start_time" required>
-          </label>
-
-          <label class="conf-step__label conf-step__label-fullsize" for="date">
-            Дата
-            <input class="conf-step__input" type="date" placeholder="Например, &laquo;Зал 1&raquo;" name="date" required>
           </label>
 
           <div class="conf-step__buttons text-center">

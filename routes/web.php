@@ -28,6 +28,7 @@ Route::post('/admin/add_hall', [\App\Http\Controllers\AdminController::class, 'a
 Route::post('/admin/add_movie', [\App\Http\Controllers\AdminController::class, 'addMovie'])->name('addMovie');
 Route::post('/admin/del_hall/{id}', [\App\Http\Controllers\AdminController::class, 'deleteHall']);
 Route::post('/admin/add_seance/{id}', [\App\Http\Controllers\AdminController::class, 'addSeance']);
+//Route::post('/admin/add_seance', [\App\Http\Controllers\AdminController::class, 'addSeance']);
 
 //Route::post('/halls',[\App\Http\Controllers\HallController::class, 'update']);
 

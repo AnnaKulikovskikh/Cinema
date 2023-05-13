@@ -1,30 +1,23 @@
+const headers = Array.from(document.querySelectorAll('.conf-step__header'));
+headers.forEach(header => header.addEventListener('click', () => {
+  header.classList.toggle('conf-step__header_closed');
+  header.classList.toggle('conf-step__header_opened');
+}));
 
 //получение таблицы с залами с сервера
 const hallsTable = document.querySelector('.data-halls')
 const hallsData = JSON.parse(hallsTable.value).data
 let choosenHall = hallsData.length - 1
-hallConfigurate()
+if (hallsData.length > 0) hallConfigurate()
 
 const moviesTable = document.querySelector('.data-movies')
 const moviesData = JSON.parse(moviesTable.value).data
-let choosenSeance = null
 
-document.querySelector(".price").value = hallsData[choosenHall].price
-document.querySelector(".vip_price").value = hallsData[choosenHall].price_vip
+const seancesTable = document.querySelector('.data-seances')
+const seancesData = JSON.parse(seancesTable.value)
+console.log(seancesData)
 
 const colors = ['#caff85', '#85ff89', '#85ffd3', '#85e2ff', '#8599ff', '#ba85ff', '#ff85fb', '#ff85b1', '#ffa285']
-//заместо записанных на сервер
-const sessions = [
-    {id: 0, hall: 1, movie: "Forest", start: 0, duration: 120},
-    {id: 1, hall: 1, movie: "Waterfall", start: 1200, duration: 220},
-    {id: 2, hall: 2, movie: "Forest", start: 340, duration: 120},
-    {id: 3, hall: 2, movie: "Forest", start: 700, duration: 120},
-    {id: 4, hall: 4, movie: "Lake", start: 700, duration: 180},
-    {id: 5, hall: 1, movie: "Lake", start: 700, duration: 180},
-    {id: 6, hall: 2, movie: "Waterfall", start: 1000, duration: 220},
-    {id: 7, hall: 4, movie: "Forest", start: 45, duration: 120},
-  ]
-
 
 //массив из 5 всплывающих окон
 const popup = [...document.querySelectorAll('.popup')]
@@ -123,8 +116,8 @@ function resizeHall(dimension, value){
 function hallConfigurate() {
     // hallsData   //перечень залов
     
-    document.querySelector(".price").value = hallsData[i].price
-    document.querySelector(".vip_price").value = hallsData[i].price_vip
+    document.querySelector(".price").value = hallsData[choosenHall].price
+    document.querySelector(".vip_price").value = hallsData[choosenHall].price_vip
 
     const wrapper = document.querySelector('.conf-step__hall-wrapper')
 
@@ -193,16 +186,15 @@ formUpdate.onsubmit = function(e){
     }
 
     fetch(`/api/halls/${hallsData[choosenHall].id}`, options)
-        .then(res=>res.json())
-        .then(data=>console.log(data))
-
-        
-//         .then(res => res.json())
-//         if (res.ok) {
-//             alert('save')
-//         } else {
-//             throw new Error(res.status)
-//         }
+        .then(res=> {
+            res.json()
+            if (res.ok) {
+                alert('save')
+            } else {
+                throw new Error(res.status)
+            }
+        })
+        // .then(data=>console.log(data))
 }
 
 
@@ -239,7 +231,7 @@ let addTimeline = ""
 const hallSession = [] //сортировка сеансов по залам
 
 for (let j = 0; j < hallsData.length; j++){
-    hallSession.push(sessions.filter(item => item.hall === hallsData[j].id))
+    hallSession.push(seancesData.filter(item => item.hall_id === hallsData[j].id))
     addTimeline += `
       <div class="conf-step__seances-hall">
         <h3 class="conf-step__seances-title">${hallsData[j].name}</h3>
@@ -252,35 +244,15 @@ for (let j = 0; j < hallsData.length; j++){
   
 wrappersHalls.innerHTML = addTimeline
 
-
 //добавление сеанса
 const moviesEl = [...document.querySelectorAll('.conf-step__movie')]
-for (i = 0; i < moviesEl.length; i++) {
+for (let i = 0; i < moviesEl.length; i++) {
     moviesEl[i].onclick = () => {
-        //choosenMovie = i // choosenMovie = moviesData[i].id  а нужна ли эта переменная?
         popup[3].classList.add('active')
-        addForm = document.querySelector('.add_seance').action 
+        addForm = document.getElementById('add_seance')
         addForm.action =  addForm.action + '/' + moviesData[i].id
     }
 }
-
-
-
-for (let i = 0; i <delHall.length; i++) {
-    delHall[i].addEventListener('click', () => {
-        //работает, потому что conf-step__paragraph в рорар для удаления встречается в первый раз
-        const nameHall = document.querySelector('.conf-step__paragraph') 
-        const trashForm = document.querySelector('.trash-form')
-        nameHall.querySelector('span').textContent = delHall[i].closest('li').textContent
-        const hallID = delHall[i].closest('li').dataset.id
-        popup[1].classList.add('active')
-        trashForm.action =  trashForm.action + '/' + hallID
-    })
-}
-
-
-
-
 
 //добавление сеансов в seances-timeline залов
 const wrapperSeances = [...document.querySelectorAll(".conf-step__seances-timeline")]
@@ -288,10 +260,13 @@ let addSeance = ""
 
 for (let j = 0; j < hallsData.length; j++){
     for (let k = 0; k < hallSession[j].length; k++){
+      const movie = moviesData.find(movie => movie.id== hallSession[j][k].movie_id)
       addSeance += `
-        <div class="conf-step__seances-movie" style="width: ${hallSession[j][k].duration/2}px; background-color: ${colors[moviesData.findIndex(item => item.title === hallSession[j][k].movie)]}; left: ${hallSession[j][k].start/2}px;">
-          <p class="conf-step__seances-movie-title">${hallSession[j][k].movie}</p>
-          <p class="conf-step__seances-movie-start">${minutesToTime(hallSession[j][k].start)}</p>
+        <div class="conf-step__seances-movie" style="width: ${movie.duration/2}px; 
+             background-color: ${colors[moviesData.findIndex(item => item.id === movie.id)]};
+             left: ${timeToMinutes(hallSession[j][k].start)/2}px;">
+          <p class="conf-step__seances-movie-title">${movie.title}</p>
+          <p class="conf-step__seances-movie-start">${hallSession[j][k].start}</p>
         </div>
     `
     }
@@ -318,5 +293,35 @@ function minutesToTime(min){
     return `${h}:${m}`
   }
 
+//вспомогательная функция для перевода hh:mm в минуты
+function timeToMinutes(time){
+    const h = time.slice(0,2)
+    const m = time.slice(3,5)
+    return h * 60 + Number(m)   
+}
 
+
+
+//сохранение seance_update
+const formSeance = document.getElementById("seance_update")
+formSeance.onsubmit = function(e){
+    e.preventDefault()
+
+    // const options = {
+    //     method: "POST",
+    //     body: JSON.stringify(hallsData[choosenHall]),
+    //     headers: {"Content-Type": "application/json"}
+    // }
+
+    // fetch(`/api/halls/${hallsData[choosenHall].id}`, options)
+    //     .then(res=> {
+    //         res.json()
+    //         if (res.ok) {
+    //             alert('save')
+    //         } else {
+    //             throw new Error(res.status)
+    //         }
+    //     })
+        // .then(data=>console.log(data))
+}
   

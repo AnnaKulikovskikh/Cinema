@@ -8,16 +8,14 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
-     * $table->integer('hall_id');
-     * $table->integer('movie_id');
      */
     public function up(): void
     {
         Schema::create('sessions', function (Blueprint $table) {
             $table->id();
-            $table->date('data');
             $table->integer('start');
-            $table->integer('finish');
+            $table->integer('hall_id');
+            $table->integer('movie_id');
         });
     }
 

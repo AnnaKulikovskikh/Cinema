@@ -52,6 +52,12 @@ class AdminController extends Controller
         return redirect()->back();
     }
 
+
+    public function deleteMovie(Request $request, int $id): RedirectResponse
+    {
+        Movie::destroy($id);
+        return redirect('admin/index');
+    }
     
     public function addSeance(Request $request, int $id): RedirectResponse
     {
@@ -62,6 +68,12 @@ class AdminController extends Controller
         ]);
 
         return redirect()->back();
-    }    
+    }
+
+    public function deleteSeance(Request $request, int $id): RedirectResponse
+    {
+        Session::destroy($id);
+        return redirect('admin/index');
+    } 
     
 }

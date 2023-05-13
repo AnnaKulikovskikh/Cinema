@@ -15,11 +15,12 @@ const moviesData = JSON.parse(moviesTable.value).data
 
 const seancesTable = document.querySelector('.data-seances')
 const seancesData = JSON.parse(seancesTable.value)
+console.log(moviesData)
 console.log(seancesData)
 
 const colors = ['#caff85', '#85ff89', '#85ffd3', '#85e2ff', '#8599ff', '#ba85ff', '#ff85fb', '#ff85b1', '#ffa285']
 
-//массив из 5 всплывающих окон
+//массив из 6 всплывающих окон
 const popup = [...document.querySelectorAll('.popup')]
 
 //добавление-удаление зала
@@ -56,7 +57,7 @@ for (let i = 0; i < dismiss.length; i++) {
 
 function close(e) {
     e.preventDefault()
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < popup.length; i++) {
         if (popup[i].classList.contains('active')) {
             popup[i].classList.remove('active')
         }
@@ -274,14 +275,51 @@ for (let j = 0; j < hallsData.length; j++){
     addSeance = ""
 }
 
-//удаление сеанса
-const seanceEl = [...document.querySelectorAll('.conf-step__seances-movie')]
-for (i = 0; i < seanceEl.length; i++) {
-    seanceEl[i].onclick = () => {
-        //choosenSeance = i // choosenMovie = moviesData[i].id
-        popup[4].classList.add('active')
+//удаление фильма
+const delMovie = [...document.querySelectorAll('.trash_movie')]
+for (let i = 0; i < delMovie.length; i++) {
+    delMovie[i].onclick = (e) => {
+        e.stopPropagation()
+        const formMovie = document.getElementById('delete_movie')
+        formMovie.querySelector('span').textContent = moviesData[i].title
+        const id = '/' +  moviesData[i].id
+        formMovie.action += id
+        popup[5].classList.add('active')
     }
 }
+
+//удаление сеанса
+const seanceEl = [...document.querySelectorAll('.conf-step__seances-movie')]
+for (let i = 0; i < seanceEl.length; i++) {
+    seanceEl[i].onclick = () => {
+        const movie = moviesData.find(movie => movie.id == getSeanceId(i).movie_id)
+        const formSeance = document.getElementById('delete_seance')
+        formSeance.querySelector('span').textContent = movie.title
+        const id = '/' +  getSeanceId(i).id
+        formSeance.action += id
+        popup[4].classList.add('active')
+        
+    }
+}
+
+
+//вспомогательная функция возвращает сеанса от его номера в seances-timeline
+function getSeanceId(k){
+    let i = 0
+    let j = 0
+    for (let s = 0; s < hallSession.length; s++) {
+        if (hallSession[s].length - k <= 0) {
+            k -= hallSession[s].length
+            i++
+        } else {
+            j = k
+            break
+        }
+    }
+    return hallSession[i][j]
+}
+
+
 
 
 //вспомогательная функция для перевода минут в hh:mm

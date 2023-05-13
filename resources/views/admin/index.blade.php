@@ -19,6 +19,7 @@
   @include('popup.movie_add')
   @include('popup.show_add')
   @include('popup.show_del')
+  @include('popup.movie_del')
   <!-- все залы из table-halls в $halls -->
   <input class="data-halls" type="hidden" value="{{ json_encode($halls) }}"/>
   <input class="data-movies" type="hidden" value="{{ json_encode($movies) }}"/>

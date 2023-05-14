@@ -248,11 +248,20 @@ wrappersHalls.innerHTML = addTimeline
 //добавление сеанса
 const moviesEl = [...document.querySelectorAll('.conf-step__movie')]
 for (let i = 0; i < moviesEl.length; i++) {
-    moviesEl[i].onclick = () => {
+    moviesEl[i].onclick = (e) => {
         popup[3].classList.add('active')
-        document.getElementById('add_seance').action = '/admin/add_seance/' + moviesData[i].id
+        const form = document.getElementById('add_seance')
+        form .action = '/admin/add_seance/' + moviesData[i].id
+        form.onsubmit = function(e) { 
+            if (!isTimeOk(form.hall.value, timeToMinutes(form.start_time.value), moviesData[i].duration)) {
+                e.preventDefault()
+                alert('Сеанс нельзя установить на занятое время!')
+            }
+        }
     }
 }
+
+
 
 //добавление сеансов в seances-timeline залов
 const wrapperSeances = [...document.querySelectorAll(".conf-step__seances-timeline")]
@@ -279,9 +288,6 @@ const delMovie = [...document.querySelectorAll('.trash_movie')]
 for (let i = 0; i < delMovie.length; i++) {
     delMovie[i].onclick = (e) => {
         e.stopPropagation()
-        //удаление сеансов с фильмом
-        //const seancesDel = seancesData.filter(seance => seance.movie_id === moviesData[i].id)
-        //console.log(seancesDel)
         const formMovie = document.getElementById('delete_movie')
         formMovie.querySelector('span').textContent = moviesData[i].title
         formMovie.action = '/admin/delete_movie/' +  moviesData[i].id
@@ -319,9 +325,6 @@ function getSeanceId(k){
     return hallSession[i][j]
 }
 
-
-
-
 //вспомогательная функция для перевода минут в hh:mm
 function minutesToTime(min){
     let h = Math.floor(min/60)
@@ -336,6 +339,39 @@ function timeToMinutes(time){
     const h = time.slice(0,2)
     const m = time.slice(3,5)
     return h * 60 + Number(m)   
+}
+
+//проверка добавлен ли сеанс в свободное время. Время сеанса + 10 мин на пересменку
+function isTimeOk(hallID, start, duration) {
+    let isOk = true
+    let finish = start + duration + 10
+    //если во время сеанса наступает полночь отсчет финиша с утренних минут
+    if (finish > 1439) finish -= 1440 
+
+    //отбор сеансов в выбранном зале. Перевод начала сеанса в минуты.
+    // добавление продолжительности сеанса. Сортировка по началу сеанса
+    let hallIDseances = seancesData.filter(seance => seance.hall_id == hallID)
+    hallIDseances = hallIDseances.map(seance => {
+        const dur = moviesData.find(movie => movie.id === seance.movie_id).duration
+        return {...seance, start: timeToMinutes(seance.start), duration: dur}
+    } )
+
+    hallIDseances.sort((a, b) => a.start > b.start ? 1 : -1)
+
+    //занятое время в зале
+    const busyTime = []
+    for (let hallIDSeance of hallIDseances) {
+        busyTime.push({start: hallIDSeance.start, finish: hallIDSeance.start + hallIDSeance.duration + 10})
+    }
+
+    //проверка попадает ли новый сеанс на занятое время
+    for (let busy of busyTime) {
+        if ((start > busy.start && start < busy.finish) || (finish > busy.start && finish < busy.finish)) {
+            isOk = false
+            break
+        }
+    }
+    return isOk
 }
 
 
@@ -362,4 +398,6 @@ formSeance.onsubmit = function(e){
     //     })
         // .then(data=>console.log(data))
 }
+
+//отмена сохранения cancel
   

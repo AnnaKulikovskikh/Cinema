@@ -92,7 +92,7 @@
 
           
           <fieldset from="hall_update" class="conf-step__buttons text-center">
-            <button class="conf-step__button conf-step__button-regular abort">Отмена</button>
+            <button class="conf-step__button conf-step__button-regular cancel">Отмена</button>
             <input type="submit" value="Сохранить" class="conf-step__button conf-step__button-accent">
           </fieldset>                 
         </div>
@@ -127,7 +127,7 @@
             </div>  
           
           <fieldset from="hall_update" class="conf-step__buttons text-center">
-            <button class="conf-step__button conf-step__button-regular">Отмена</button>
+            <button class="conf-step__button conf-step__button-regular cancel">Отмена</button>
             <input type="submit" value="Сохранить" class="conf-step__button conf-step__button-accent">
           </fieldset>  
         </div>
@@ -153,7 +153,7 @@
             </div>
           
             <fieldset class="conf-step__buttons text-center" form="seance_update">
-              <button class="conf-step__button conf-step__button-regular">Отмена</button>
+              <button class="conf-step__button conf-step__button-regular cancel">Отмена</button>
               <input type="submit" value="Сохранить" class="conf-step__button conf-step__button-accent">
             </fieldset>  
           </div>

@@ -39,7 +39,7 @@ for (let i = 0; i <delHall.length; i++) {
         nameHall.querySelector('span').textContent = delHall[i].closest('li').textContent
         const hallID = delHall[i].closest('li').dataset.id
         popup[1].classList.add('active')
-        trashForm.action =  trashForm.action + '/' + hallID
+        trashForm.action =  '/admin/del_hall/' + hallID
     })
 }
 
@@ -250,8 +250,7 @@ const moviesEl = [...document.querySelectorAll('.conf-step__movie')]
 for (let i = 0; i < moviesEl.length; i++) {
     moviesEl[i].onclick = () => {
         popup[3].classList.add('active')
-        addForm = document.getElementById('add_seance')
-        addForm.action =  addForm.action + '/' + moviesData[i].id
+        document.getElementById('add_seance').action = '/admin/add_seance/' + moviesData[i].id
     }
 }
 
@@ -280,10 +279,12 @@ const delMovie = [...document.querySelectorAll('.trash_movie')]
 for (let i = 0; i < delMovie.length; i++) {
     delMovie[i].onclick = (e) => {
         e.stopPropagation()
+        //удаление сеансов с фильмом
+        //const seancesDel = seancesData.filter(seance => seance.movie_id === moviesData[i].id)
+        //console.log(seancesDel)
         const formMovie = document.getElementById('delete_movie')
         formMovie.querySelector('span').textContent = moviesData[i].title
-        const id = '/' +  moviesData[i].id
-        formMovie.action += id
+        formMovie.action = '/admin/delete_movie/' +  moviesData[i].id
         popup[5].classList.add('active')
     }
 }
@@ -295,8 +296,7 @@ for (let i = 0; i < seanceEl.length; i++) {
         const movie = moviesData.find(movie => movie.id == getSeanceId(i).movie_id)
         const formSeance = document.getElementById('delete_seance')
         formSeance.querySelector('span').textContent = movie.title
-        const id = '/' +  getSeanceId(i).id
-        formSeance.action += id
+        formSeance.action = '/admin/delete_seance/' +  getSeanceId(i).id
         popup[4].classList.add('active')
         
     }

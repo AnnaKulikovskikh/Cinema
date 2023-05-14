@@ -38,6 +38,13 @@ class AdminController extends Controller
 
     public function deleteHall(Request $request, int $id): RedirectResponse
     {
+        //найти все сеансы с hall id. удалить
+        $sessions = Session::all();
+        foreach ($sessions as $session) {
+            if ($session->hall_id === $id) {
+                Session::destroy($session->id);
+            }
+        }
         Hall::destroy($id);
         return redirect('admin/index');
     }
@@ -55,6 +62,13 @@ class AdminController extends Controller
 
     public function deleteMovie(Request $request, int $id): RedirectResponse
     {
+        //найти все сеансы с movie id. удалить
+        $sessions = Session::all();
+        foreach ($sessions as $session) {
+            if ($session->movie_id === $id) {
+                Session::destroy($session->id);
+            }
+        }
         Movie::destroy($id);
         return redirect('admin/index');
     }

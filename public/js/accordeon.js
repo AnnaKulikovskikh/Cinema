@@ -383,11 +383,11 @@ formSeance.onsubmit = function(e){
 
     // const options = {
     //     method: "POST",
-    //     body: JSON.stringify(hallsData[choosenHall]),
+    //     body: JSON.stringify(seancesData),
     //     headers: {"Content-Type": "application/json"}
     // }
 
-    // fetch(`/api/halls/${hallsData[choosenHall].id}`, options)
+    // fetch(`/api/seances/${hallsData[choosenHall].id}`, options)
     //     .then(res=> {
     //         res.json()
     //         if (res.ok) {
@@ -400,4 +400,11 @@ formSeance.onsubmit = function(e){
 }
 
 //отмена сохранения cancel
+const cancel = [...document.querySelectorAll('.cancel')]
+cancel.forEach(item => {
+    item.onclick = (e) => {
+        e.preventDefault()
+        location.reload()
+    }
+})
   

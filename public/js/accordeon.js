@@ -74,12 +74,16 @@ for (let i = 0; i < hallsList.length; i++){
     hallsList1[i].addEventListener('input', function(){
         choosenHall = i
         hallsList[i].checked = true
+        document.querySelector('.rows') = hallsData[choosenHall].rows
+        document.querySelector('.cols') = hallsData[choosenHall].cols
         hallConfigurate()
     })
 
     hallsList[i].addEventListener('input', function(){
         choosenHall = i
         hallsList1[i].checked = true
+        document.querySelector('.rows') = hallsData[choosenHall].rows
+        document.querySelector('.cols') = hallsData[choosenHall].cols
         hallConfigurate()
     })
 }

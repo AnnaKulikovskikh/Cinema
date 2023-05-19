@@ -1,24 +1,49 @@
-const date = new Date();
-const nameDay = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб']
-let add = `<a class="page-nav__day page-nav__day_today page-nav__day_chosen" href="#">
+ let s = 1
+ const date = new Date();
+ viewCalendar(s, date)
+
+
+function viewCalendar(s, date) {
+  //date.setDate(date.getDate() + s)
+  const nameDay = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб']
+  let add = ""
+  if (s === 1) {
+    add += `<a class="page-nav__day page-nav__day_today page-nav__day_chosen" href="#">
             <span class="page-nav__day-week">${nameDay[date.getDay()]}</span>
             <span class="page-nav__day-number">${date.getDate()}</span>
             </a>`
-for (let i = 1; i < 6; i++) {
-    let day = (date.getDay() + i) < 7 ? nameDay[date.getDay() + i] : nameDay[date.getDay() + i - 7]
+  } else {
+       add += '<a class="page-nav__day page-nav__day_prev" href="#"></a>'
+  }
+    
+  for (let i = s; i < s + 5; i++) {
+    //let day = (date.getDay() + i) < 7 ? nameDay[date.getDay() + i] : nameDay[date.getDay() + i - 7]
+    //let day = date.getDay() + i - Math.floor((date.getDay() + i)/7) * 7
+    date.setDate(date.getDate() + 1)
     add += `<a class="page-nav__day" href="#">
-                <span class="page-nav__day-week">${day}</span>
-                <span class="page-nav__day-number">${date.getDate() + i}</span>
+                <span class="page-nav__day-week">${nameDay[date.getDay()]}</span>
+                <span class="page-nav__day-number">${date.getDate()}</span>
             </a>`
-}
+  }   
+  add += '<a class="page-nav__day page-nav__day_next" href="#"></a>'
+  document.querySelector('.page-nav').innerHTML = add
+  const dayEl = [...document.querySelectorAll('.page-nav__day')]
 
-const next = '<a class="page-nav__day page-nav__day_next" href="#"></a>'
-add += next
-document.querySelector('.page-nav').innerHTML = add
-const day = [...document.querySelectorAll('.page-nav__day')]
-day.forEach(item => item.onclick = () => {
-    day.forEach(d => {
-        if (d.classList.contains('page-nav__day_chosen')) d.classList.remove('page-nav__day_chosen')
-    })
+  dayEl.forEach(item => item.onclick = () => {
+    dayEl.forEach(d => {
+      if (d.classList.contains('page-nav__day_chosen')) d.classList.remove('page-nav__day_chosen')
+      })
     item.classList.add('page-nav__day_chosen')
-  })
+    })
+
+  document.querySelector('.page-nav__day_next').onclick = () => {
+    s += 5
+    viewCalendar(s, date)
+  }
+
+  document.querySelector('.page-nav__day_prev').onclick = () => {
+    s -= 5
+    date.setDate(date.getDate() - 10)
+    viewCalendar(s, date)
+  }
+}

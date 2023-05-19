@@ -83,6 +83,17 @@ body {
   font-weight: 700;
   font-size: 2.4rem;
 }
+
+.page-nav .page-nav__day_prev {
+  text-align: center;
+}
+.page-nav .page-nav__day_prev::before {
+  content: '<';
+  font-family: monospace;
+  font-weight: 700;
+  font-size: 2.4rem;
+}
+
 .page-nav .page-nav__day_today .page-nav__day-week::before {
   content: 'Сегодня';
   display: block;

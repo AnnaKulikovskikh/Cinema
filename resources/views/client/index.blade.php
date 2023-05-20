@@ -54,9 +54,8 @@
         @endforeach
       </section>
     @endforeach
-    <script src="/js/accordeon.js"></script>
   </main>
 
-  <script src="/js/client.js"></script>
+  <script type="module" src="/js/client/client.js"></script>
 </body>
 </html>

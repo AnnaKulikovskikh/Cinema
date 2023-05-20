@@ -74,16 +74,12 @@ for (let i = 0; i < hallsList.length; i++){
     hallsList1[i].addEventListener('input', function(){
         choosenHall = i
         hallsList[i].checked = true
-        document.querySelector('.rows') = hallsData[choosenHall].rows
-        document.querySelector('.cols') = hallsData[choosenHall].cols
         hallConfigurate()
     })
 
     hallsList[i].addEventListener('input', function(){
         choosenHall = i
         hallsList1[i].checked = true
-        document.querySelector('.rows') = hallsData[choosenHall].rows
-        document.querySelector('.cols') = hallsData[choosenHall].cols
         hallConfigurate()
     })
 }
@@ -120,7 +116,9 @@ function resizeHall(dimension, value){
 
 function hallConfigurate() {
     // hallsData   //перечень залов
-    
+
+    document.querySelector('.rows').value = hallsData[choosenHall].rows
+    document.querySelector('.cols').value = hallsData[choosenHall].cols
     document.querySelector(".price").value = hallsData[choosenHall].price
     document.querySelector(".vip_price").value = hallsData[choosenHall].price_vip
 

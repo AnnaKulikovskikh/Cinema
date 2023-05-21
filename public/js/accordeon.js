@@ -31,6 +31,7 @@ addHall.onclick = function() {
     popup[0].classList.add('active')
 }
 
+
 for (let i = 0; i <delHall.length; i++) {
     delHall[i].addEventListener('click', () => {
         //работает, потому что conf-step__paragraph в рорар для удаления встречается в первый раз
@@ -370,7 +371,7 @@ function isTimeOk(hallID, start, duration) {
 
     //проверка попадает ли новый сеанс на занятое время
     for (let busy of busyTime) {
-        if ((start > busy.start && start < busy.finish) || (finish > busy.start && finish < busy.finish)) {
+        if ((start >= busy.start && start <= busy.finish) || (finish >= busy.start && finish <= busy.finish)) {
             isOk = false
             break
         }

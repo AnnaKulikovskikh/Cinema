@@ -16,13 +16,13 @@ class AddHallPostRequest extends FormRequest
 
     /**
      * Get the validation rules that apply to the request.
-     *
+     * 'name' => 'required|unique:halls|max:15',
      * @return array<string, \Illuminate\Contracts\Validation\Rule|array|string>
      */
     public function rules(): array
     {
         return [
-            'name' => 'required|unique:halls|max:15',
+            'name' => ['bail', 'required', 'unique:halls', 'max:15']
         ];
     }
 }

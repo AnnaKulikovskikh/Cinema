@@ -22,7 +22,7 @@ class AddHallPostRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|unique:halls|max:255',
+            'name' => 'required|unique:halls|max:15',
         ];
     }
 }

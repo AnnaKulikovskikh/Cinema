@@ -74,22 +74,26 @@ for (let i = 0; i < hallsList.length; i++){
     hallsList1[i].addEventListener('input', function(){
         choosenHall = i
         hallsList[i].checked = true
+        // document.querySelector('.rows').value = hallsData[choosenHall].rows
+        // document.querySelector('.cols').value = hallsData[choosenHall].cols
         hallConfigurate()
     })
 
     hallsList[i].addEventListener('input', function(){
         choosenHall = i
         hallsList1[i].checked = true
+        // document.querySelector('.rows').value = hallsData[choosenHall].rows
+        // document.querySelector('.cols').value = hallsData[choosenHall].cols
         hallConfigurate()
     })
 }
 
 //количество рядов и мест в них
-document.querySelector('.rows').onchange = (e) => {
+document.querySelector('.rows').oninput = (e) => {
     resizeHall('rows', e.target.value)
 }
 
-document.querySelector('.cols').onchange = (e) => {
+document.querySelector('.cols').oninput = (e) => {
     resizeHall('cols', e.target.value)
 }
 
@@ -116,9 +120,7 @@ function resizeHall(dimension, value){
 
 function hallConfigurate() {
     // hallsData   //перечень залов
-
-    document.querySelector('.rows').value = hallsData[choosenHall].rows
-    document.querySelector('.cols').value = hallsData[choosenHall].cols
+    
     document.querySelector(".price").value = hallsData[choosenHall].price
     document.querySelector(".vip_price").value = hallsData[choosenHall].price_vip
 
@@ -402,6 +404,7 @@ formSeance.onsubmit = function(e){
 }
 
 //отмена сохранения cancel
+
 const cancel = [...document.querySelectorAll('.cancel')]
 cancel.forEach(item => {
     item.onclick = (e) => {

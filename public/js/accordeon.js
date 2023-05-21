@@ -89,11 +89,11 @@ for (let i = 0; i < hallsList.length; i++){
 }
 
 //количество рядов и мест в них
-document.querySelector('.rows').oninput = (e) => {
+document.querySelector('.rows').onchange = (e) => {
     resizeHall('rows', e.target.value)
 }
 
-document.querySelector('.cols').oninput = (e) => {
+document.querySelector('.cols').onchange = (e) => {
     resizeHall('cols', e.target.value)
 }
 
@@ -241,7 +241,6 @@ for (let j = 0; j < hallsData.length; j++){
       <div class="conf-step__seances-hall">
         <h3 class="conf-step__seances-title">${hallsData[j].name}</h3>
         <div class="conf-step__seances-timeline">
-        
         </div>
       </div>  
     `
@@ -273,7 +272,8 @@ let addSeance = ""
 
 for (let j = 0; j < hallsData.length; j++){
     for (let k = 0; k < hallSession[j].length; k++){
-      const movie = moviesData.find(movie => movie.id== hallSession[j][k].movie_id)
+      //const movie = moviesData.find(movie => movie.id== hallSession[j][k].movie_id)
+      const movie = hallSession[j][k].movie
       addSeance += `
         <div class="conf-step__seances-movie" style="width: ${movie.duration/2}px; 
              background-color: ${colors[moviesData.findIndex(item => item.id === movie.id)]};

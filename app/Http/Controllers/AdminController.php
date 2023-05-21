@@ -22,7 +22,8 @@ class AdminController extends Controller
     {
         $halls = Hall::paginate(7);
         $movies = Movie::paginate(10);
-        $seances = Session::all();
+        //$seances = Session::with('movie')->with('hall')->get();
+        $seances = Session::with('movie')->get();
         return view('admin.index', ['halls' => $halls, 'movies' => $movies, 'seances' => $seances]);
     }
 

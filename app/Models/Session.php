@@ -2,6 +2,7 @@
 
 namespace App\Models;
 use App\Models\Movie;
+use App\Models\Hall;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -12,8 +13,13 @@ class Session extends Model
     public $timestamps = false;
     public $fillable = ['start', 'hall_id', 'movie_id'];
 
-    public function movies()
+    public function movie()
     {
-        return $this->hasMany(Movie::class);
+        return $this->belongsTo(Movie::class);
+    }
+
+    public function hall()
+    {
+        return $this->belongsTo(Hall::class);
     }
 }

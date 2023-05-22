@@ -25,4 +25,13 @@ class AddHallPostRequest extends FormRequest
             'name' => ['bail', 'required', 'unique:halls', 'max:15']
         ];
     }
+
+    public function messages()
+{
+    return [
+        'name.required' => 'Надо указать название зала!',
+        'name.unique' => 'Название зала дложно быть уникальным!',
+        'name.max' => 'Длина названия должна быть не более 15 символов!',
+    ];
+}
 }

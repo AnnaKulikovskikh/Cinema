@@ -20,6 +20,14 @@ console.log(seancesData)
 
 const colors = ['#caff85', '#85ff89', '#85ffd3', '#85e2ff', '#8599ff', '#ba85ff', '#ff85fb', '#ff85b1', '#ffa285']
 
+//ошибка валидации
+//const err = document.querySelector('.alert-danger')
+// console.log(err)
+// if (err) {
+//     console.log(err.dataset.error)  
+// }
+//console.log(err.dataset.error)
+
 //массив из 6 всплывающих окон
 const popup = [...document.querySelectorAll('.popup')]
 
@@ -91,14 +99,22 @@ for (let i = 0; i < hallsList.length; i++){
 
 //количество рядов и мест в них
 document.querySelector('.rows').onchange = (e) => {
-    resizeHall('rows', e.target.value)
+    resizeHall('rows', parseInt(e.target.value))
 }
 
 document.querySelector('.cols').onchange = (e) => {
-    resizeHall('cols', e.target.value)
+    resizeHall('cols', parseInt(e.target.value))
 }
 
 function resizeHall(dimension, value){
+    if (!Number.isInteger(value) || value <=0 || value > 50) {
+        if (dimension === 'cols') {
+            document.querySelector('.cols').value = hallsData[choosenHall].cols
+        } else {
+            document.querySelector('.rows').value = hallsData[choosenHall].rows
+        }
+        return null
+    }
     for (let i = 0; i < hallsList.length; i++){
         if (hallsList[i].checked){
             choosenHall = i
@@ -124,6 +140,9 @@ function hallConfigurate() {
     
     document.querySelector(".price").value = hallsData[choosenHall].price
     document.querySelector(".vip_price").value = hallsData[choosenHall].price_vip
+
+    document.querySelector('.rows').value = hallsData[choosenHall].rows
+    document.querySelector('.cols').value = hallsData[choosenHall].cols
 
     const wrapper = document.querySelector('.conf-step__hall-wrapper')
 

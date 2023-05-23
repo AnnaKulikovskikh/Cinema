@@ -9,23 +9,15 @@
 
       </div>
       <div class="popup__wrapper">
-        <form action="/admin/add_hall" method="post" accept-charset="utf-8">
+
+        <form action="/admin/add_hall" method="post" accept-charset="utf-8" id="addHall">
             
           @csrf
-
           <label class="conf-step__label conf-step__label-fullsize" for="name">
             Название зала
             <input class="conf-step__input" type="text" id="name" placeholder="Например, &laquo;Зал 1&raquo;" name="name" required>
           </label>
-          @if ($errors->any())
-            <div class="alert alert-danger">
-              <ul>
-                  @foreach ($errors->all() as $error)
-                      <li>{{ $error }}</li>
-                  @endforeach
-              </ul>
-            </div>
-          @endif
+          <div class="alert"></div>
           <div class="conf-step__buttons text-center">
             <input type="submit" value="Добавить зал" class="conf-step__button conf-step__button-accent">
             <button class="abort conf-step__button conf-step__button-regular">Отменить</button>

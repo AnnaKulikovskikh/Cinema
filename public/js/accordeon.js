@@ -21,6 +21,67 @@ console.log(seancesData)
 const colors = ['#caff85', '#85ff89', '#85ffd3', '#85e2ff', '#8599ff', '#ba85ff', '#ff85fb', '#ff85b1', '#ffa285']
 
 //ошибка валидации
+let error = false
+let typeError = null
+const alert = [...document.querySelectorAll('.alert')]
+
+const inputHallName = document.getElementById('name')
+inputHallName.addEventListener("change", function (event) {
+    error = false
+    hallsData.forEach(hall => {
+        if (hall.name.toLowerCase() === inputHallName.value.toLowerCase()) {
+            error = true
+            typeError = "Зал с таким названием уже есть"
+        }
+    })
+    if (inputHallName.value.length > 15) {
+        error = true
+        typeError = "Слишком длинное название"
+    }
+})
+
+const inputMovieTitle = document.getElementById('movie-name')
+inputMovieTitle.addEventListener("change", function (event) {
+    error = false
+    const value = inputMovieTitle.value
+    moviesData.forEach(movie => {
+        if (movie.title.toLowerCase() === value.toLowerCase()) {
+            error = true
+            typeError = "Такой фильм уже есть"
+        }
+    })
+    console.log(value.length)
+    if (value.length > 40) {
+        error = true
+        typeError = "Слишком длинное название"
+    }
+})
+
+const inputMovieDur = document.getElementById('movie-dur')
+inputMovieDur.addEventListener("change", function (event) {
+    error = false
+    const value =  parseInt(inputMovieDur.value)
+    if (!Number.isInteger(value) || value <=0 || value > 300) {
+        error = true
+        typeError = "Неверно указана продолжительность фильма"
+    }
+})
+
+document.getElementById('addHall').onsubmit = (e) => {
+    if (error) {
+        e.preventDefault()
+        alert[0].textContent = typeError
+    }
+}
+
+document.getElementById('addMovie').onsubmit = (e) => {
+    if (error) {
+        e.preventDefault()
+        alert[1].textContent = typeError
+    }
+}
+
+
 //const err = document.querySelector('.alert-danger')
 // console.log(err)
 // if (err) {
@@ -66,6 +127,9 @@ for (let i = 0; i < dismiss.length; i++) {
 
 function close(e) {
     e.preventDefault()
+    for (let i = 0; i < alert.length; i++) {
+        alert[i].textContent = null
+    }
     for (let i = 0; i < popup.length; i++) {
         if (popup[i].classList.contains('active')) {
             popup[i].classList.remove('active')
@@ -83,16 +147,12 @@ for (let i = 0; i < hallsList.length; i++){
     hallsList1[i].addEventListener('input', function(){
         choosenHall = i
         hallsList[i].checked = true
-        // document.querySelector('.rows').value = hallsData[choosenHall].rows
-        // document.querySelector('.cols').value = hallsData[choosenHall].cols
         hallConfigurate()
     })
 
     hallsList[i].addEventListener('input', function(){
         choosenHall = i
         hallsList1[i].checked = true
-        // document.querySelector('.rows').value = hallsData[choosenHall].rows
-        // document.querySelector('.cols').value = hallsData[choosenHall].cols
         hallConfigurate()
     })
 }
@@ -191,10 +251,20 @@ function hallConfigurate() {
 
 //изменение цены
 document.querySelector(".price").onchange = (e) => {
+    const value = parseInt(e.target.value)
+    if (!Number.isInteger(value) || value < 0) {
+        document.querySelector(".price").value = hallsData[choosenHall].price
+        return null
+    }
     hallsData[choosenHall].price = e.target.value
 }
 
 document.querySelector(".vip_price").onchange = (e) => {
+    const value = parseInt(e.target.value)
+    if (!Number.isInteger(value) || value <= 0) {
+        document.querySelector(".price").value = hallsData[choosenHall].price_vip
+        return null
+    }
     hallsData[choosenHall].price_vip = e.target.value
 }
 

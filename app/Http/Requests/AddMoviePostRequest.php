@@ -22,7 +22,7 @@ class AddMoviePostRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|unique:movies, title|max:40',
+            'name' => 'required|unique:movies,title|max:40',
             'duration' => 'required|integer|max:300',
         ];
     }

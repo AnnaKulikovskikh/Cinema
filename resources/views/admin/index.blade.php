@@ -24,6 +24,7 @@
   <input class="data-halls" type="hidden" value="{{ json_encode($halls) }}"/>
   <input class="data-movies" type="hidden" value="{{ json_encode($movies) }}"/>
   <input class="data-seances" type="hidden" value="{{ json_encode($seances) }}"/>
+  <input class="data-seats" type="hidden" value="{{ json_encode($seats) }}"/>
   
   <header class="page-header">
     <h1 class="page-header__title">Идём<span>в</span>кино</h1>

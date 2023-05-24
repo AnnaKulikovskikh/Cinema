@@ -10,13 +10,19 @@ const hallsData = JSON.parse(hallsTable.value).data
 let choosenHall = hallsData.length - 1
 if (hallsData.length > 0) hallConfigurate()
 
+const seatsTable = document.querySelector('.data-seats')
+const seatsData = JSON.parse(seatsTable.value)
+
 const moviesTable = document.querySelector('.data-movies')
 const moviesData = JSON.parse(moviesTable.value).data
 
 const seancesTable = document.querySelector('.data-seances')
 const seancesData = JSON.parse(seancesTable.value)
-console.log(moviesData)
-console.log(seancesData)
+
+//console.log(moviesData)
+//console.log(seancesData)
+console.log(hallsData)
+console.log(seatsData)
 
 const colors = ['#caff85', '#85ff89', '#85ffd3', '#85e2ff', '#8599ff', '#ba85ff', '#ff85fb', '#ff85b1', '#ffa285']
 

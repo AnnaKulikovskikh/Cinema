@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Hall;
 use App\Models\Movie;
 use App\Models\Session;
+use App\Models\Seat;
 use App\Http\Requests\AddHallPostRequest;
 use App\Http\Requests\AddMoviePostRequest;
 use Illuminate\Http\RedirectResponse;
@@ -21,17 +22,23 @@ class AdminController extends Controller
     public function index()
     {
         $halls = Hall::paginate(7);
+        //$halls = Hall::with('seat')->get();
+        $seats = Seat::with('hall')->get();
         $movies = Movie::paginate(10);
         //$seances = Session::with('movie')->with('hall')->get();
         $seances = Session::with('movie')->get();
-        return view('admin.index', ['halls' => $halls, 'movies' => $movies, 'seances' => $seances]);
+        return view('admin.index', ['halls' => $halls, 'movies' => $movies, 'seances' => $seances, 'seats' => $seats]);
     }
 
     public function addHall(AddHallPostRequest $request): RedirectResponse
     {
         $validated = $request->validated();
-        Hall::create([
+        $hall = Hall::create([
             "name" => $validated['name'],
+            "seats" => ['st','st','st','st','st','st'],
+        ]);
+        Seat::create([
+            "hall_id" => $hall->id,
             "seats" => ['st','st','st','st','st','st'],
         ]);
         return redirect()->back();
@@ -46,6 +53,7 @@ class AdminController extends Controller
                 Session::destroy($session->id);
             }
         }
+        Seat::destroy($id);
         Hall::destroy($id);
         return redirect('admin/index');
     }

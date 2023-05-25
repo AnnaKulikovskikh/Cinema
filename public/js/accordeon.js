@@ -19,10 +19,20 @@ const moviesData = JSON.parse(moviesTable.value).data
 const seancesTable = document.querySelector('.data-seances')
 const seancesData = JSON.parse(seancesTable.value)
 
-//console.log(moviesData)
-//console.log(seancesData)
-console.log(hallsData)
-console.log(seatsData)
+//сортировка сеансов по залам
+let hallSession = []
+fillHallSession()
+function fillHallSession() {
+    hallSession = []
+    for (let i = 0; i < hallsData.length; i++){
+        hallSession.push(seancesData.filter(item => item.hall_id === hallsData[i].id))
+    }
+}
+
+console.log(moviesData)
+console.log(seancesData)
+//console.log(hallsData)
+//console.log(seatsData)
 
 const colors = ['#caff85', '#85ff89', '#85ffd3', '#85e2ff', '#8599ff', '#ba85ff', '#ff85fb', '#ff85b1', '#ffa285']
 
@@ -56,7 +66,6 @@ inputMovieTitle.addEventListener("change", function (event) {
             typeError = "Такой фильм уже есть"
         }
     })
-    console.log(value.length)
     if (value.length > 40) {
         error = true
         typeError = "Слишком длинное название"
@@ -65,7 +74,6 @@ inputMovieTitle.addEventListener("change", function (event) {
 
 const inputMovieDur = document.getElementById('movie-dur')
 inputMovieDur.addEventListener("change", function (event) {
-    error = false
     const value =  parseInt(inputMovieDur.value)
     if (!Number.isInteger(value) || value <=0 || value > 300) {
         error = true
@@ -323,26 +331,7 @@ for (let i = 0; i < moviesData.length; i++) {
 }
 
 wrapperMovies.innerHTML = addMovie
-
-
-//вывод seances-timeline залов
-
-const wrappersHalls = document.querySelector(".conf-step__seances")
-let addTimeline = ""
-const hallSession = [] //сортировка сеансов по залам
-
-for (let j = 0; j < hallsData.length; j++){
-    hallSession.push(seancesData.filter(item => item.hall_id === hallsData[j].id))
-    addTimeline += `
-      <div class="conf-step__seances-hall">
-        <h3 class="conf-step__seances-title">${hallsData[j].name}</h3>
-        <div class="conf-step__seances-timeline">
-        </div>
-      </div>  
-    `
-  }
-  
-wrappersHalls.innerHTML = addTimeline
+viewSeances()
 
 //добавление сеанса
 const moviesEl = [...document.querySelectorAll('.conf-step__movie')]
@@ -350,37 +339,63 @@ for (let i = 0; i < moviesEl.length; i++) {
     moviesEl[i].onclick = (e) => {
         popup[3].classList.add('active')
         const form = document.getElementById('add_seance')
-        form .action = '/admin/add_seance/' + moviesData[i].id
+        form.action = '/admin/add_seance/' + moviesData[i].id
         form.onsubmit = function(e) { 
+            e.preventDefault()
             if (!isTimeOk(form.hall.value, timeToMinutes(form.start_time.value), moviesData[i].duration)) {
-                e.preventDefault()
+                //e.preventDefault()
                 alert('Сеанс нельзя установить на занятое время!')
+                return null
             }
+            const id = seancesData[seancesData.length-1].id + 1
+            const hall_id = parseInt(form.hall.value)
+            const movie = moviesData[i]
+            const add = {id: id, start: form.start_time.value, hall_id: hall_id, movie_id: moviesData[i].id, movie: movie}
+            seancesData.push(add)
+            fillHallSession()
+            console.log(hallSession)
+            popup[3].classList.remove('active')
+            viewSeances()
         }
     }
 }
-
-
+ 
 
 //добавление сеансов в seances-timeline залов
-const wrapperSeances = [...document.querySelectorAll(".conf-step__seances-timeline")]
-let addSeance = ""
-
-for (let j = 0; j < hallsData.length; j++){
-    for (let k = 0; k < hallSession[j].length; k++){
-      //const movie = moviesData.find(movie => movie.id== hallSession[j][k].movie_id)
-      const movie = hallSession[j][k].movie
-      addSeance += `
-        <div class="conf-step__seances-movie" style="width: ${movie.duration/2}px; 
-             background-color: ${colors[moviesData.findIndex(item => item.id === movie.id)]};
-             left: ${timeToMinutes(hallSession[j][k].start)/2}px;">
-          <p class="conf-step__seances-movie-title">${movie.title}</p>
-          <p class="conf-step__seances-movie-start">${hallSession[j][k].start}</p>
-        </div>
-    `
+function viewSeances() {
+    //вывод seances-timeline залов
+    const wrappersHalls = document.querySelector(".conf-step__seances")
+    let addTimeline = ""
+    for (let j = 0; j < hallsData.length; j++){
+        addTimeline += `
+        <div class="conf-step__seances-hall">
+            <h3 class="conf-step__seances-title">${hallsData[j].name}</h3>
+            <div class="conf-step__seances-timeline">
+            </div>
+        </div>  
+        `
     }
-    wrapperSeances[j].innerHTML = addSeance
-    addSeance = ""
+    wrappersHalls.innerHTML = addTimeline
+
+    const wrapperSeances = [...document.querySelectorAll(".conf-step__seances-timeline")]
+    let addSeance = ""
+
+    for (let j = 0; j < hallsData.length; j++){
+        for (let k = 0; k < hallSession[j].length; k++){
+        //const movie = moviesData.find(movie => movie.id== hallSession[j][k].movie_id)
+        const movie = hallSession[j][k].movie
+        addSeance += `
+            <div class="conf-step__seances-movie" style="width: ${movie.duration/2}px; 
+                 background-color: ${colors[moviesData.findIndex(item => item.id === movie.id)]};
+                left: ${timeToMinutes(hallSession[j][k].start)/2}px;">
+            <p class="conf-step__seances-movie-title">${movie.title}</p>
+            <p class="conf-step__seances-movie-start">${hallSession[j][k].start}</p>
+            </div>
+        `
+        }
+        wrapperSeances[j].innerHTML = addSeance
+        addSeance = ""
+    }
 }
 
 //удаление фильма
@@ -397,6 +412,7 @@ for (let i = 0; i < delMovie.length; i++) {
 
 //удаление сеанса
 const seanceEl = [...document.querySelectorAll('.conf-step__seances-movie')]
+console.log(seanceEl)
 for (let i = 0; i < seanceEl.length; i++) {
     seanceEl[i].onclick = () => {
         const movie = moviesData.find(movie => movie.id == getSeanceId(i).movie_id)
@@ -404,6 +420,10 @@ for (let i = 0; i < seanceEl.length; i++) {
         formSeance.querySelector('span').textContent = movie.title
         formSeance.action = '/admin/delete_seance/' +  getSeanceId(i).id
         popup[4].classList.add('active')
+        formSeance.onsubmit = (e) => {
+            e.preventDefault()
+            //убрать сеанс из seanceData, обновить страницу
+        }
         
     }
 }
@@ -426,13 +446,13 @@ function getSeanceId(k){
 }
 
 //вспомогательная функция для перевода минут в hh:mm
-function minutesToTime(min){
-    let h = Math.floor(min/60)
-    let m = min - h*60
-    if (String(h).length < 2) h = `0${h}`
-    if (String(m).length < 2) m = `0${m}`
-    return `${h}:${m}`
-  }
+// function minutesToTime(min){
+//     let h = Math.floor(min/60)
+//     let m = min - h*60
+//     if (String(h).length < 2) h = `0${h}`
+//     if (String(m).length < 2) m = `0${m}`
+//     return `${h}:${m}`
+//   }
 
 //вспомогательная функция для перевода hh:mm в минуты
 function timeToMinutes(time){
@@ -481,23 +501,27 @@ const formSeance = document.getElementById("seance_update")
 formSeance.onsubmit = function(e){
     e.preventDefault()
 
-    // const options = {
-    //     method: "POST",
-    //     body: JSON.stringify(seancesData),
-    //     headers: {"Content-Type": "application/json"}
-    // }
+    const options = {
+        method: "POST",
+        body: JSON.stringify(seancesData),
+        headers: {"Content-Type": "application/json"}
+    }
 
-    // fetch(`/api/seances/${hallsData[choosenHall].id}`, options)
-    //     .then(res=> {
-    //         res.json()
-    //         if (res.ok) {
-    //             alert('save')
-    //         } else {
-    //             throw new Error(res.status)
-    //         }
-    //     })
-        // .then(data=>console.log(data))
+    fetch(`/api/seances`, options)
+        .then(res=> {
+            res.json()
+            if (res.ok) {
+                alert('save')
+            } else {
+                throw new Error(res.status)
+            }
+        })
+        .then(data=>console.log(data))
 }
+
+
+ 
+
 
 //отмена сохранения cancel
 

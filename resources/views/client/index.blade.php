@@ -57,5 +57,6 @@
   </main>
 
   <script type="module" src="/js/client/client.js"></script>
+  <script type="module" src="/js/client/calendar.js"></script>
 </body>
 </html>

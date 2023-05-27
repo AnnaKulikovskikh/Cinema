@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('name')->default('New hall');
             $table->integer('rows')->default(2);
             $table->integer('cols')->default(3);
-            $table->json('seats');
             $table->integer('price')->default(100);
             $table->integer('price_vip')->default(200);
         });

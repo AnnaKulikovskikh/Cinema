@@ -11,7 +11,6 @@ class Hall extends Model
 {
     use HasFactory;
     public $timestamps = false;
-    protected $casts = ['seats' => 'array'];
     protected $fillable = ['name', 'rows', 'cols', 'seats', 'price', 'price_vip' ];
 
     public function sessions()
@@ -21,6 +20,6 @@ class Hall extends Model
 
     public function seat()
     {
-        return $this->hasOne(Seat::class);
+        return $this->hasMany(Seat::class);
     }
 }

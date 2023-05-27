@@ -9,9 +9,8 @@ use Illuminate\Database\Eloquent\Model;
 class Seat extends Model
 {
     use HasFactory;
-    protected $fillable = ['hall_id', 'seats'];
+    protected $fillable = ['hall_id', 'type_seat'];
     public $timestamps = false;
-    protected $casts = ['seats' => 'array'];
 
     public function hall()
     {

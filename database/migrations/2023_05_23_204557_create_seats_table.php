@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('seats', function (Blueprint $table) {
             $table->id();
             $table->integer('hall_id');
-            $table->json('seats');
+            $table->string('type_seat');
+            //$table->set('seats', ['st', 'vip', 'disabled','taken']);
         });
     }
 

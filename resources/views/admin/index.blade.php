@@ -180,7 +180,10 @@
 
 
 
-  <script src="/js/accordeon.js"></script>
+  <script type="module" src="/js/admin/accordeon.js"></script>
+  <script type="module" src="/js/admin/addDelHall.js"></script>
+  <script type="module" src="/js/admin/resizeHall.js"></script>
+  <script type="module" src="/js/admin/hallConfigurate.js"></script>
 </body>
 </html>
 

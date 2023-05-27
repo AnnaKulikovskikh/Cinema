@@ -15,6 +15,7 @@ class ClientController extends Controller
         $movies = Movie::paginate(10);
         $seances = Session::all();
         return view('client.index', ['halls' => $halls, 'movies' => $movies, 'seances' => $seances]);
+        //return view('client.index', ['movies' => $movies]);
     }
 
     public function hall()

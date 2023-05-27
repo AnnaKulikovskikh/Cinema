@@ -21,9 +21,10 @@ class AdminController extends Controller
 
     public function index()
     {
-        $halls = Hall::paginate(7);
-        //$halls = Hall::with('seat')->get();
-        $seats = Seat::with('hall')->get();
+        //$halls = Hall::paginate(7);
+        $halls = Hall::with('seat')->get();
+        //$seats = Seat::with('hall')->get();
+        $seats = Seat::all();
         $movies = Movie::paginate(10);
         //$seances = Session::with('movie')->with('hall')->get();
         $seances = Session::with('movie')->get();
@@ -34,13 +35,15 @@ class AdminController extends Controller
     {
         $validated = $request->validated();
         $hall = Hall::create([
-            "name" => $validated['name'],
-            "seats" => ['st','st','st','st','st','st'],
+            "name" => $validated['name']
         ]);
-        Seat::create([
-            "hall_id" => $hall->id,
-            "seats" => ['st','st','st','st','st','st'],
-        ]);
+        for ($i = 0; $i < 6; $i++) 
+        {
+            Seat::create([
+                "hall_id" => $hall->id,
+                "type_seat" => 'st',
+            ]);
+        }
         return redirect()->back();
     }
 

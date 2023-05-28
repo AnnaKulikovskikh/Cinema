@@ -184,6 +184,10 @@
   <script type="module" src="/js/admin/addDelHall.js"></script>
   <script type="module" src="/js/admin/resizeHall.js"></script>
   <script type="module" src="/js/admin/hallConfigurate.js"></script>
+  <script type="module" src="/js/admin/addDelMovie.js"></script>
+  <script type="module" src="/js/admin/addDelSeance.js"></script>
+  <script type="module" src="/js/admin/viewSeances.js"></script>
+  <script type="module" src="/js/admin/inputError.js"></script>
 </body>
 </html>
 

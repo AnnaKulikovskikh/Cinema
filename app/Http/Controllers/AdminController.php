@@ -21,9 +21,7 @@ class AdminController extends Controller
 
     public function index()
     {
-        //$halls = Hall::paginate(7);
         $halls = Hall::with('seat')->get();
-        //$seats = Seat::with('hall')->get();
         $seats = Seat::all();
         $movies = Movie::paginate(10);
         //$seances = Session::with('movie')->with('hall')->get();
@@ -56,7 +54,7 @@ class AdminController extends Controller
                 Session::destroy($session->id);
             }
         }
-        Seat::destroy($id);
+        Seat::query()->where(['hall_id' => $id])->delete();
         Hall::destroy($id);
         return redirect('admin/index');
     }

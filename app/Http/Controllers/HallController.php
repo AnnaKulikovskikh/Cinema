@@ -19,10 +19,23 @@ class HallController extends Controller
 
     public function updateSeats(Request $request, int $id)
     {
-        app('log')->info($request->all());
-        $seats = Seat::query()->findOrFail($id);
-        $seats->fill($request->all());
-        $seats->save();
+        //app('log')->info($request);
+        $halls = Hall::query()->findOrFail($id);
+        $count = $halls->rows * $halls->cols;
+        //app('log')->info($halls->rows * $halls->cols);
+       Seat::query()->where(['hall_id' => $id])->delete();
+        
+
+        //$seats = [];
+        for ($i = 0; $i < $count; $i++) 
+        {
+            //app('log')->info($request[i]);
+            Seat::create([
+                "hall_id" => $id,
+                "type_seat" => $request[i],
+            ]);
+        }
+        $seats = Seat::query()->where(['hall_id' => $id])->get();
         return response()->json($seats);
     }
 }

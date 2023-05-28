@@ -1,6 +1,10 @@
 import addDelHall from "./addDelHall.js"
 import resizeHall from "./resizeHall.js"
 import hallConfigurate from "./hallConfigurate.js"
+import addDelMovie from "./addDelMovie.js"
+import addDelSeance from "./addDelSeance.js"
+import viewSeances from "./viewSeances.js"
+import inputError from "./inputError.js"
 
 //сворачивание разделов
 const headers = Array.from(document.querySelectorAll('.conf-step__header'));
@@ -27,11 +31,32 @@ if (hallsData.length > 0) hallConfigurate(hallsData, choosenHall)
 //получение кресел
 const seatTable = document.querySelector('.data-seats')
 const seatData = JSON.parse(seatTable.value)
-console.log(seatData)
+//console.log(seatData)
 
 //получение фильмов
-//получение сеансов
+const moviesTable = document.querySelector('.data-movies')
+const moviesData = JSON.parse(moviesTable.value).data
 
+//получение сеансов
+const seancesTable = document.querySelector('.data-seances')
+const seancesData = JSON.parse(seancesTable.value)
+  //сортировка сеансов по залам
+let hallSession = []
+fillHallSession()
+function fillHallSession() {
+    hallSession = []
+    for (let i = 0; i < hallsData.length; i++){
+        if (seancesData.length == 0) {
+            hallSession[i] = 0    
+        } else {
+            hallSession.push(seancesData.filter(item => item.hall_id === hallsData[i].id))
+        }
+    }
+}
+console.log(seancesData.length)
+
+//раскраска сеансов
+const colors = ['#caff85', '#85ff89', '#85ffd3', '#85e2ff', '#8599ff', '#ba85ff', '#ff85fb', '#ff85b1', '#ffa285']
 
 //массив из 6 всплывающих окон
 const popup = [...document.querySelectorAll('.popup')]
@@ -39,9 +64,13 @@ const popup = [...document.querySelectorAll('.popup')]
 //добавление-удаление зала
 addDelHall(popup)
 
+//проверка правильности ввода данных
+inputError(moviesData, hallsData)
+
 //кнопка "Отменить"
 const abort = [...document.querySelectorAll('.abort')]
 const dismiss = [...document.querySelectorAll('.popup__dismiss')]
+const alert = [...document.querySelectorAll('.alert')]
 
 for (let i = 0; i < abort.length; i++) {
     abort[i].addEventListener('click', close)
@@ -115,11 +144,16 @@ document.querySelector(".vip_price").onchange = (e) => {
 const formUpdate = document.getElementById("hall_update")
 formUpdate.onsubmit = function(e){
     e.preventDefault()
-    const seatsArr = []
-    for (let i = 0; i < hallsData[choosenHall].seat.length; i++) {
-        seatsArr.push({id: i, hall_id: hallsData[choosenHall].id, type_seat: hallsData[choosenHall].seat[i]})
-    }
-    document.querySelector(".data-seats").value = seatsArr 
+
+    // const seatsArr1 = []
+    // const seatsArr = []
+    // for (let i = 0; i < hallsData[choosenHall].seat.length; i++) {
+    //     seatsArr1.push({id: i, hall_id: hallsData[choosenHall].id, type_seat: hallsData[choosenHall].seat[i]})
+    //     seatsArr.push(hallsData[choosenHall].seat[i])
+    // }
+    // //document.querySelector(".data-seats").value = seatsArr1
+
+    const seatArr = hallsData[choosenHall].seat
     delete hallsData[choosenHall].seat
     document.querySelector(".data-tables").value = hallsData[choosenHall]
     
@@ -138,7 +172,7 @@ formUpdate.onsubmit = function(e){
                 throw new Error(res.status)
             }
         })
-        .then(data=>console.log(data))
+        //.then(data=>console.log(data))
 
         const options1 = {
             method: "POST",
@@ -155,7 +189,7 @@ formUpdate.onsubmit = function(e){
                 throw new Error(res.status)
             }
         })
-        .then(data=>console.log(data))
+        
 }
 
 //отмена сохранения cancel
@@ -166,3 +200,15 @@ cancel.forEach(item => {
         location.reload()
     }
 })
+
+
+//добавить-удалить фильм
+addDelMovie(popup, moviesData)
+
+// добавить-удалить сеанс
+addDelSeance(popup, moviesData, seancesData)
+
+
+// отобразить сеанс
+viewSeances(hallsData, hallSession)
+

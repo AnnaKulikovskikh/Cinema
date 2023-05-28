@@ -15,5 +15,6 @@ class Movie extends Model
     public function sessions()
     {
         return $this->hasMany(Session::class);
+        //return $this->hasMany(Session::class)->orderedBy('start');
     }
 }

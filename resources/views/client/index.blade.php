@@ -46,8 +46,10 @@
           <div class="movie-seances__hall">
             <h3 class="movie-seances__hall-title">{{ $hall->name }}</h3>
             <ul class="movie-seances__list">
-            @foreach ($seances as $seance)
-              <li class="movie-seances__time-block"><a class="movie-seances__time" href="hall.html">10:20</a></li>
+            @foreach ($movie->sessions as $seance)
+              @if ($seance->hall_id == $hall->id)
+                <li class="movie-seances__time-block"><a class="movie-seances__time" href="hall.html">{{ $seance->start}}</a></li>
+              @endif
             @endforeach  
             </ul>
           </div>

@@ -1,5 +1,13 @@
-export default function viewSeances(hallsData, hallSession) {
+import sortSeances from "./sortSeances.js"
+import timeToMinutes from "./timeToMinutes.js"
+import delSeance from "./delSeance.js"
+
+export default function viewSeances(hallsData, moviesData, seancesData) {
+    //раскраска сеансов
+    const colors = ['#caff85', '#85ff89', '#85ffd3', '#85e2ff', '#8599ff', '#ba85ff', '#ff85fb', '#ff85b1', '#ffa285']
+
     //вывод seances-timeline залов
+    let hallSession = sortSeances(hallsData, seancesData)
     const wrappersHalls = document.querySelector(".conf-step__seances")
     let addTimeline = ""
     for (let j = 0; j < hallsData.length; j++){
@@ -32,4 +40,5 @@ export default function viewSeances(hallsData, hallSession) {
         wrapperSeances[j].innerHTML = addSeance
         addSeance = ""
     }
+    delSeance(hallsData, moviesData, seancesData)
 }

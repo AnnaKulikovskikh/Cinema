@@ -1,5 +1,8 @@
-export default function addDelSeance(popup, moviesData, seancesData) {
+import viewSeances from "./viewSeances.js"
+import delSeance from "./delSeance.js"
+import timeToMinutes from "./timeToMinutes.js"
 
+export default function addSeance(popup, hallsData, moviesData, seancesData) {
     //добавить сеанс
     const moviesEl = [...document.querySelectorAll('.conf-step__movie')]
     for (let i = 0; i < moviesEl.length; i++) {
@@ -9,7 +12,7 @@ export default function addDelSeance(popup, moviesData, seancesData) {
             form.action = '/admin/add_seance/' + moviesData[i].id
             form.onsubmit = function(e) { 
                 e.preventDefault()
-                if (!isTimeOk(form.hall.value, timeToMinutes(form.start_time.value), moviesData[i].duration, seancesData)) {
+                if (!isTimeOk(form.hall.value, timeToMinutes(form.start_time.value), moviesData[i].duration, seancesData, moviesData)) {
                     alert('Сеанс нельзя установить на занятое время!')
                     return null
                 }
@@ -18,17 +21,16 @@ export default function addDelSeance(popup, moviesData, seancesData) {
                 const movie = moviesData[i]
                 const add = {id: id, start: form.start_time.value, hall_id: hall_id, movie_id: moviesData[i].id, movie: movie}
                 seancesData.push(add)
-                //fillHallSession()
-                //console.log(hallSession)
                 popup[3].classList.remove('active')
-                //viewSeances()
+                viewSeances(hallsData, moviesData, seancesData)
+                delSeance(hallsData, moviesData, seancesData)
             }
         }
     }
 }
 
 //проверка добавлен ли сеанс в свободное время. Время сеанса + 10 мин на пересменку
-function isTimeOk(hallID, start, duration, seancesData) {
+function isTimeOk(hallID, start, duration, seancesData, moviesData) {
     let isOk = true
     let finish = start + duration + 10
     //если во время сеанса наступает полночь отсчет финиша с утренних минут
@@ -58,11 +60,4 @@ function isTimeOk(hallID, start, duration, seancesData) {
         }
     }
     return isOk
-}
-
-//вспомогательная функция для перевода hh:mm в минуты
-function timeToMinutes(time){
-    const h = time.slice(0,2)
-    const m = time.slice(3,5)
-    return h * 60 + Number(m)   
 }

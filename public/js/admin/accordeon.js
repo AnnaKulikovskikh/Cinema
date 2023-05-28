@@ -2,9 +2,11 @@ import addDelHall from "./addDelHall.js"
 import resizeHall from "./resizeHall.js"
 import hallConfigurate from "./hallConfigurate.js"
 import addDelMovie from "./addDelMovie.js"
-import addDelSeance from "./addDelSeance.js"
+import addSeance from "./addSeance.js"
+import delSeance from "./delSeance.js"
 import viewSeances from "./viewSeances.js"
 import inputError from "./inputError.js"
+//import sortSeances from "./sortSeances.js"
 
 //сворачивание разделов
 const headers = Array.from(document.querySelectorAll('.conf-step__header'));
@@ -36,27 +38,16 @@ const seatData = JSON.parse(seatTable.value)
 //получение фильмов
 const moviesTable = document.querySelector('.data-movies')
 const moviesData = JSON.parse(moviesTable.value).data
+console.log(moviesData)
 
 //получение сеансов
 const seancesTable = document.querySelector('.data-seances')
 const seancesData = JSON.parse(seancesTable.value)
   //сортировка сеансов по залам
-let hallSession = []
-fillHallSession()
-function fillHallSession() {
-    hallSession = []
-    for (let i = 0; i < hallsData.length; i++){
-        if (seancesData.length == 0) {
-            hallSession[i] = 0    
-        } else {
-            hallSession.push(seancesData.filter(item => item.hall_id === hallsData[i].id))
-        }
-    }
-}
-console.log(seancesData.length)
-
-//раскраска сеансов
-const colors = ['#caff85', '#85ff89', '#85ffd3', '#85e2ff', '#8599ff', '#ba85ff', '#ff85fb', '#ff85b1', '#ffa285']
+//let hallSession = []
+//hallSession = sortSeances(hallsData, seancesData)
+console.log(seancesData)
+//console.log(hallSession)
 
 //массив из 6 всплывающих окон
 const popup = [...document.querySelectorAll('.popup')]
@@ -206,9 +197,10 @@ cancel.forEach(item => {
 addDelMovie(popup, moviesData)
 
 // добавить-удалить сеанс
-addDelSeance(popup, moviesData, seancesData)
+addSeance(popup, hallsData, moviesData, seancesData)
+delSeance(hallsData, moviesData, seancesData)
 
 
 // отобразить сеанс
-viewSeances(hallsData, hallSession)
+viewSeances(hallsData, moviesData, seancesData)
 

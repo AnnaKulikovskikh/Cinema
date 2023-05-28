@@ -6,7 +6,6 @@ import addSeance from "./addSeance.js"
 import delSeance from "./delSeance.js"
 import viewSeances from "./viewSeances.js"
 import inputError from "./inputError.js"
-//import sortSeances from "./sortSeances.js"
 
 //сворачивание разделов
 const headers = Array.from(document.querySelectorAll('.conf-step__header'));
@@ -43,11 +42,8 @@ console.log(moviesData)
 //получение сеансов
 const seancesTable = document.querySelector('.data-seances')
 const seancesData = JSON.parse(seancesTable.value)
-  //сортировка сеансов по залам
-//let hallSession = []
-//hallSession = sortSeances(hallsData, seancesData)
 console.log(seancesData)
-//console.log(hallSession)
+
 
 //массив из 6 всплывающих окон
 const popup = [...document.querySelectorAll('.popup')]
@@ -84,7 +80,6 @@ function close(e) {
 }
 
 //выбор зала для конфигураций
-
 const hallsList = [...document.getElementsByName('chairs-hall')] //переключатели для вида зала
 const hallsList1 = [...document.getElementsByName('chairs-hall1')] //переключатели для цены
 const chooseForm = document.querySelector('.choose-form')
@@ -204,3 +199,28 @@ delSeance(hallsData, moviesData, seancesData)
 // отобразить сеанс
 viewSeances(hallsData, moviesData, seancesData)
 
+//сохранить сеансы
+const formSeance = document.getElementById("seance_update")
+formSeance.onsubmit = function(e){
+    e.preventDefault()
+
+    //const seances = []
+    seancesData.forEach(seance => delete seance.movie)
+    console.log(seancesData)
+    
+    const options = {
+        method: "POST",
+        body: JSON.stringify(seancesData),
+        headers: {"Content-Type": "application/json"}
+    }
+
+    fetch(`/api/seances`, options)
+        .then(res=> {
+            res.json()
+            if (res.ok) {
+                alert('save')
+            } else {
+                throw new Error(res.status)
+            }
+        })
+}

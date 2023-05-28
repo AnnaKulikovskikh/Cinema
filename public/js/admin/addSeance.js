@@ -54,7 +54,7 @@ function isTimeOk(hallID, start, duration, seancesData, moviesData) {
 
     //проверка попадает ли новый сеанс на занятое время
     for (let busy of busyTime) {
-        if ((start >= busy.start && start <= busy.finish) || (finish >= busy.start && finish <= busy.finish)) {
+        if ((start >= busy.start && start <= busy.finish) || (finish >= busy.start && finish <= busy.finish) || (start === busy.start)) {
             isOk = false
             break
         }

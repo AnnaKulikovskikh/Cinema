@@ -40,8 +40,8 @@ Route::post('/admin/delete_movie/{id}', [\App\Http\Controllers\AdminController::
 //})
 
 Route::get('/client/index', [\App\Http\Controllers\ClientController::class, 'index']);
-Route::get('/client/hall', [\App\Http\Controllers\ClientController::class, 'hall']);
-Route::get('/client/payment', [\App\Http\Controllers\ClientController::class, 'payment']);
-Route::get('/client/ticket', [\App\Http\Controllers\ClientController::class, 'ticket']);
+Route::get('/client/hall/{id}', [\App\Http\Controllers\ClientController::class, 'hall']);
+Route::get('/client/payment/{id}', [\App\Http\Controllers\ClientController::class, 'payment']);
+Route::get('/client/ticket/{id}', [\App\Http\Controllers\ClientController::class, 'ticket']);
 
 

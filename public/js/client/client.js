@@ -1,9 +1,10 @@
- import viewCalendar from "./calendar.js"
+import viewCalendar from "./calendar.js"
+import sortSeances from "./sortSeances.js"
  
- let s = 1
- const date = new Date()
+let s = 1
+const date = new Date()
 
- viewCalendar(s, date)
+viewCalendar(s, date)
 
 
  //получение данных с сервера
@@ -23,27 +24,13 @@ const seancesData = JSON.parse(seancesTable.value)
 //console.log(seancesData)
 
 //сеансы, сортированные по фильмам и залам
-seancesData.sort((a, b) => a.start > b.start ? 1 : -1)
-console.log(seancesData)
-// const hallSession = []
-// for (let i = 0; i < moviesData.length; i++) {
-//     for (let j = 0; j < hallsData.length; j++) {
-//         seancesData.forEach(seance => {
-//             if (seance.movie_id == moviesData[i].id && seance.hall_id == hallsData[j].id) {
-//                 hallSession.push(seance)
-//                 //console.log(seance)
-//             }
-//         })
-//     }
-// }
-// console.log(hallSession)
-
+const orderedSeances = sortSeances(moviesData, hallsData, seancesData)
+//console.log(orderedSeances)
 
 //выбор сеанса
 const seanceBtn = [...document.querySelectorAll('.movie-seances__time')]
-seanceBtn.forEach(btn => btn.addEventListener('click', (e) => {
-    e.preventDefault()
-    console.log('click')
-}))
-
-
+for (let i = 0; i < seanceBtn.length; i++) {
+    seanceBtn[i].addEventListener('click', (e) => {
+        seanceBtn[i].href = `/client/hall/${orderedSeances[i].id}`
+    })
+}

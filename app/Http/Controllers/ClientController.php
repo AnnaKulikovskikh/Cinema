@@ -6,37 +6,63 @@ use Illuminate\Http\Request;
 use App\Models\Hall;
 use App\Models\Movie;
 use App\Models\Session;
+use App\Models\Seat;
 
 class ClientController extends Controller
 {
     public function index()
     {
         $halls = Hall::paginate(7);
-        //$movies = Movie::paginate(10);
         $movies = Movie::with('sessions')->get();
-        //$halls = Hall::with('seat')->get();
         $seances = Session::all();
-        //$seances = Movie::with('sessions')->get();
-        //$seances = Movie::with('session')->get();
-        //$seances = Movie::with('hall')->get();
         return view('client.index', ['halls' => $halls, 'movies' => $movies, 'seances' => $seances]);
-        //return view('client.index', ['movies' => $movies]);
-        //$seances = Session::with('movie')->get();
     }
 
-    public function hall()
+    public function hall(Request $request, int $id)
     {
-        return view('client.hall');
+        //$seance = Session::query()->findOrFail($id);
+        $sessions = Session::with(['movie','hall'])->get();
+        $seance = null;
+        foreach($sessions as $session)
+        {
+            if ($session->id == $id)
+            {
+                $seance = $session;
+                break;
+            }
+        }
+        $seats = Seat::where('hall_id', '=', $seance->hall_id)->get();
+        return view('client.hall', ['seance' => $seance, 'seats'=> $seats]);
     }
 
-    public function payment()
+    public function payment(Request $request, int $id)
     {
-        return view('client.payment');
+        $sessions = Session::with(['movie','hall'])->get();
+        $seance = null;
+        foreach($sessions as $session)
+        {
+            if ($session->id == $id)
+            {
+                $seance = $session;
+                break;
+            }
+        }
+        return view('client.payment', ['seance' => $seance]);
     }
 
-    public function ticket()
+    public function ticket(Request $request, int $id)
     {
-        return view('client.ticket');
+        $sessions = Session::with(['movie','hall'])->get();
+        $seance = null;
+        foreach($sessions as $session)
+        {
+            if ($session->id == $id)
+            {
+                $seance = $session;
+                break;
+            }
+        }
+        return view('client.ticket', ['seance' => $seance]);
     }
     
 }

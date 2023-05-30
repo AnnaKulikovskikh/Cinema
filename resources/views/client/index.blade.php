@@ -16,7 +16,7 @@
     <h1 class="page-header__title">Идём<span>в</span>кино</h1>
   </header>
 
-  <!-- все залы из table-halls в $halls -->
+  <!-- данные с сервера -->
   <input class="data-halls" type="hidden" value="{{ json_encode($halls) }}"/>
   <input class="data-movies" type="hidden" value="{{ json_encode($movies) }}"/>
   <input class="data-seances" type="hidden" value="{{ json_encode($seances) }}"/>
@@ -60,5 +60,6 @@
 
   <script type="module" src="/js/client/client.js"></script>
   <script type="module" src="/js/client/calendar.js"></script>
+  <script type="module" src="/js/client/sortSeances.js"></script>
 </body>
 </html>

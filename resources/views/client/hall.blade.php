@@ -54,7 +54,7 @@
     </section>     
   </main>
 
-  <script type="module" src="/js/client/viewHall.js"></script>
+  <script type="module" src="/js/client/hall.js"></script>
   
 </body>
 </html>

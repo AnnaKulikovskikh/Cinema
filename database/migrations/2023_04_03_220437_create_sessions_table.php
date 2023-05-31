@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Query\Expression;
 
 return new class extends Migration
 {
@@ -16,7 +17,8 @@ return new class extends Migration
             $table->string('start');
             $table->integer('hall_id');
             $table->integer('movie_id');
-            $table->json('seats')->default([]);
+            $table->json('selected_seats')->default(new Expression('(JSON_ARRAY())'));
+            //$table->date('date')->default('2038-01-19');
         });
     }
 

@@ -32,12 +32,12 @@ class AdminController extends Controller
     {
         $validated = $request->validated();
         $hall = Hall::create([
-            "name" => $validated['name']
+            'name' => $validated['name']
         ]);
 
         // function foo($item)
         // {
-            //return Seat::create(["hall_id" => $hall->id, "type_seat" => 'st']);
+            //return Seat::create(['hall_id' => $hall->id, 'type_seat' => 'st']);
             //return ['type_seat' => $item['type_seat']];
         //}
         //$seats = array_map('foo', $request->json());
@@ -52,8 +52,8 @@ class AdminController extends Controller
         for ($i = 0; $i < 6; $i++) 
         {
             Seat::create([
-                "hall_id" => $hall->id,
-                "type_seat" => 'st',
+                'hall_id' => $hall->id,
+                'type_seat' => 'st',
             ]);
         }
         return redirect()->back();
@@ -77,8 +77,8 @@ class AdminController extends Controller
     {
         $validated = $request->validated();
         Movie::create([
-            "title" => $validated['name'],
-            "duration" => $validated['duration'],
+            'title' => $validated['name'],
+            'duration' => $validated['duration'],
         ]);
         return redirect()->back();
     }
@@ -100,9 +100,9 @@ class AdminController extends Controller
     public function addSeance(Request $request, int $id): RedirectResponse
     {
         Session::create([
-            "start" => $request['start_time'],
-            "hall_id" => $request['hall'],
-            "movie_id" => $id,
+            'start' => $request['start_time'],
+            'hall_id' => $request['hall'],
+            'movie_id' => $id,
         ]);
 
         return redirect()->back();

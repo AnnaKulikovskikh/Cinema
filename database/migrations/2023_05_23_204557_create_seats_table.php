@@ -16,6 +16,7 @@ return new class extends Migration
             $table->integer('hall_id');
             $table->string('type_seat');
             //$table->set('seats', ['st', 'vip', 'disabled','taken']);
+            //$table->string('description')->default('Ряд , Место');
         });
     }
 

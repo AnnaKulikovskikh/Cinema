@@ -45,7 +45,7 @@ const moviesData = JSON.parse(moviesTable.value).data
 //получение сеансов
 const seancesTable = document.querySelector('.data-seances')
 const seancesData = JSON.parse(seancesTable.value)
-//console.log(seancesData)
+console.log(seancesData)
 
 //добавление-удаление зала
 addDelHall()

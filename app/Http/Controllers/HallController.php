@@ -11,7 +11,7 @@ class HallController extends Controller
 {
     public function update(Request $request, int $id)
     {
-        app('log')->info($request->all());
+        //app('log')->info($request->all());
         $hall = Hall::query()->findOrFail($id);
         $hall->fill($request->all());
         $hall->save();
@@ -20,7 +20,7 @@ class HallController extends Controller
 
     public function updateSeats(Request $request, int $id)
     {
-        app('log')->info($request);
+        //app('log')->info($request);
         $halls = Hall::query()->findOrFail($id);
         Seat::query()->where(['hall_id' => $id])->delete();
         $newSeats = $request->json();

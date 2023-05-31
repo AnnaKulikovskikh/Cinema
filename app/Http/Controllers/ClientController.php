@@ -62,6 +62,18 @@ class ClientController extends Controller
                 break;
             }
         }
+        $seats = Seat::where('hall_id', '=', $seance->hall_id)->get();
+        // foreach($seats as $seat)
+        // {
+        //     foreach($seance->selected_seats as $selected_seat)
+        //     {
+        //         if ($seat->id == $selected_seat->id)
+        //         {
+        //             $seat->type_seat = 'taken';
+        //         }
+        //     }
+        // }
+        //$seats->save();
         return view('client.ticket', ['seance' => $seance]);
     }
     

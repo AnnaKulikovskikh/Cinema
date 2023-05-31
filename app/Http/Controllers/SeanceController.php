@@ -21,4 +21,15 @@ class SeanceController extends Controller
         return response()->json($seances);
     }
 
+    public function addSeats(Request $request, int $id)
+    {
+        $seance = Session::query()->findOrFail($id);
+        //$seance->fill($request->all());
+        //$seaance->save();
+        $seance->selected_seats = $request->selected_seats;
+        $seance->save();
+        //return response()->json($seances);
+        //return redirect('admin/index');
+    }
+
 }

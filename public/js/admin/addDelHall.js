@@ -1,9 +1,9 @@
-export default function addDelHall(popup) {
+export default function addDelHall() {
     const addHall = document.querySelector('.add_hall')
     const delHall = [...document.querySelectorAll('.trash_hall')]
     
     addHall.onclick = function() {
-        popup[0].classList.add('active')
+        document.getElementById('addHallPopup').classList.add('active')
     }
     
     for (let i = 0; i <delHall.length; i++) {
@@ -13,7 +13,7 @@ export default function addDelHall(popup) {
             const trashForm = document.querySelector('.trash-form')
             nameHall.querySelector('span').textContent = delHall[i].closest('li').textContent
             const hallID = delHall[i].closest('li').dataset.id
-            popup[1].classList.add('active')
+            document.getElementById('delHallPopup').classList.add('active')
             trashForm.action =  '/admin/del_hall/' + hallID
         })
     }

@@ -2,12 +2,12 @@ import viewSeances from "./viewSeances.js"
 import delSeance from "./delSeance.js"
 import timeToMinutes from "./timeToMinutes.js"
 
-export default function addSeance(popup, hallsData, moviesData, seancesData) {
+export default function addSeance(hallsData, moviesData, seancesData) {
     //добавить сеанс
     const moviesEl = [...document.querySelectorAll('.conf-step__movie')]
     for (let i = 0; i < moviesEl.length; i++) {
         moviesEl[i].onclick = (e) => {
-            popup[3].classList.add('active')
+            document.getElementById('addShowPopup').classList.add('active')
             const form = document.getElementById('add_seance')
             form.action = '/admin/add_seance/' + moviesData[i].id
             form.onsubmit = function(e) { 
@@ -21,7 +21,7 @@ export default function addSeance(popup, hallsData, moviesData, seancesData) {
                 const movie = moviesData[i]
                 const add = {id: id, start: form.start_time.value, hall_id: hall_id, movie_id: moviesData[i].id, movie: movie}
                 seancesData.push(add)
-                popup[3].classList.remove('active')
+                document.getElementById('addShowPopup').classList.remove('active')
                 viewSeances(hallsData, moviesData, seancesData)
                 delSeance(hallsData, moviesData, seancesData)
             }

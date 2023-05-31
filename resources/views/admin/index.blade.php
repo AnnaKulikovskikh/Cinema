@@ -41,7 +41,7 @@
         <p class="conf-step__paragraph">Доступные залы:</p>
         <ul class="conf-step__list">
           @foreach ($halls as $hall)
-            <li data-id="{{ $hall->id }}">{{ $hall->id}} {{ $hall->name}}
+            <li data-id="{{ $hall->id }}">{{ $hall->name}}
               <button class="conf-step__button conf-step__button-trash trash_hall"></button>
             </li>
           @endforeach

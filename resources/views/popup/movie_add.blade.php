@@ -1,4 +1,4 @@
-<div class="popup">
+<div class="popup" id="addMoviePopup">
   <div class="popup__container">
     <div class="popup__content">
       <div class="popup__header">

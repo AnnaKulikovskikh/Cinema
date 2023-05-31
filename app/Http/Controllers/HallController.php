@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Hall;
 use App\Models\Seat;
 use Illuminate\Http\JsonResponse;
@@ -11,31 +12,23 @@ class HallController extends Controller
     public function update(Request $request, int $id)
     {
         app('log')->info($request->all());
-        $halls = Hall::query()->findOrFail($id);
-        $halls->fill($request->all());
-        $halls->save();
-        return response()->json($halls);
+        $hall = Hall::query()->findOrFail($id);
+        $hall->fill($request->all());
+        $hall->save();
+        return response()->json($hall);
     }
 
     public function updateSeats(Request $request, int $id)
     {
-        //app('log')->info($request);
+        app('log')->info($request);
         $halls = Hall::query()->findOrFail($id);
-        $count = $halls->rows * $halls->cols;
-        //app('log')->info($halls->rows * $halls->cols);
-       Seat::query()->where(['hall_id' => $id])->delete();
-        
-
-        //$seats = [];
-        for ($i = 0; $i < $count; $i++) 
+        Seat::query()->where(['hall_id' => $id])->delete();
+        $newSeats = $request->json();
+        foreach($newSeats as $newSeat)
         {
-            //app('log')->info($request[i]);
-            Seat::create([
-                "hall_id" => $id,
-                "type_seat" => $request[i],
-            ]);
+            Seat::query()->create($newSeat);
         }
-        $seats = Seat::query()->where(['hall_id' => $id])->get();
+        $seats = Seat::all();
         return response()->json($seats);
     }
 }

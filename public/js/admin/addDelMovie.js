@@ -1,7 +1,7 @@
-export default function addDelMovie(popup, moviesData) {
+export default function addDelMovie(moviesData) {
     //добавление фильма
     document.querySelector('.add_movie').onclick = function(e) {
-        popup[2].classList.add('active')
+        document.getElementById('addMoviePopup').classList.add('active')
         e.preventDefault()
     }
     
@@ -32,7 +32,7 @@ export default function addDelMovie(popup, moviesData) {
         const formMovie = document.getElementById('delete_movie')
         formMovie.querySelector('span').textContent = moviesData[i].title
         formMovie.action = '/admin/delete_movie/' +  moviesData[i].id
-        popup[5].classList.add('active')
+        document.getElementById('delMoviePopup').classList.add('active')
     }
 }
 }

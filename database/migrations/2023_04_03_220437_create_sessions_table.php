@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('start');
             $table->integer('hall_id');
             $table->integer('movie_id');
+            $table->json('seats')->default([]);
         });
     }
 

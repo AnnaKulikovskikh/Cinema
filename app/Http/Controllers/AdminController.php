@@ -24,7 +24,6 @@ class AdminController extends Controller
         $halls = Hall::with('seat')->get();
         $seats = Seat::all();
         $movies = Movie::paginate(10);
-        //$seances = Session::with('movie')->with('hall')->get();
         $seances = Session::with('movie')->get();
         return view('admin.index', ['halls' => $halls, 'movies' => $movies, 'seances' => $seances, 'seats' => $seats]);
     }
@@ -35,6 +34,21 @@ class AdminController extends Controller
         $hall = Hall::create([
             "name" => $validated['name']
         ]);
+
+        // function foo($item)
+        // {
+            //return Seat::create(["hall_id" => $hall->id, "type_seat" => 'st']);
+            //return ['type_seat' => $item['type_seat']];
+        //}
+        //$seats = array_map('foo', $request->json());
+
+        // $seats = array_map(
+        //     fn($item) => ['type_seat' => $item['type_seat']],
+        //     $request->json()
+        // );
+
+        //$hall->seat()->createMany($seats);
+        
         for ($i = 0; $i < 6; $i++) 
         {
             Seat::create([

@@ -4,7 +4,6 @@ import viewSeances from "./viewSeances.js"
 //удаление сеанса
 export default function delSeance(hallsData, moviesData, seancesData) {
     //массив из 6 всплывающих окон
-    const popup = [...document.querySelectorAll('.popup')]
     const seanceEl = [...document.querySelectorAll('.conf-step__seances-movie')]
     for (let i = 0; i < seanceEl.length; i++) {
         seanceEl[i].onclick = () => {
@@ -12,13 +11,13 @@ export default function delSeance(hallsData, moviesData, seancesData) {
             const formSeance = document.getElementById('delete_seance')
             formSeance.querySelector('span').textContent = movie.title
             formSeance.action = '/admin/delete_seance/' +  getSeanceId(i, hallsData, seancesData).id
-            popup[4].classList.add('active')
+            document.getElementById('delShowPopup').classList.add('active')
             formSeance.onsubmit = (e) => {
                 e.preventDefault()
                 let delEl = seancesData.findIndex(item => item.id == getSeanceId(i, hallsData, seancesData).id)
                 seancesData.splice(delEl, 1)
                 viewSeances(hallsData, moviesData, seancesData)
-                popup[4].classList.remove('active')
+                document.getElementById('delShowPopup').classList.remove('active')
             }
             
         }

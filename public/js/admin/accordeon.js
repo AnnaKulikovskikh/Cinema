@@ -18,6 +18,8 @@ headers.forEach(header => header.addEventListener('click', () => {
 //получение таблицы с залами с сервера
 const hallsTable = document.querySelector('.data-halls')
 const hallsData = JSON.parse(hallsTable.value)
+console.log(hallsData)
+
 hallsData.map(hall => {
     const arr = []
     for (let i = 0; i < hall.seat.length; i++) {
@@ -25,6 +27,7 @@ hallsData.map(hall => {
     }
     hall.seat = arr
 })
+
 //установление выбранного зала для отображения
 let choosenHall = hallsData.length - 1
 if (hallsData.length > 0) hallConfigurate(hallsData, choosenHall)
@@ -37,19 +40,15 @@ const seatData = JSON.parse(seatTable.value)
 //получение фильмов
 const moviesTable = document.querySelector('.data-movies')
 const moviesData = JSON.parse(moviesTable.value).data
-console.log(moviesData)
+//console.log(moviesData)
 
 //получение сеансов
 const seancesTable = document.querySelector('.data-seances')
 const seancesData = JSON.parse(seancesTable.value)
-console.log(seancesData)
-
-
-//массив из 6 всплывающих окон
-const popup = [...document.querySelectorAll('.popup')]
+//console.log(seancesData)
 
 //добавление-удаление зала
-addDelHall(popup)
+addDelHall()
 
 //проверка правильности ввода данных
 inputError(moviesData, hallsData)
@@ -69,6 +68,7 @@ for (let i = 0; i < dismiss.length; i++) {
 
 function close(e) {
     e.preventDefault()
+    const popup = [...document.querySelectorAll('.popup')]
     for (let i = 0; i < alert.length; i++) {
         alert[i].textContent = null
     }
@@ -131,13 +131,13 @@ const formUpdate = document.getElementById("hall_update")
 formUpdate.onsubmit = function(e){
     e.preventDefault()
 
-    // const seatsArr1 = []
-    // const seatsArr = []
-    // for (let i = 0; i < hallsData[choosenHall].seat.length; i++) {
-    //     seatsArr1.push({id: i, hall_id: hallsData[choosenHall].id, type_seat: hallsData[choosenHall].seat[i]})
-    //     seatsArr.push(hallsData[choosenHall].seat[i])
-    // }
-    // //document.querySelector(".data-seats").value = seatsArr1
+    const seatsArr1 = []
+    const seatsArr = []
+    for (let i = 0; i < hallsData[choosenHall].seat.length; i++) {
+        seatsArr1.push({hall_id: hallsData[choosenHall].id, type_seat: hallsData[choosenHall].seat[i]})
+        seatsArr.push(hallsData[choosenHall].seat[i])
+    }
+    //document.querySelector(".data-seats").value = seatsArr1
 
     const seatArr = hallsData[choosenHall].seat
     delete hallsData[choosenHall].seat
@@ -162,7 +162,7 @@ formUpdate.onsubmit = function(e){
 
         const options1 = {
             method: "POST",
-            body: JSON.stringify(seatsArr),
+            body: JSON.stringify(seatsArr1),
             headers: {"Content-Type": "application/json"}
         }
 
@@ -189,10 +189,10 @@ cancel.forEach(item => {
 
 
 //добавить-удалить фильм
-addDelMovie(popup, moviesData)
+addDelMovie(moviesData)
 
 // добавить-удалить сеанс
-addSeance(popup, hallsData, moviesData, seancesData)
+addSeance(hallsData, moviesData, seancesData)
 delSeance(hallsData, moviesData, seancesData)
 
 
@@ -206,7 +206,7 @@ formSeance.onsubmit = function(e){
 
     //const seances = []
     seancesData.forEach(seance => delete seance.movie)
-    console.log(seancesData)
+    //console.log(seancesData)
     
     const options = {
         method: "POST",

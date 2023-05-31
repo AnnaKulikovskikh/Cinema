@@ -10,15 +10,12 @@ class SeanceController extends Controller
 {
     public function update(Request $request)
     {
-        app('log')->info($request->all());
-        Session::destroy(all);
-        for ($i = 0; $i < count($request); $i++)
+        //app('log')->info($request->all());
+        $seances = $request->json();
+        Session::query()->delete();
+        foreach ($seances as $seance)
         {
-            Session::create([
-                "start" => $request['start_time'],
-                "hall_id" => $request['hall_id'],
-                "movie_id" => $request['movie_id'],
-            ]);
+            Session::query()->create($seance);
         }
         $seances = Session::with('movie')->get();
         return response()->json($seances);

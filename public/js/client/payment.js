@@ -22,7 +22,7 @@ function seatsForTicket(){
 function calcPrice() {
     let result = 0
     for (let seat of seance.selected_seats) {
-        if (seat.type = 'vip') {
+        if (seat.type == 'vip') {
             result += seance.hall.price_vip
         } else {
             result += seance.hall.price

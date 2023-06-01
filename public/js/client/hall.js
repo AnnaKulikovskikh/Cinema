@@ -6,6 +6,7 @@ console.log(seance)
 
 const seatsTable = document.querySelector('.data-seats')
 const seats = JSON.parse(seatsTable.value)
+//console.log(seats)
 
 document.querySelector('.buying__info-title').textContent = seance.movie.title
 document.querySelector('.buying__info-start').textContent = `Начало сеанса: ${seance.start}`

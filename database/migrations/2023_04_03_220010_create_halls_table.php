@@ -20,6 +20,7 @@ return new class extends Migration
             $table->integer('cols')->default(3);
             $table->integer('price')->default(100);
             $table->integer('price_vip')->default(200);
+            $table->boolean('is_open')->default(false);
         });
     }
 

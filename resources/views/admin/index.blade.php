@@ -42,12 +42,12 @@
         <ul class="conf-step__list">
           @foreach ($halls as $hall)
             <li data-id="{{ $hall->id }}">{{ $hall->name}}
-              <button class="conf-step__button conf-step__button-trash trash_hall"></button>
+              <button class="conf-step__button conf-step__button-trash trash_hall" onclick="deleteHall(event)"></button>
             </li>
           @endforeach
         </ul>
 
-        <button class="conf-step__button conf-step__button-accent add_hall">Создать зал</button>
+        <button class="conf-step__button conf-step__button-accent" onclick="addHall()">Создать зал</button>
 
       </div>
     </section>
@@ -146,24 +146,23 @@
           <h2 class="conf-step__title">Сетка сеансов</h2>
         </header>
 
-        <form action="/api/seance" id="seance_update" method="post">
-          <div class="conf-step__wrapper">
-            <p class="conf-step__paragraph">
-              <button class="conf-step__button conf-step__button-accent add_movie">Добавить фильм</button>
-            </p>
+        
+        <div class="conf-step__wrapper">
+          <p class="conf-step__paragraph">
+            <button class="conf-step__button conf-step__button-accent" onclick="addMovie()">Добавить фильм</button>
+          </p>
+          <div class="conf-step__movies">
+          </div>
 
-            <div class="conf-step__movies">
-            </div>
-
+          <form action="/api/seance" id="seance_update" method="post">
             <div class="conf-step__seances">
             </div>
-          
             <fieldset class="conf-step__buttons text-center" form="seance_update">
               <button class="conf-step__button conf-step__button-regular cancel">Отмена</button>
               <input type="submit" value="Сохранить" class="conf-step__button conf-step__button-accent">
             </fieldset>  
-          </div>
-        </form>
+          </form>
+        </div>
       </section>
     
     
@@ -181,10 +180,10 @@
 
 
   <script type="module" src="/js/admin/accordeon.js"></script>
-  <script type="module" src="/js/admin/addDelHall.js"></script>
+  <script src="/js/admin/addDelHall.js"></script>
   <script type="module" src="/js/admin/resizeHall.js"></script>
   <script type="module" src="/js/admin/hallConfigurate.js"></script>
-  <script type="module" src="/js/admin/addDelMovie.js"></script>
+  <script src="/js/admin/addDelMovie.js"></script>
   <script type="module" src="/js/admin/addSeance.js"></script>
   <script type="module" src="/js/admin/delSeance.js"></script>
   <script type="module" src="/js/admin/viewSeances.js"></script>

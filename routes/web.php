@@ -31,10 +31,6 @@ Route::post('/admin/add_seance/{id}', [\App\Http\Controllers\AdminController::cl
 Route::post('/admin/delete_seance/{id}', [\App\Http\Controllers\AdminController::class, 'deleteSeance']);
 Route::post('/admin/delete_movie/{id}', [\App\Http\Controllers\AdminController::class, 'deleteMovie']);
 
-//Route::post('/admin/add_seance', [\App\Http\Controllers\AdminController::class, 'addSeance']);
-
-//Route::post('/halls',[\App\Http\Controllers\HallController::class, 'update']);
-
 // Route::group(['middleware'=>'auth'], function() {
 //  Route::get добавить сюда защещенные роуты
 //})

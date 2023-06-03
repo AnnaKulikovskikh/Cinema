@@ -1,7 +1,7 @@
-import addDelHall from "./addDelHall.js";
+//import addDelHall from "./addDelHall.js";
 import resizeHall from "./resizeHall.js";
 import hallConfigurate from "./hallConfigurate.js";
-import addDelMovie from "./addDelMovie.js";
+//import addDelMovie from "./addDelMovie.js";
 import addSeance from "./addSeance.js";
 import delSeance from "./delSeance.js";
 import viewSeances from "./viewSeances.js";
@@ -19,7 +19,7 @@ headers.forEach(header => header.addEventListener('click', () => {
 const hallsTable = document.querySelector('.data-halls');
 const hallsData = JSON.parse(hallsTable.value);
 //console.log(hallsData);
-hallsData.forEach(hall => console.log(hall.is_open))
+//hallsData.forEach(hall => console.log(hall.is_open))
 
 hallsData.map(hall => {
     const arr = [];
@@ -36,7 +36,7 @@ if (hallsData.length > 0) hallConfigurate(hallsData, choosenHall);
 //получение кресел
 const seatTable = document.querySelector('.data-seats');
 const seatData = JSON.parse(seatTable.value);
-console.log(seatData);
+//console.log(seatData);
 
 //получение фильмов
 const moviesTable = document.querySelector('.data-movies');
@@ -50,15 +50,14 @@ const seancesData = JSON.parse(seancesTable.value);
 
 //кнопка открытия-закрытия продаж
 const openSales = document.querySelector('#open_sales');
-//openSales.textContent = hallsData[choosenHall].is_open ?"Приостановить продажу билетов" : "Открыть продажу билетов"
 
 openSales.onclick = () => {
     if (!hallsData[choosenHall].is_open) {
-        openSales.textContent = "Приостановить продажу билетов";
+        openSales.textContent = 'Приостановить продажу билетов';
         hallsData[choosenHall].is_open = true;
         saveHall();
     } else {
-        openSales.textContent = "Открыть продажу билетов";
+        openSales.textContent = 'Открыть продажу билетов';
         hallsData[choosenHall].is_open = false;
         saveHall();
     }
@@ -66,9 +65,9 @@ openSales.onclick = () => {
 
 function saveHall() {
     const options = {
-        method: "POST",
+        method: 'POST',
         body: JSON.stringify(hallsData[choosenHall]),
-        headers: {"Content-Type": "application/json"}
+        headers: {'Content-Type': 'application/json'}
     }
     
     fetch(`/api/halls/${hallsData[choosenHall].id}`, options)
@@ -83,12 +82,12 @@ function saveHall() {
 }
 
 //добавление-удаление зала
-addDelHall();
+//addDelHall();
 
 //проверка правильности ввода данных
 inputError(moviesData, hallsData);
 
-//кнопка "Отменить"
+//кнопка 'Отменить'
 const abort = [...document.querySelectorAll('.abort')];
 const dismiss = [...document.querySelectorAll('.popup__dismiss')];
 const alert = [...document.querySelectorAll('.alert')];
@@ -143,45 +142,44 @@ document.querySelector('.cols').onchange = (e) => {
 }
 
 //изменение цены
-document.querySelector(".price").onchange = (e) => {
+document.querySelector('.price').onchange = (e) => {
     const value = parseInt(e.target.value);
     if (!Number.isInteger(value) || value <= 0) {
-        document.querySelector(".price").value = hallsData[choosenHall].price;
+        document.querySelector('.price').value = hallsData[choosenHall].price;
         return null;
     }
     hallsData[choosenHall].price = e.target.value;
 }
 
-document.querySelector(".vip_price").onchange = (e) => {
+document.querySelector('.vip_price').onchange = (e) => {
     const value = parseInt(e.target.value);
     if (!Number.isInteger(value) || value <= 0) {
-        document.querySelector(".vip_price").value = hallsData[choosenHall].price_vip;
+        document.querySelector('.vip_price').value = hallsData[choosenHall].price_vip;
         return null
     }
     hallsData[choosenHall].price_vip = e.target.value;
 }
 
 //сохранение hall_update
-const formUpdate = document.getElementById("hall_update");
+const formUpdate = document.getElementById('hall_update');
 formUpdate.onsubmit = function(e) {
     e.preventDefault();
 
     const seatsArr1 = [];
-    const seatsArr = [];
+    //const seatsArr = [];
     for (let i = 0; i < hallsData[choosenHall].seat.length; i++) {
         seatsArr1.push({hall_id: hallsData[choosenHall].id, type_seat: hallsData[choosenHall].seat[i]});
-        seatsArr.push(hallsData[choosenHall].seat[i]);
+        //seatsArr.push(hallsData[choosenHall].seat[i]);
     }
-    //document.querySelector(".data-seats").value = seatsArr1
 
-    const seatArr = hallsData[choosenHall].seat;
+    //const seatArr = hallsData[choosenHall].seat;
     delete hallsData[choosenHall].seat;
-    document.querySelector(".data-tables").value = hallsData[choosenHall];
+    document.querySelector('.data-tables').value = hallsData[choosenHall];
     
     const options = {
-        method: "POST",
+        method: 'POST',
         body: JSON.stringify(hallsData[choosenHall]),
-        headers: {"Content-Type": "application/json"}
+        headers: {'Content-Type': 'application/json'}
     }
 
     fetch(`/api/halls/${hallsData[choosenHall].id}`, options)
@@ -193,12 +191,11 @@ formUpdate.onsubmit = function(e) {
                 throw new Error(res.status);
             }
         })
-        //.then(data=>console.log(data))
 
         const options1 = {
-            method: "POST",
+            method: 'POST',
             body: JSON.stringify(seatsArr1),
-            headers: {"Content-Type": "application/json"}
+            headers: {'Content-Type': 'application/json'}
         }
 
         fetch(`/api/seats/${hallsData[choosenHall].id}`, options1)
@@ -223,8 +220,25 @@ cancel.forEach(item => {
 })
 
 
-//добавить-удалить фильм
-addDelMovie(moviesData);
+//добавить фильм
+const wrapperMovies = document.querySelector(".conf-step__movies");
+let addMovie = "";
+
+
+for (let i = 0; i < moviesData.length; i++) {
+    addMovie += `
+        <div class="conf-step__movie">
+            <img class="conf-step__movie-poster" alt="poster" src="/i/poster.png">
+            <h3 class="conf-step__movie-title">${moviesData[i].title}</h3>
+            <p class="conf-step__movie-duration">${moviesData[i].duration} минут</p>
+            <input class="movie_id" type="hidden" value=${moviesData[i].id} />
+            <button class="conf-step__button conf-step__button-trash trash_movie" onclick="deleteMovie(event)""></button>
+        </div>
+        
+    `;
+}
+
+wrapperMovies.innerHTML = addMovie;
 
 // добавить-удалить сеанс
 addSeance(hallsData, moviesData, seancesData);
@@ -235,7 +249,7 @@ delSeance(hallsData, moviesData, seancesData);
 viewSeances(hallsData, moviesData, seancesData);
 
 //сохранить сеансы
-const formSeance = document.getElementById("seance_update");
+const formSeance = document.getElementById('seance_update');
 formSeance.onsubmit = function(e) {
     e.preventDefault();
 
@@ -244,9 +258,9 @@ formSeance.onsubmit = function(e) {
     //console.log(seancesData);
     
     const options = {
-        method: "POST",
+        method: 'POST',
         body: JSON.stringify(seancesData),
-        headers: {"Content-Type": "application/json"}
+        headers: {'Content-Type': 'application/json'}
     }
 
     fetch(`/api/seances`, options)

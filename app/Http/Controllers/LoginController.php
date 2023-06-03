@@ -8,9 +8,6 @@ class LoginController extends Controller
 {
     public function result(Request $request)
     {
-        // dump($request->input('mail'));
-		// dump($request->input('pwd'));
-        //dump($request->session());
         if ($request->input('mail') === 'user-1@mail.ru' && $request->input('pwd') === '12345678') {
             // dump($request->input('mail'));
             // $value = $request->session()->get('counter', 1);

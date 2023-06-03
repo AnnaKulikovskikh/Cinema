@@ -11,6 +11,8 @@ const seats = JSON.parse(seatsTable.value);
 document.querySelector('.buying__info-title').textContent = seance.movie.title;
 document.querySelector('.buying__info-start').textContent = `Начало сеанса: ${seance.start}`;
 document.querySelector('.buying__info-hall').textContent = `Зал ${seance.hall.name}`;
+document.querySelector('.st_chair').textContent = `${seance.hall.price}`;
+document.querySelector('.vip_chair').textContent = `${seance.hall.price_vip}`;
 
 //отображение кресел
 

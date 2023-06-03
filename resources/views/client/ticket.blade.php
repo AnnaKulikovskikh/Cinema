@@ -18,7 +18,6 @@
 
     <!-- данные с сервера -->
     <input class="data-seance" type="hidden" value="{{ json_encode($seance) }}"/>
-    <input class="data-seats0" type="hidden" value="{{ json_encode($seats) }}"/>
   
   <main>
     <section class="ticket">

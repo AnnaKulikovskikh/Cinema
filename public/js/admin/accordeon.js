@@ -36,7 +36,7 @@ if (hallsData.length > 0) hallConfigurate(hallsData, choosenHall);
 //получение кресел
 const seatTable = document.querySelector('.data-seats');
 const seatData = JSON.parse(seatTable.value);
-//console.log(seatData);
+console.log(seatData);
 
 //получение фильмов
 const moviesTable = document.querySelector('.data-movies');

@@ -48,10 +48,13 @@ export default function hallConfigurate(hallsData, choosenHall) {
                     seats[i].classList.toggle('conf-step__chair_disabled');
                     seats[i].classList.toggle('conf-step__chair_standart');
                     hallsData[choosenHall].seat[i] = 'st';
-                } else {
+                } else if (hallsData[choosenHall].seat[i] == 'vip') {
                     seats[i].classList.toggle('conf-step__chair_vip');
                     seats[i].classList.toggle('conf-step__chair_disabled');
                     hallsData[choosenHall].seat[i] = 'disabled';
+                } else {
+                    seats[i].classList.add('conf-step__chair_standart');
+                    hallsData[choosenHall].seat[i] = 'st';
                 }
                 //console.log(hallsData[choosenHall].seat[i]);
             })

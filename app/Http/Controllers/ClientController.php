@@ -12,7 +12,7 @@ class ClientController extends Controller
 {
     public function index()
     {
-        $halls = Hall::paginate(7);
+        $halls = Hall::where('is_open', '=', true)->get();
         $movies = Movie::with('sessions')->get();
         $seances = Session::all();
         return view('client.index', ['halls' => $halls, 'movies' => $movies, 'seances' => $seances]);
@@ -71,10 +71,12 @@ class ClientController extends Controller
                 if ($seat->id == $selected_seat['id'])
                 {
                     $seat->type_seat = 'taken';
+                    $seat->save();
                 }
             }
         }
-        return view('client.ticket', ['seance' => $seance, 'seats' => $seats]);
+        $s = Seat::all();
+        return view('client.ticket', ['seance' => $seance]);
     }
     
 }

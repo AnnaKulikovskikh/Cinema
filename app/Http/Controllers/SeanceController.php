@@ -10,7 +10,7 @@ class SeanceController extends Controller
 {
     public function update(Request $request)
     {
-        //app('log')->info($request->all());
+        //app('log')->info($request[0]['seance_seats']);
         $seances = $request->json();
         Session::query()->delete();
         foreach ($seances as $seance)
@@ -24,12 +24,9 @@ class SeanceController extends Controller
     public function addSeats(Request $request, int $id)
     {
         $seance = Session::query()->findOrFail($id);
-        //$seance->fill($request->all());
-        //$seaance->save();
         $seance->selected_seats = $request->selected_seats;
+        $seance->seance_seats = $request->seance_seats;
         $seance->save();
-        //return response()->json($seances);
-        //return redirect('admin/index');
     }
 
 }

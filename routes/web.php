@@ -18,7 +18,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/admin/login', [\App\Http\Controllers\LoginController::class, 'form']);
+Route::get('/admin/login', [\App\Http\Controllers\LoginController::class, 'form'])->name('login');
 Route::post('/admin/login', [\App\Http\Controllers\LoginController::class, 'result']);
 //if (Auth::check()) { return redirect(route('/admin/index'));}
 
@@ -27,17 +27,13 @@ Route::get('/admin/index', [\App\Http\Controllers\AdminController::class, 'index
 Route::post('/admin/add_hall', [\App\Http\Controllers\AdminController::class, 'addHall'])->name('addHall');
 Route::post('/admin/add_movie', [\App\Http\Controllers\AdminController::class, 'addMovie'])->name('addMovie');
 Route::post('/admin/del_hall/{id}', [\App\Http\Controllers\AdminController::class, 'deleteHall']);
-Route::post('/admin/add_seance/{id}', [\App\Http\Controllers\AdminController::class, 'addSeance']);
-Route::post('/admin/delete_seance/{id}', [\App\Http\Controllers\AdminController::class, 'deleteSeance']);
 Route::post('/admin/delete_movie/{id}', [\App\Http\Controllers\AdminController::class, 'deleteMovie']);
 
 // Route::group(['middleware'=>'auth'], function() {
-//  Route::get добавить сюда защещенные роуты
-//})
+
+// });
 
 Route::get('/client/index', [\App\Http\Controllers\ClientController::class, 'index']);
 Route::get('/client/hall/{id}', [\App\Http\Controllers\ClientController::class, 'hall']);
 Route::get('/client/payment/{id}', [\App\Http\Controllers\ClientController::class, 'payment']);
 Route::get('/client/ticket/{id}', [\App\Http\Controllers\ClientController::class, 'ticket']);
-
-

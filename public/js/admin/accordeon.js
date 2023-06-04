@@ -46,7 +46,7 @@ const moviesData = JSON.parse(moviesTable.value).data;
 //получение сеансов
 const seancesTable = document.querySelector('.data-seances');
 const seancesData = JSON.parse(seancesTable.value);
-//console.log(seancesData);
+console.log(seancesData);
 
 //кнопка открытия-закрытия продаж
 const openSales = document.querySelector('#open_sales');
@@ -254,8 +254,11 @@ formSeance.onsubmit = function(e) {
     e.preventDefault();
 
     //const seances = []
-    seancesData.forEach(seance => delete seance.movie);
-    //console.log(seancesData);
+    seancesData.forEach(seance => {
+        delete seance.movie;
+        //const hall = hallsData.find(hall => hall.id = seance.hall_id);
+        //seance.seance_seats = hall.seat;
+    });
     
     const options = {
         method: 'POST',

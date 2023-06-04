@@ -1,12 +1,17 @@
- //получение данных с сервера
+//получение данных с сервера
 //получение таблицы с сеансами с сервера
 const seanceTable = document.querySelector('.data-seance');
 const seance = JSON.parse(seanceTable.value);
 console.log(seance);
 
 const seatsTable = document.querySelector('.data-seats');
-const seats = JSON.parse(seatsTable.value);
-//console.log(seats);
+let seats =[];
+if (seance.seance_seats.length == 0) {
+    seats = JSON.parse(seatsTable.value);
+} else {
+    seats = seance.seance_seats;
+}
+console.log(seats);
 
 document.querySelector('.buying__info-title').textContent = seance.movie.title;
 document.querySelector('.buying__info-start').textContent = `Начало сеанса: ${seance.start}`;
@@ -85,10 +90,18 @@ document.querySelector('.acceptin-button').addEventListener('click', (e) => {
     e.preventDefault();
     if (chosenChairs.length < 1) return null;
     //seance.selected_seats = chosenChairs;
+    seats.forEach(seat => {
+        for (let i = 0; i < chosenChairs.length; i++) {
+            if (seat.id == chosenChairs[i].id) {
+                seat.type_seat = 'taken';
+            }
+        }
+    })
     seance.selected_seats = rowAndSeat;
+    seance.seance_seats = seats;
 
     //console.log(chosenChairs);
-    console.log(rowAndSeat);
+    //console.log(rowAndSeat);
     //console.log(seance);
 
     const options = {
@@ -98,21 +111,8 @@ document.querySelector('.acceptin-button').addEventListener('click', (e) => {
     }
 
     fetch(`/api/seances/${seance.id}`, options);
-        // .then(res=> {
-        //     res.json()
-        //     if (res.ok) {
-        //         alert('save')
-        //     } else {
-        //         throw new Error(res.status)
-        //     }
-        // })
-
 
     location.href = `/client/payment/${seance.id}`;
-    //передать выбранные seats, чтобы потом перезаписать как проданные
-    //передать отображение мест как "Ряд, Место" для билета
-    //передать сеанс, чтобы отметить фильм время и зал в билете
-    //добавить к seat поле descriiption по умолчанию пустое, куда можно записать ряд и место
 })
 
 

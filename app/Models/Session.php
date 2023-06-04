@@ -12,8 +12,7 @@ class Session extends Model
     use HasFactory;
     public $timestamps = false;
     public $fillable = ['start', 'hall_id', 'movie_id'];
-    protected $casts = ['selected_seats' => 'array'];
-
+    protected $casts = ['selected_seats' => 'array', 'seance_seats' => 'array'];
 
     public function movie()
     {

@@ -18,7 +18,8 @@ return new class extends Migration
             $table->integer('hall_id');
             $table->integer('movie_id');
             $table->json('selected_seats')->default(new Expression('(JSON_ARRAY())'));
-            //$table->date('date')->default('2038-01-19');
+            $table->json('seance_seats')->default(new Expression('(JSON_ARRAY())'));
+            //$table->date('date')->default('');
         });
     }
 

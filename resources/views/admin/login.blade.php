@@ -30,8 +30,24 @@
       </header>
       <div class="login__wrapper">
 
-        <form class="login__form" action="" method="POST" accept-charset="utf-8">
+        <form class="login__form" action="{{ route('login') }}" method="POST" accept-charset="utf-8">
           @csrf
+
+          @if(isset($errors) && count($errors) > 0)
+                @foreach($errors->all() as $error)
+                  @php
+                    $sentences = explode('\n', $error);
+                  @endphp
+                  @if (count($sentences) > 1)
+                    @foreach ($sentences as $sentence)
+                      <p class="login__error">{{ $sentence }}</p>
+                    @endforeach
+                  @else
+                    <p class="login__error">{{ $error }}</p>
+                  @endif
+                @endforeach
+          @endif
+
           <label class="login__label" for="mail">
             E-mail
             <input class="login__input" type="mail" placeholder="example@domain.xyz" name="mail" required>
@@ -49,6 +65,5 @@
     </section>
   </main>
 
-  <script src="js/accordeon.js"></script>
 </body>
 </html>

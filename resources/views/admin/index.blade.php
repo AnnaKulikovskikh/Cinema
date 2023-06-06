@@ -89,14 +89,12 @@
             <p class="conf-step__hint">Чтобы изменить вид кресла, нажмите по нему левой кнопкой мыши</p>
           </div>  
 
-
           <div class="conf-step__hall">
             <div class="conf-step__hall-wrapper">
   
             </div>
           </div>
-
-          
+       
           <fieldset from="hall_update" class="conf-step__buttons text-center">
             <button class="conf-step__button conf-step__button-regular cancel">Отмена</button>
             <input type="submit" value="Сохранить" class="conf-step__button conf-step__button-accent">

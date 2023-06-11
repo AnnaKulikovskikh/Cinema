@@ -1,9 +1,7 @@
 import sortSeances from "./sortSeances.js";
 import viewSeances from "./viewSeances.js";
 
-//удаление сеанса
 export default function delSeance(hallsData, moviesData, seancesData) {
-    //массив из 6 всплывающих окон
     const seanceEl = [...document.querySelectorAll('.conf-step__seances-movie')];
     for (let i = 0; i < seanceEl.length; i++) {
         seanceEl[i].onclick = () => {
@@ -24,7 +22,7 @@ export default function delSeance(hallsData, moviesData, seancesData) {
     }
 }
 
-//вспомогательная функция возвращает сеанса от его номера в seances-timeline
+//вспомогательная функция возвращает сеанс от его номера в seances-timeline
 function getSeanceId(k, hallsData, seancesData) {
     let hallSession = sortSeances(hallsData, seancesData);
     let i = 0;

@@ -1,20 +1,21 @@
 export default function hallConfigurate(hallsData, choosenHall) {
-        // hallsData   //перечень залов
-    
         document.querySelector(".price").value = hallsData[choosenHall].price;
         document.querySelector(".vip_price").value = hallsData[choosenHall].price_vip;
-    
         document.querySelector('.rows').value = hallsData[choosenHall].rows;
         document.querySelector('.cols').value = hallsData[choosenHall].cols;
 
         const openSales = document.querySelector('#open_sales');
-        openSales.textContent = hallsData[choosenHall].is_open ? "Приостановить продажу билетов" : "Открыть продажу билетов";
+        if (hallsData[choosenHall].is_open) {
+            openSales.textContent = 'Приостановить продажу билетов';
+        } else {
+            openSales.textContent = 'Открыть продажу билетов';
+        }
     
         const wrapper = document.querySelector('.conf-step__hall-wrapper');
     
         let type = 'conf-step__chair_standart';
         let i = 0;
-        let addSeat = ''; //  DOM-элемент для вставки отображения кресел
+        let addSeat = '';
     
         for (let row = 0; row < hallsData[choosenHall].rows; row++) {
             addSeat += '<div class="conf-step__row">';
@@ -35,11 +36,9 @@ export default function hallConfigurate(hallsData, choosenHall) {
         wrapper.innerHTML = addSeat;
     
         //изменение вида кресла
-        const seats = [...document.getElementsByClassName('seat')]; // элементы DOM обозрачающие кресла
+        const seats = [...document.getElementsByClassName('seat')];
         for (let i = 0; i < seats.length; i++) {
             seats[i].addEventListener('click', function() {
-                //console.log(hallsData[choosenHall].seat);
-                //console.log(hallsData[choosenHall].seat[i]);
                 if (hallsData[choosenHall].seat[i] == 'st') {
                     seats[i].classList.toggle('conf-step__chair_standart');
                     seats[i].classList.toggle('conf-step__chair_vip');
@@ -56,7 +55,6 @@ export default function hallConfigurate(hallsData, choosenHall) {
                     seats[i].classList.add('conf-step__chair_standart');
                     hallsData[choosenHall].seat[i] = 'st';
                 }
-                //console.log(hallsData[choosenHall].seat[i]);
             })
         }
 }

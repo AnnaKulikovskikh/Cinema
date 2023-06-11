@@ -1,7 +1,7 @@
 import hallConfigurate from "./hallConfigurate.js";
 
 export default function resizeHall(hallsData, choosenHall, dimension, value) {
-    const hallsList = [...document.getElementsByName('chairs-hall')]; //переключатели для вида зала
+    const hallsList = [...document.getElementsByName('chairs-hall')];
     if (!Number.isInteger(value) || value <=0 || value > 50) {
         if (dimension === 'cols') {
             document.querySelector('.cols').value = hallsData[choosenHall].cols;
@@ -19,7 +19,8 @@ export default function resizeHall(hallsData, choosenHall, dimension, value) {
                 hallsData[choosenHall].rows = value;
             }
             hallsData[choosenHall].seat = [];
-            for (let j = 0; j <  hallsData[choosenHall].rows *  hallsData[choosenHall].cols; j++) {
+            let seatsCount = hallsData[choosenHall].rows *  hallsData[choosenHall].cols;
+            for (let j = 0; j <  seatsCount; j++) {
                 hallsData[choosenHall].seat.push('st');
             }
         }

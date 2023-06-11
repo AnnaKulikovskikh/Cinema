@@ -11,8 +11,6 @@ export default function viewCalendar(s, date) {
   }
     
   for (let i = s; i < s + 5; i++) {
-    //let day = (date.getDay() + i) < 7 ? nameDay[date.getDay() + i] : nameDay[date.getDay() + i - 7];
-    //let day = date.getDay() + i - Math.floor((date.getDay() + i)/7) * 7;
     date.setDate(date.getDate() + 1);
     add += `<a class="page-nav__day" href="#">
                 <span class="page-nav__day-week">${nameDay[date.getDay()]}</span>

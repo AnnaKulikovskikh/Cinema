@@ -1,7 +1,5 @@
-//import addDelHall from "./addDelHall.js";
 import resizeHall from "./resizeHall.js";
 import hallConfigurate from "./hallConfigurate.js";
-//import addDelMovie from "./addDelMovie.js";
 import addSeance from "./addSeance.js";
 import delSeance from "./delSeance.js";
 import viewSeances from "./viewSeances.js";
@@ -18,8 +16,6 @@ headers.forEach(header => header.addEventListener('click', () => {
 //получение таблицы с залами с сервера
 const hallsTable = document.querySelector('.data-halls');
 const hallsData = JSON.parse(hallsTable.value);
-//console.log(hallsData);
-//hallsData.forEach(hall => console.log(hall.is_open))
 
 hallsData.map(hall => {
     const arr = [];
@@ -36,12 +32,10 @@ if (hallsData.length > 0) hallConfigurate(hallsData, choosenHall);
 //получение кресел
 const seatTable = document.querySelector('.data-seats');
 const seatData = JSON.parse(seatTable.value);
-//console.log(seatData);
 
 //получение фильмов
 const moviesTable = document.querySelector('.data-movies');
 const moviesData = JSON.parse(moviesTable.value).data;
-//console.log(moviesData);
 
 //получение сеансов
 const seancesTable = document.querySelector('.data-seances');
@@ -81,9 +75,6 @@ function saveHall() {
         })    
 }
 
-//добавление-удаление зала
-//addDelHall();
-
 //проверка правильности ввода данных
 inputError(moviesData, hallsData);
 
@@ -114,8 +105,8 @@ function close(e) {
 }
 
 //выбор зала для конфигураций
-const hallsList = [...document.getElementsByName('chairs-hall')]; //переключатели для вида зала
-const hallsList1 = [...document.getElementsByName('chairs-hall1')]; //переключатели для цены
+const hallsList = [...document.getElementsByName('chairs-hall')];
+const hallsList1 = [...document.getElementsByName('chairs-hall1')];
 const chooseForm = document.querySelector('.choose-form');
 
 for (let i = 0; i < hallsList.length; i++) {
@@ -166,23 +157,20 @@ formUpdate.onsubmit = function(e) {
     e.preventDefault();
 
     const seatsArr1 = [];
-    //const seatsArr = [];
     for (let i = 0; i < hallsData[choosenHall].seat.length; i++) {
-        seatsArr1.push({hall_id: hallsData[choosenHall].id, type_seat: hallsData[choosenHall].seat[i]});
-        //seatsArr.push(hallsData[choosenHall].seat[i]);
+        const type =  hallsData[choosenHall].seat[i];
+        seatsArr1.push({hall_id: hallsData[choosenHall].id, type_seat: type});
     }
-
-    //const seatArr = hallsData[choosenHall].seat;
     delete hallsData[choosenHall].seat;
     document.querySelector('.data-tables').value = hallsData[choosenHall];
     
-    const options = {
+    const optionsHalls = {
         method: 'POST',
         body: JSON.stringify(hallsData[choosenHall]),
         headers: {'Content-Type': 'application/json'}
     }
 
-    fetch(`/api/halls/${hallsData[choosenHall].id}`, options)
+    fetch(`/api/halls/${hallsData[choosenHall].id}`, optionsHalls)
         .then(res=> {
             res.json();
             if (res.ok) {
@@ -192,13 +180,13 @@ formUpdate.onsubmit = function(e) {
             }
         })
 
-        const options1 = {
+        const optionsSeats = {
             method: 'POST',
             body: JSON.stringify(seatsArr1),
             headers: {'Content-Type': 'application/json'}
         }
 
-        fetch(`/api/seats/${hallsData[choosenHall].id}`, options1)
+        fetch(`/api/seats/${hallsData[choosenHall].id}`, optionsSeats)
         .then(res=> {
             res.json()
             if (res.ok) {
@@ -223,7 +211,6 @@ cancel.forEach(item => {
 //добавить фильм
 const wrapperMovies = document.querySelector(".conf-step__movies");
 let addMovie = "";
-
 
 for (let i = 0; i < moviesData.length; i++) {
     addMovie += `
@@ -256,8 +243,6 @@ formSeance.onsubmit = function(e) {
     //const seances = []
     seancesData.forEach(seance => {
         delete seance.movie;
-        //const hall = hallsData.find(hall => hall.id = seance.hall_id);
-        //seance.seance_seats = hall.seat;
     });
     
     const options = {

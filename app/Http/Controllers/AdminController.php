@@ -14,11 +14,6 @@ use Illuminate\Http\RedirectResponse;
 
 class AdminController extends Controller
 {
-    // public function __construct()
-    // {
-    //     $this->middleware('auth');
-    // }
-
     public function index()
     {
         $halls = Hall::with('seat')->get();
@@ -34,20 +29,6 @@ class AdminController extends Controller
         $hall = Hall::create([
             'name' => $validated['name']
         ]);
-
-        // function foo($item)
-        // {
-            //return Seat::create(['hall_id' => $hall->id, 'type_seat' => 'st']);
-            //return ['type_seat' => $item['type_seat']];
-        //}
-        //$seats = array_map('foo', $request->json());
-
-        // $seats = array_map(
-        //     fn($item) => ['type_seat' => $item['type_seat']],
-        //     $request->json()
-        // );
-
-        //$hall->seat()->createMany($seats);
         
         for ($i = 0; $i < 6; $i++) 
         {
@@ -61,7 +42,6 @@ class AdminController extends Controller
 
     public function deleteHall(Request $request, int $id): RedirectResponse
     {
-        //найти все сеансы с hall id. удалить
         $sessions = Session::all();
         foreach ($sessions as $session) {
             if ($session->hall_id === $id) {
@@ -86,7 +66,6 @@ class AdminController extends Controller
 
     public function deleteMovie(Request $request, int $id): RedirectResponse
     {
-        //найти все сеансы с movie id. удалить
         $sessions = Session::all();
         foreach ($sessions as $session) {
             if ($session->movie_id === $id) {

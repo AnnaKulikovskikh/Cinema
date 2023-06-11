@@ -13,12 +13,12 @@ class LoginController extends Controller
     public function authenticate(Request $request)
     {
         $user = User::query()->firstWhere(['email' => $request->input('mail')]);
-        //app('log')->info($user);
         if ($user && Hash::check($request->input('pwd'), $user->password)) {
             Auth::login($user);
             return redirect('/admin/index');
         }
-        return redirect()->back()->withErrors(['mail' => 'Пользователь не найден или введён неверный пароль.']);
+        $text = 'Пользователь не найден или введён неверный пароль.';
+        return redirect()->back()->withErrors(['mail' => $text]);
     }
 
     public function form()

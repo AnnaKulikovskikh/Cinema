@@ -30,7 +30,6 @@ export default function viewSeances(hallsData, moviesData, seancesData) {
 
     for (let j = 0; j < hallsData.length; j++) {
         for (let k = 0; k < hallSession[j].length; k++) {
-        //const movie = moviesData.find(movie => movie.id== hallSession[j][k].movie_id);
         const movie = hallSession[j][k].movie;
         addSeance += `
             <div class="conf-step__seances-movie" style="width: ${movie.duration/2}px; 

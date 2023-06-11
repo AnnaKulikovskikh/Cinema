@@ -10,7 +10,6 @@ export default function sortSeances(moviesData, hallsData, seancesData) {
         arrSeance[i][j].sort((a, b) => a.start > b.start ? 1 : -1);
         }
     }
-    //console.log(arrSeance)
     let result = [];
     for (let i = 0; i < arrSeance.length; i++) {
         for (let j = 0; j < arrSeance[i].length; j++) {

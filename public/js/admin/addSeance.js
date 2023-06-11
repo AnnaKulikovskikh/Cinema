@@ -3,7 +3,6 @@ import delSeance from "./delSeance.js";
 import timeToMinutes from "./timeToMinutes.js";
 
 export default function addSeance(hallsData, moviesData, seancesData) {
-    //добавить сеанс
     const moviesEl = [...document.querySelectorAll('.conf-step__movie')];
     for (let i = 0; i < moviesEl.length; i++) {
         moviesEl[i].onclick = (e) => {

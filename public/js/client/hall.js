@@ -2,7 +2,7 @@
 //получение таблицы с сеансами с сервера
 const seanceTable = document.querySelector('.data-seance');
 const seance = JSON.parse(seanceTable.value);
-console.log(seance);
+//console.log(seance);
 
 const seatsTable = document.querySelector('.data-seats');
 let seats =[];
@@ -11,7 +11,6 @@ if (seance.seance_seats.length == 0) {
 } else {
     seats = seance.seance_seats;
 }
-console.log(seats);
 
 document.querySelector('.buying__info-title').textContent = seance.movie.title;
 document.querySelector('.buying__info-start').textContent = `Начало сеанса: ${seance.start}`;
@@ -20,7 +19,6 @@ document.querySelector('.st_chair').textContent = `${seance.hall.price}`;
 document.querySelector('.vip_chair').textContent = `${seance.hall.price_vip}`;
 
 //отображение кресел
-
 let addSeats = '';
 let s = 0;
 const classSeat = [
@@ -56,7 +54,8 @@ const rowAndSeat = [];
 const chairs = [...document.querySelectorAll('.buying-scheme__chair')];
 for (let i = 0; i < chairs.length; i++) {
     chairs[i].onclick = () => {
-        if (chairs[i].classList.contains(classSeat[1]) || chairs[i].classList.contains(classSeat[3])) {
+        if (chairs[i].classList.contains(classSeat[1]) 
+            || chairs[i].classList.contains(classSeat[3])) {
             return null;
         }
         if (chairs[i].classList.contains(classSeat[4])) {
@@ -89,7 +88,6 @@ for (let i = 0; i < chairs.length; i++) {
 document.querySelector('.acceptin-button').addEventListener('click', (e) => {
     e.preventDefault();
     if (chosenChairs.length < 1) return null;
-    //seance.selected_seats = chosenChairs;
     seats.forEach(seat => {
         for (let i = 0; i < chosenChairs.length; i++) {
             if (seat.id == chosenChairs[i].id) {
@@ -99,10 +97,6 @@ document.querySelector('.acceptin-button').addEventListener('click', (e) => {
     })
     seance.selected_seats = rowAndSeat;
     seance.seance_seats = seats;
-
-    //console.log(chosenChairs);
-    //console.log(rowAndSeat);
-    //console.log(seance);
 
     const options = {
         method: "POST",
@@ -114,7 +108,6 @@ document.querySelector('.acceptin-button').addEventListener('click', (e) => {
 
     location.href = `/client/payment/${seance.id}`;
 })
-
 
 //перевести номер seat в ряд и место в зале
 function seatInHall(num) {

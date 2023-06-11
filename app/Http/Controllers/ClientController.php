@@ -20,7 +20,6 @@ class ClientController extends Controller
 
     public function hall(Request $request, int $id)
     {
-        //$seance = Session::query()->findOrFail($id);
         $sessions = Session::with(['movie','hall'])->get();
         $seance = null;
         foreach($sessions as $session)
@@ -62,19 +61,6 @@ class ClientController extends Controller
                 break;
             }
         }
-        // app('log')->info($seance->selected_seats[0]['seance_seats']);
-        // $seats = Seat::where('hall_id', '=', $seance->hall_id)->get();
-        // foreach($seats as $seat)
-        // {
-        //     foreach($seance->selected_seats as $selected_seat)
-        //     {
-        //         if ($seat->id == $selected_seat['id'])
-        //         {
-        //             $seat->type_seat = 'taken';
-        //             $seat->save();
-        //         }
-        //     }
-        // }
         return view('client.ticket', ['seance' => $seance]);
     }
     

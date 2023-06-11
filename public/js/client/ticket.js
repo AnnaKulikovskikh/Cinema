@@ -1,5 +1,3 @@
- //получение данных с сервера
-//получение таблицы с сеансами с сервера
 const seanceTable = document.querySelector('.data-seance');
 const seance = JSON.parse(seanceTable.value);
 console.log(seance);

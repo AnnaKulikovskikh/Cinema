@@ -13,10 +13,8 @@ return new class extends Migration
     {
         Schema::create('seats', function (Blueprint $table) {
             $table->id();
-            $table->integer('hall_id');
+            $table->foreignId('hall_id')>constrained()->cascadeOnDelete();
             $table->string('type_seat');
-            //$table->set('seats', ['st', 'vip', 'disabled','taken']);
-            //$table->string('description')->default('Ряд , Место');
         });
     }
 

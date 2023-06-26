@@ -2,7 +2,7 @@
 //получение таблицы с сеансами с сервера
 const seanceTable = document.querySelector('.data-seance');
 const seance = JSON.parse(seanceTable.value);
-//console.log(seance);
+console.log(seance);
 
 const seatsTable = document.querySelector('.data-seats');
 let seats =[];

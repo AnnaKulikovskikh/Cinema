@@ -10,32 +10,35 @@ class SeanceController extends Controller
 {
     public function update(Request $request)
     {
-        //app('log')->info($request[0]['seance_seats']);
+        //app('log')->info($seance);
         //все сеансы стираются и пересоздаются заново. При этом теряется инфо о купленных местах
 
-        $seances = $request->json();
-        Session::query()->delete();
-        foreach ($seances as $seance)
-        {
-            Session::query()->create($seance);
-        }
-        $seances = Session::with('movie')->get();
-
-        // $seances = Session::all();
-        // $seancesIn = $request->json();
-        // $s = 0;
-        // $d = 0;
-        // foreach ($seancesIn as $seanceIn) {
-        //     foreach ($seances as $seance) {
-        //         if ($seanceIn['id'] === $seance->id) {
-        //             $s++;
-        //         }
-        //         Session::query()->create($seanceIn);
-        //         $s = 0;
-        //     }
+        // $seances = $request->json();
+        // Session::query()->delete();
+        // foreach ($seances as $seance)
+        // {
+        //     Session::query()->create($seance);
         // }
-        // $seancesOut = Session::all();
-        return response()->json($seances);
+        // $seances = Session::with('movie')->get();
+
+        $seances = Session::all();
+        Session::query()->delete();
+        $seancesIn = $request->json();
+        app('log')->info($seances);
+        app('log')->info($request);
+        foreach ($seancesIn as $seanceIn) {
+            foreach ($seances as $seance) {
+                if ($seanceIn['id'] === $seance->id) {
+                    Session::query()->create($seanceIn);
+                    
+                    $s++;
+                }
+            }
+            if ($s == 0) Session::query()->create($seanceIn);
+            $s = 0;
+        }
+        $seancesOut = Session::all();
+        return response()->json($seancesOut);
     }
 
     public function addSeats(Request $request, int $id)

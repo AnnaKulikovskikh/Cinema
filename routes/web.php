@@ -1,6 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ClientController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -18,20 +22,22 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/admin/login', [\App\Http\Controllers\LoginController::class, 'form'])->name('login');
-Route::post('/admin/login', [\App\Http\Controllers\LoginController::class, 'authenticate']);
-//if (Auth::check()) { return redirect(route('/admin/index'));}
+Route::prefix('admin')->group(function () {
+    Route::get('login', [LoginController::class, 'form'])->name('login');
+    Route::post('login', [LoginController::class, 'authenticate']);
 
-//роуты admin
-Route::group(['middleware'=>'auth'], function() {
-    Route::get('/admin/index', [\App\Http\Controllers\AdminController::class, 'index'])->name('index');
-    Route::post('/admin/add_hall', [\App\Http\Controllers\AdminController::class, 'addHall'])->name('addHall');
-    Route::post('/admin/add_movie', [\App\Http\Controllers\AdminController::class, 'addMovie'])->name('addMovie');
-    Route::post('/admin/del_hall/{id}', [\App\Http\Controllers\AdminController::class, 'deleteHall']);
-    Route::post('/admin/delete_movie/{id}', [\App\Http\Controllers\AdminController::class, 'deleteMovie']);
+    Route::group(['middleware'=>'auth'], function() {
+        Route::get('index', [AdminController::class, 'index'])->name('index');
+        Route::post('add_hall', [AdminController::class, 'addHall'])->name('addHall');
+        Route::post('add_movie', [AdminController::class, 'addMovie'])->name('addMovie');
+        Route::post('del_hall/{id}', [AdminController::class, 'deleteHall']);
+        Route::post('delete_movie/{id}', [AdminController::class, 'deleteMovie']);
+    });
 });
 
-Route::get('/client/index', [\App\Http\Controllers\ClientController::class, 'index']);
-Route::get('/client/hall/{id}', [\App\Http\Controllers\ClientController::class, 'hall']);
-Route::get('/client/payment/{id}', [\App\Http\Controllers\ClientController::class, 'payment']);
-Route::get('/client/ticket/{id}', [\App\Http\Controllers\ClientController::class, 'ticket']);
+Route::prefix('client')->group(function () {
+    Route::get('index', [ClientController::class, 'index']);
+    Route::get('hall/{id}', [ClientController::class, 'hall']);
+    Route::get('payment/{id}', [ClientController::class, 'payment']);
+    Route::get('ticket/{id}', [ClientController::class, 'ticket']);
+});

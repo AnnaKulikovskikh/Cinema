@@ -16,10 +16,10 @@ return new class extends Migration
         Schema::create('halls', function (Blueprint $table) {
             $table->id();
             $table->string('name')->default('New hall');
-            $table->integer('rows')->default(2);
-            $table->integer('cols')->default(3);
-            $table->integer('price')->default(100);
-            $table->integer('price_vip')->default(200);
+            $table->unsignedInteger('rows')->default(2);
+            $table->unsegnedInteger('cols')->default(3);
+            $table->unsegnedInteger('price')->default(100);
+            $table->unsegnedInteger('price_vip')->default(200);
             $table->boolean('is_open')->default(false);
         });
     }

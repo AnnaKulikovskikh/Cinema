@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('movies', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->integer('duration');
+            $table->unsignedInteger('duration');
         });
     }
 

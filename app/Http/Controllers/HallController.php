@@ -9,9 +9,9 @@ use Illuminate\Http\Request;
 
 class HallController extends Controller
 {
-    public function update(Request $request, int $id)
+    public function update(Request $request, int $hall)
     {
-        $hall = Hall::query()->findOrFail($id);
+        //$hall = Hall::query()->findOrFail($hall);
         $hall->fill($request->all());
         $hall->save();
         return response()->json($hall);

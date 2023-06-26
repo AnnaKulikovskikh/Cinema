@@ -15,10 +15,12 @@ return new class extends Migration
         Schema::create('sessions', function (Blueprint $table) {
             $table->id();
             $table->string('start');
-            $table->integer('hall_id');
-            $table->integer('movie_id');
-            $table->json('selected_seats')->default(new Expression('(JSON_ARRAY())'));
-            $table->json('seance_seats')->default(new Expression('(JSON_ARRAY())'));
+            $table->foreignId('hall_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('movie_id')>constrained()->cascadeOnDelete();
+            //$table->json('selected_seats')->default(new Expression('(JSON_ARRAY())'));
+            //$table->json('seance_seats')->default(new Expression('(JSON_ARRAY())'));
+            $table->json('selected_seats')->nullable();
+            $table->json('seance_seats')->nullable();
             //$table->date('date')->default('');
         });
     }

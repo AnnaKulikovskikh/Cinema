@@ -41,11 +41,11 @@ class SeanceController extends Controller
         return response()->json($seancesOut);
     }
 
-    public function addSeats(Request $request, int $id)
+    public function addSeats(Request $request, Session $seance)
     {
-        $seance = Session::query()->findOrFail($id);
-        $seance->selected_seats = $request->selected_seats;
-        $seance->seance_seats = $request->seance_seats;
+        //$seance = Session::query()->findOrFail($id);
+        $seance->selected_seats = $request->input('selected_seats');
+        $seance->seance_seats = $request->input('seance_seats');
         $seance->save();
     }
 }

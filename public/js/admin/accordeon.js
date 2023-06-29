@@ -107,7 +107,6 @@ function close(e) {
 //выбор зала для конфигураций
 const hallsList = [...document.getElementsByName('chairs-hall')];
 const hallsList1 = [...document.getElementsByName('chairs-hall1')];
-const chooseForm = document.querySelector('.choose-form');
 
 for (let i = 0; i < hallsList.length; i++) {
     hallsList1[i].addEventListener('input', function() {

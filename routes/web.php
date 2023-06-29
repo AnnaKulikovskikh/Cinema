@@ -29,9 +29,9 @@ Route::prefix('admin')->group(function () {
 
     Route::group(['middleware'=>'auth'], function() {
         Route::get('index', [AdminController::class, 'index'])->name('index');
-        Route::post('add_hall', [HallController::class, 'addHall'])->middleware('admin')->name('addHall');
+        Route::post('add_hall', [HallController::class, 'create'])->middleware('admin')->name('addHall');
         Route::post('add_movie', [AdminController::class, 'addMovie'])->name('addMovie');
-        Route::post('del_hall/{id}', [HallController::class, 'deleteHall'])->middleware('admin');
+        Route::post('del_hall/{id}', [HallController::class, 'delete'])->middleware('admin');
         Route::post('delete_movie/{id}', [AdminController::class, 'deleteMovie']);
     });
 });

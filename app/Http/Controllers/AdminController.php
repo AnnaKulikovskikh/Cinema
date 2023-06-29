@@ -10,6 +10,7 @@ use App\Models\User;
 use App\Http\Requests\MovieStoreRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 
 class AdminController extends Controller
 {
@@ -40,14 +41,8 @@ class AdminController extends Controller
     }
 
 
-    public function deleteMovie(Request $request, int $id): RedirectResponse
+    public function deleteMovie(int $id): RedirectResponse
     {
-        $sessions = Session::all();
-        foreach ($sessions as $session) {
-            if ($session->movie_id === $id) {
-                Session::destroy($session->id);
-            }
-        }
         Movie::destroy($id);
 
         return redirect('admin/index');
